@@ -1,0 +1,94 @@
+<main>
+	<div class="content-r">
+    <h3>Differences Between Primitive and Object Wrapper</h3>
+	<hr>
+	<p>
+	  Whenever is possible we should use <strong>primitive types</strong> because they are:
+	  </p>
+	   <ul>
+		<li>simple to use</li>
+		<li>lightweight</li>
+	   </ul>
+
+	<p>Primitive Types Are:</p>
+	<ol>
+	  <li>boolean</li>
+	  <li>string</li>
+	  <li>number</li>
+	  <li>null</li>
+	  <li>undefined</li>
+	</ol>
+<pre><code class="language-javascript">
+const js  = "js";                      // primitive type
+const njs = new String( "js" );        // object wrapper
+
+typeof js  === "string";               // true
+typeof njs === "string";               // false
+
+const es5 = new String( "JS" );
+const es6 = new String( "JS" );
+es5 === es6;                           // false, two different Object
+
+// Pitfalls
+typeof "js";                           // "string"
+typeof String("js");                   // "string"
+typeof String(2019);                   // "string"
+typeof new String("js"); // "object"
+
+typeof 4;                              // "number"
+typeof Number(4);                      // "number"
+typeof Number("js");                   // "number" NOTE!!!
+typeof new Number(4);                  // "object"
+
+typeof {} === typeof "js";             // false
+typeof {} === typeof String("js");     // false
+typeof {} === typeof new String("js"); // true
+
+typeof {} === typeof 4;                // false
+typeof {} === typeof Number(4);        // false
+typeof {} === typeof new Number(4);    // true
+</code></pre>
+
+	<p>Challenge</p>
+
+<pre><code class="language-javascript">
+typeof NaN === "number"                // true
+// Why?
+</code></pre>
+
+	<p>Stack Overflow: <a href="https://stackoverflow.com/questions/2801601/why-does-typeof-nan-return-number" target="_blank">why-does-typeof-nan-return-number</a></p>
+	<hr>
+	<p>Some <strong>pitfalls</strong> when working with object wrappers</p>
+<pre><code class="language-javascript">
+const n = new Number(4);
+console.log( n );           // Number { 4 }
+n.valueOf();                // 4
+n + 0                       // 4 === n.valueOf() + 0
+
+const s = new String("js");
+console.log( s );           // String { "js" }
+s.valueOf();                // "js"
+s + " es6"                  // "js es6" === s.valueOf() + " es6"
+</code></pre>
+
+	<p>Challenge</p>
+
+<pre><code class="language-javascript">
+// These two objects are equal or not?
+( {} === {} );
+
+// How about these two:
+( { valueOf: () => 4 } === { valueOf: () => 4 } );
+</code></pre>
+
+	<p>Answer</p>
+	<ol>
+	  <li>false, two different objects</li>
+	  <li>false, two different objects, even with the same value</li>
+	</ol>        
+		DD_MM_YYYY
+        <div class="edit-on-github">
+            <a target="_blank" href="https://github.com/k-five/jsfun.ir/blob/master/effective-javascript/prefer-primitive-types/main.html">Edit on Github</a>
+        </div>
+	</div>
+</main>

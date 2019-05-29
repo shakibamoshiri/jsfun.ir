@@ -1,0 +1,11 @@
+{
+    "home": {
+        "effective-javascript": {
+            "strict-mode": "",
+            "implicit-coercion-explicit-coercion": "",
+            "prefer-primitive-types": ""
+        },
+        "effective dom": "",
+        "back-end with node.js": ""
+    }
+}

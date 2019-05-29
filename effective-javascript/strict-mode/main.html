@@ -1,0 +1,75 @@
+<main>
+	<div class="content-r">
+		<h1>strict-mode</h1>
+<h3>how to use "use strict" when we have more than one files</h3>
+	<hr>
+	<p>
+	  "use strict" is an ECMAScript Standard to force web browser Compatibility.
+	  <ul>
+		<li>Within a file it can be applied only at the top most of the file</li>
+		<li>and within a function the same rule - at the top most of a function</li>
+	  </ul>
+	</p>
+
+	<p>
+	  If we have two files and one of them uses [strict mode] but the other not, bundling these two files will remove the [strict mode] effect
+	  if the rule has not been put at the top most of the bundled file.
+	</p>
+
+	<p>File-1.js does not use "use strict"</p>
+<pre><code class="language-javascript">
+// file-1.js
+// no strict mode
+function(){
+	// ...
+}
+</code></pre>
+
+	<p>file-2.js uses "use strict"</p>
+
+<pre><code class="language-javascript">
+"use strict";
+// file-2.js
+function(){
+	// ...
+}
+</code></pre>
+
+	<p>Bundling these two files has no effect!</p>
+
+<pre><code class="language-javascript">
+// bundling file-1.js && file-2.js
+// strict mode has no effect
+// file-1.js
+function(){
+	// ...
+}
+"use strict";
+// file-2.js
+function(){
+	// ...
+}
+</code></pre>
+
+<p>
+Solution is to use IIFE (= Immediately Invoke Function Expression).
+</p>
+
+<pre><code class="language-javascript">
+// solution for each file
+(function(){
+	"use strict";
+	function(){
+	// ...
+}
+}());
+</code></pre>
+
+	<p>NOTE: If you use <strong>Webpack</strong> it automatically adds "use strict" to the bundled file.</p>
+        
+		DD_MM_YYYY
+        <div class="edit-on-github">
+            <a target="_blank" href="https://github.com/k-five/jsfun.ir/blob/master/effective-javascript/strict-mode/main.html">Edit on Github</a>
+        </div>
+	</div>
+</main>
