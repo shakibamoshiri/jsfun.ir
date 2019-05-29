@@ -5,6 +5,8 @@
 <p>Before doing it you will need <a target="_blank" href="https://github.com/k-five/nodepost">nodepost</a> application to handle dependencies.</p>
 
 <h1 align="center">Instruction</h1>
+
+
  1. `git clone htttp://github.com/k-five/nodepost`
  2. `cd nodepost`
  3. again: `git clone https://github.com/k-five/jsfun.ir home`
