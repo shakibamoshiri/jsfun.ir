@@ -1,0 +1,25 @@
+{
+  "name": "jsfun.ir",
+  "version": "1.0.0",
+  "description": "JavaScript the Fun Part",
+  "main": "\"\"",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/k-five/jsfun.ir.git"
+  },
+  "keywords": [
+    "js",
+    "javascript",
+    "nodejs",
+    "blog"
+  ],
+  "author": "Shakiba Moshiri",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/k-five/jsfun.ir/issues"
+  },
+  "homepage": "https://github.com/k-five/jsfun.ir#readme"
+}
