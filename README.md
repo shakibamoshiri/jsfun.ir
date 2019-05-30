@@ -10,7 +10,7 @@
  1. `git clone http://github.com/k-five/nodepost`
  2. `cd nodepost`
  3. again: `git clone https://github.com/k-five/jsfun.ir home`
- 4. `rm -f database'
+ 4. `rm -f database`
  5. `mv home/database .`
  6. `npm install`
  7. `./node-dev nodepost`
@@ -26,6 +26,40 @@ This is what we did:
  6. Then install applicatoin dependencies using `npm`.
  7. Then running the nodepost application
  8. Finally see it live.
+
+Or using `npm`
+
+ 1. `npm install nodepost` | installing **nodepost** application
+ 2. `mv node_modules/nodepost .` | moving it to Current Working Directory
+ 3. `cd nodepost` | changing Working Directory
+ 3. `npm install jsfun.ir` | installing **jsfun.ir** blog
+ 4. `mv node_modules/jsfun.ir home` | moving+renaming it to Current Working Directory
+ 5. `rm -fr database` | deleting the default **database**
+ 6. `mv home/database .` | moving jsfun.ir's database to CWD
+ 7. `npm install` | installing dependencies
+ 8. `./node-dev nodepost.js` | run the application
+ 
+The directory structure will be like this:
+
+```bash
+nodepost                    # nodepost application
+├── build
+├── database                # database we pulled out of jsfun.ir
+├── database-manager
+├── error-page
+├── home                    # jsfun.ir, which we renamed it to home
+├── main-html
+├── node_modules
+├── path-manager
+├── public
+├── route-manager
+├── script
+├── src
+├── test
+└── vendor
+
+14 directories
+```
 
 If everything goes well, we will get:
 
