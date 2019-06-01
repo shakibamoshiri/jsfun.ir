@@ -1,9 +1,6 @@
 {
     "home": {
         "effective-javascript": {
-            "strict-mode": "",
-            "implicit-coercion-explicit-coercion": "",
-            "prefer-primitive-types": "",
             "accustoming yourself with javascript": {
                 "strict mode": "",
                 "implicit coercion explicit coercion": "",
