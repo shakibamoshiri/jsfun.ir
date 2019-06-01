@@ -29,9 +29,8 @@ This is what we did:
 
 Or using `npm`
 
- 1. `npm install nodepost` | installing **nodepost** application
- 2. `mv node_modules/nodepost .` | moving it to Current Working Directory
- 3. `cd nodepost` | changing Working Directory
+ 1. `git clone https://github.com/k-five/nodepost` | clone the application
+ 2. `cd nodepost` | changing Working Directory
  3. `npm install jsfun.ir` | installing **jsfun.ir** blog
  4. `mv node_modules/jsfun.ir home` | moving+renaming it to Current Working Directory
  5. `rm -fr database` | deleting the default **database**
