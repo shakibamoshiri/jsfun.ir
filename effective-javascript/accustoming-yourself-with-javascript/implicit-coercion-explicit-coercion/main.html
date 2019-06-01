@@ -1,7 +1,80 @@
 <main>
 	<div class="content-r">
-		<h1>implicit-coercion-explicit-coercion</h1>
-        
+	<h3>What Are Implicit Coercion and Explicit Coercion</h3>
+	<hr>
+	<p>
+	  Usually <strong>Scripting Languages</strong> do not care much about type of a variable nor care they about operation between variables.
+	</p>
+	<p>
+	  Most of time <strong>The Interpreter (= Engine)</strong> tries to convert one type to another if it is possible.
+	  For example between <strong>Strings</strong> and <strong>Numbers</strong>.
+	</p>
+<pre><code class="language-javascript">
++"4";              // 4 Explicit Coercion
+parseInt(4);       // 4 functional way
+
++"four";           // NaN Explicit Coercion
+parseInt("four");  // NaN functional way
+
+4 + 4;             // 8 addition
+
+"4" + "4";         // "44" concatenation
+
++"4" + +"4";       // 8 Coercion then addition
+
+"four" + "four";   // "fourfour" concatenation
+
++"four" + +"four"; // NaN Coercion then addition
+NaN + NaN;         // NaN  addition
+</code></pre>
+
+	<p>Challenge</p>
+
+<pre><code class="language-javascript">
+const money = "I have 4 and 4 dollars";
+// how much money do we have?
+</code></pre>
+
+	<p>Solution 1</p>
+
+<pre><code class="language-javascript">
+money.split(" ")
+     // since NaN is evaluated to false
+     // +item makes each item to NaN if it is a string
+     // thus [filter] will return only string-number
+	 .filter( ( item ) => { return +item } )
+     // initializing: sum = 0
+     // sum = sum + ( +item )
+     .reduce( ( sum, item ) => { return sum + +item }, 0 )
+     // 8
+</code></pre>
+
+	<p>Solution 2</p>
+
+<pre><code class="language-javascript">
+// just match the numbers :)
+money.match(/\d+/)
+     // sum = 0
+	 // sum = sum + (+item)
+	 .reduce((sum,item) => {return sum + +item}, 0)
+	 // 8
+</code></pre>
+
+	<p>Solution 3</p>
+
+<pre><code class="language-javascript">
+// just match the number :)
+money.split(" ")
+ 	 // sum = 0
+	 // sum = sum + +item
+	 .reduce( ( sum, item ) => {
+	 // when item is NaN then
+	 // sum = sum + 0
+	 return sum + ( +item || 0 ) }
+	 ,0 )
+	 // 8
+</code></pre>
+        <p>Next <a href="../prefer-primitive-types">Prefer Primitive Types</a></p>
 		DD_MM_YYYY
         <div class="edit-on-github">
             <a target="_blank" href="https://github.com/k-five/jsfun.ir/blob/master/effective-javascript/accustoming-yourself-with-javascript/implicit-coercion-explicit-coercion/main.html">Edit on Github</a>
