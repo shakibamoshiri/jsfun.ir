@@ -6,10 +6,17 @@
                 "implicit coercion explicit coercion": "",
                 "prefer primitive types": ""
             },
-            "variable scope": "",
+            "variable scope": {
+                "minimize use of global variable": ""
+            },
             "working with functions": ""
         },
-        "effective dom": "",
+        "react": {
+            "three JSX main patterns": "",
+            "JSX direct function call": "",
+            "stateless component": "",
+            "stateful component": ""
+        },
         "back-end with node.js": ""
     }
 }
