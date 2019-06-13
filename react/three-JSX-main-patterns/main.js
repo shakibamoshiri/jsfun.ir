@@ -68,10 +68,10 @@ this.onClick = function(){ ...
 
 const root = <Fragment>
     <p>By looking at any React Code we can identify some patterns that almost covers most part of it.</p>
-    <p>Since JSX is a wrapper for creating DOM but in XML fasion, everything is almost JSX but we can categorize it into two</p>
+    <p>Since JSX is a wrapper for creating DOM but in XML fashion, everything is almost JSX but we can categorize it into two</p>
     <ol>
         <li>JSX Direct Function Call</li>
-        <li>JSX Innirect Function Call</li>
+        <li>JSX Indirect Function Call</li>
             <ol>
                 <li>Stateless Component or Pure Function</li>
                 <li>Stateful Component or Impure Function</li>
@@ -99,15 +99,15 @@ h1.textContent = "This is h1 tag";`}</Prism>
     <p>And thus we will have a <strong>Component</strong>.</p>
     <p>What is a Component?</p>
     <p>It is a wrapper around JSX that we can pass argument(s) into it. Simple right?</p>
-    <p>And for inditifying it as a Component we follow the Facebook Convension and use UpperCase letter for naming it. So it becomes <strong>H1</strong> and not <strong>h1</strong>.</p>
+    <p>And for identifying it as a Component we follow the Facebook Convention and use Uppercase letter for naming it. So it becomes <strong>H1</strong> and not <strong>h1</strong>.</p>
 
     <SubTitle>3. Stateful Component or Impure Function</SubTitle>
     <p>Along with the ability to use an argument, if we give a component the power to modify the sate of itself or others components then it become <strong>Stateless Component</strong>.</p>
     <p>Simple counting app with a button.</p>
     <Prism>{ stateful }</Prism>
     <div className="code-result" id="third">{ <H /> }</div>
-    <p>Again nothing special about it. We are manupulating the DOm but in an organized we that we can name it: Selt State Management.</p>
-    <p>The compoent keeps track of its states if it has any.</p>
+    <p>Again nothing special about it. We are manipulating the DOm but in an organized we that we can name it: Self State Management.</p>
+    <p>The component keeps track of its states if it has any.</p>
 
     <SubTitle>Two Notes</SubTitle>
     <Prism>{ two_notes }</Prism>
