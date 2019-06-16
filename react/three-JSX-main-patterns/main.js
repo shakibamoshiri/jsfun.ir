@@ -115,7 +115,7 @@ h1.textContent = "This is h1 tag";`}</Prism>
     <p>We will inspect these three one by one and explore them more.</p>
 
     <SubTitle>Simplifying these three patterns in a diagram:</SubTitle>
-    <img style={{ width: "100%" }} src="/build/jsx.svg" alt="" />
+    <img style={{ width: "100%" }} src="/build/img/three-jsx-main-patterns.png" alt="three-jsx-main-patterns.png" />
     <p>Next <a href="../JSX-direct-function-call">JSX Direct Function Call</a></p>
 
 
