@@ -15,7 +15,8 @@
             "three JSX main patterns": "",
             "JSX direct function call": "",
             "stateless component": "",
-            "stateful component": ""
+            "stateful component": "",
+            "component communication": ""
         },
         "back-end with node.js": ""
     }
