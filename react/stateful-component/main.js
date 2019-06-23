@@ -214,7 +214,7 @@ const root = <Fragment>
 
     <SubTitle>Refactoring</SubTitle>
     <p>Lets rewrite the H component to understand it better, specially <strong>binding</strong></p>
-    <p>So we directory name our class to <strong>H</strong> instead of assigning to <strong>const H</strong>. I just want to say that both ways is possible and in more advanced code the <strong>anonymous</strong> one is more handy.</p>
+    <p>So we directory name our class to <strong>H</strong> instead of assigning to <strong>const H</strong>. I just want to say that both ways are possible and in more advanced code the <strong>anonymous</strong> one is more handy.</p>
     <p>We can use ES6 arrow function which does not have implicit this binding whereas if we use the keyword <strong>function</strong> it has implicit this binding.</p>
     <Prism>{ e2 }</Prism>
     <div id="e2" className="code-result">{ <H_2 />}</div>
@@ -223,13 +223,13 @@ const root = <Fragment>
     <p>Putting the function declaration outside of the constructor</p>
     <Prism>{ e3 }</Prism>
     <div id="e3" className="code-result">{ <H_3 /> }</div>
-    <p>Now play with the code and meanwhile loot at the below diagram. Try to find a map between what this code dos with what is in the diagram.</p>i
+    <p>Now play with the code and meanwhile look at the below diagram. Try to find a map between what this code dos with what is in the diagram.</p>
 
     <SubTitle>Stateful Component Diagram</SubTitle>
     <img style={{ width: "100%" }} src="/build/img/react-stateful.component.png" alt="react-stateful.component.png" />
 
     <p>Back <a href="../stateless-component">Stateless Component</a></p>
-    <p>Back <a href="../component-communication">Component Communication</a></p>
+    <p>Next <a href="../component-communication">Component Communication</a></p>
 </Fragment>
 
 const div_id_root = document.getElementById( "root" );

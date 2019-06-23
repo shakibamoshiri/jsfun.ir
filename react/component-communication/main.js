@@ -25,8 +25,6 @@ const r = <H1>
 <H1>;
 render( r, document.getElementById( "e2" ) );`
 
-
-
 const H1 = ({ children }) => <h1>{ children }</h1>
 const I = ({ children }) => <i>{ children }</i>
 const Note = ({ children }) => <span style={{ color: "#c80000" }}>{ children }</span>;
@@ -116,11 +114,11 @@ const Line = ({ children }) => {
 };
 
 const r5 = <Colorize>
-    <Line className="xxx" >this line has no color</Line>
-    <Line className="red" >this line is in red</Line>
-    <Line className="green">this line is in greenr</Line>
-    <Line className="blue">this line is in blue</Line>
-    <Line className="xxx">this line has no color</Line>
+    <Line className="xxx"   prefix="xxx: " >this line has no color</Line>
+    <Line className="red"   prefix="red: " >this line is in red</Line>
+    <Line className="green" prefix="green: " >this line is in greenr</Line>
+    <Line className="blue"  prefix="blue: " >this line is in blue</Line>
+    <Line className="xxx"   prefix="xxx " >this line has no color</Line>
 </Colorize>;
 render( r5, document.getElementById( "e5" ) );`;
 
@@ -177,7 +175,7 @@ const root = <Fragment>
 
     <Prism>{ e2 }</Prism>
     <div id="e3" className="code-result">{ r2 }</div>
-    <p>Interesting, right? The "I" component returns its children to the "HT" component and it return its own ones to us. Good.</p>
+    <p>Interesting, right? The <strong>I</strong> component returns (passes) its children to the <strong>H1</strong> component and then H1 returns its own ones to us. Good.</p>
     <p>Lets add more.</p>
 
     <Prism>{ e3 }</Prism>
@@ -186,23 +184,23 @@ const root = <Fragment>
     <p>It is no very neat. So lets add some new components to it.</p>
     <Prism>{ e4 }</Prism>
     <div id="e4" className="code-result">{ r4 }</div>
-    <p>With the help of abstractoin any tag we want - as a component - we can design our onw markup language. It is amazing :), is not it?</p>
+    <p>With the help of abstractoin of any tags we want - as a component - we can design our own markup language. It is amazing!, is not it?</p>
     <p>Lets get crazy!</p>
     <Prism>{ e5 }</Prism>
     <div id="e5" className="code-result">{ r5 }</div>
     <p><strong>How do you feel about this code? Good or Bad?</strong></p>
     <p>If good, well.</p>
     <p>if bad, it is signal that says woooow wait! what is going on here?</p>
-    <p>Do not worry we will see more example. For now open the dev-tools and see the console.log for these:</p>
+    <p>Do not worry. We will see more examples. For now just open the dev-tools and see the console.log for these:</p>
     <ol>
         <li>log( child )</li>
         <li>log( child.props )</li>
         <li>log( child.props.children )</li>
     </ol>
     <p>Also ignore this error for now: <strong>Warning: Each child in a list should have ...</strong></p>
+    <p>Next <a href="../component-communication-2">Component Communication 2</a></p>
 
-    <p>Back <a href="">Back</a></p>
-    <p>Next <a href="">Next</a></p>
+    <p>Back <a href="../stateful-component">Statefun Component</a></p>
 
 </Fragment>
 
