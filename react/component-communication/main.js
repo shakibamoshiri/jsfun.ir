@@ -185,8 +185,10 @@ const root = <Fragment>
     <Prism>{ e4 }</Prism>
     <div id="e4" className="code-result">{ r4 }</div>
     <p>With the help of abstractoin of any tags we want - as a component - we can design our own markup language. It is amazing!, is not it?</p>
+    
     <p>Lets get crazy!</p>
     <Prism>{ e5 }</Prism>
+    
     <div id="e5" className="code-result">{ r5 }</div>
     <p><strong>How do you feel about this code? Good or Bad?</strong></p>
     <p>If good, well.</p>
@@ -198,9 +200,9 @@ const root = <Fragment>
         <li>log( child.props.children )</li>
     </ol>
     <p>Also ignore this error for now: <strong>Warning: Each child in a list should have ...</strong></p>
+    <p>Back <a href="../stateful-component">Stateful Component</a></p>
     <p>Next <a href="../component-communication-2">Component Communication 2</a></p>
 
-    <p>Back <a href="../stateful-component">Statefun Component</a></p>
 
 </Fragment>
 
