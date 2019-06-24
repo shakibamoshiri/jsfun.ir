@@ -16,7 +16,9 @@
             "JSX direct function call": "",
             "stateless component": "",
             "stateful component": "",
-            "component communication": ""
+            "component communication": "",
+            "stateless component communication": "",
+            "stateful component communication": ""
         },
         "back-end with node.js": ""
     }
