@@ -201,7 +201,7 @@ const root = <Fragment>
     </ol>
     <p>Also ignore this error for now: <strong>Warning: Each child in a list should have ...</strong></p>
     <p>Back <a href="../stateful-component">Stateful Component</a></p>
-    <p>Next <a href="../component-communication-2">Component Communication 2</a></p>
+    <p>Next <a href="../stateless-component-communication">Stateless Component Communication</a></p>
 
 
 </Fragment>
