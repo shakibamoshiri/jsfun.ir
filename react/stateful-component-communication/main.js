@@ -7,7 +7,7 @@ const Title = ( props ) => <h1 className="title">{ props.children }</h1>;
 const SubTitle = ( props ) => <h3 className="sub-title">{ props.children }</h3>;
 
 const root = <Fragment>
-    <p>Not yet.</p>
+    <h1>First CI Server :)</h1>
 </Fragment>
 
 const div_id_root = document.getElementById( "root" );
