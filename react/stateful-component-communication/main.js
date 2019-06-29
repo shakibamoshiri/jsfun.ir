@@ -8,10 +8,6 @@ const SubTitle = ( props ) => <h3 className="sub-title">{ props.children }</h3>;
 
 const root = <Fragment>
     <p>Not yet.</p>
-    <p>Not yet.</p>
-    <p>Not yet.</p>
-    <p>Not yet.</p>
-    <p>Not yet.</p>
 </Fragment>
 
 const div_id_root = document.getElementById( "root" );
