@@ -1,7 +1,6 @@
 node_modules/
 dev/
 rsync
-home/
 database/gitinfo
 database/route.dirs
 database/route.link
@@ -14,6 +13,4 @@ package-lock.json
 coverage/
 main-html/
 clean.sh
-react-js/build/
-!react-js/*.js
 
