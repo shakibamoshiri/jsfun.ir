@@ -1,14 +1,26 @@
 {
     "home": {
-        "Back end": {
-            "Node.js": "",
-            "Express.js": "",
-            "JSON": ""
+        "effective-javascript": {
+            "accustoming yourself with javascript": {
+                "strict mode": "",
+                "implicit coercion explicit coercion": "",
+                "prefer primitive types": ""
+            },
+            "variable scope": {
+                "minimize use of global variable": ""
+            },
+            "working with functions": ""
         },
-        "Front end": {
-            "JavaScript": "",
-            "HTML": "",
-            "CSS": ""
-        }
+        "react": {
+            "three JSX main patterns": "",
+            "JSX direct function call": "",
+            "stateless component": "",
+            "stateful component": "",
+            "component communication": "",
+            "stateless component communication": "",
+            "stateful component communication": "",
+            "lets create a simple shopping cart": ""
+        },
+        "back-end with node.js": ""
     }
 }

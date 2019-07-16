@@ -1,9 +1,9 @@
 {
-  "homeTitle": "NodePost | Blogging in the Fun Way",
+  "homeTitle": "JavaScript the Fun Part",
   "baseURL": "",
-  "statAddress": "/stat",
+  "statPath": "/stat",
   "git": {
-    "username" : "",
-    "repository": ""
+    "username" : "k-five",
+    "repository": "jsfun.ir"
   }
 }
