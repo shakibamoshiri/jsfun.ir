@@ -1,0 +1,9 @@
+{
+  "homeTitle": "NodePost | Blogging in the Fun Way",
+  "baseURL": "",
+  "statAddress": "/stat",
+  "git": {
+    "username" : "",
+    "repository": ""
+  }
+}

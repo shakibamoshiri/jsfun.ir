@@ -1,0 +1,41 @@
+{
+  "name": "nodepost",
+  "version": "1.0.0",
+  "description": "Bloggin in the Fun Way :)",
+  "main": "",
+  "dependencies": {
+    "body-parser": "^1.19.0",
+    "cookie-parser": "^1.4.4",
+    "express": "^4.16.4",
+    "multer": "^1.4.1",
+    "node-dev": "^4.0.0",
+    "react": "^16.8.6",
+    "react-dom": "^16.8.6"
+  },
+  "devDependencies": {
+    "@babel/core": "^7.4.5",
+    "@babel/preset-env": "^7.4.5",
+    "@babel/preset-react": "^7.0.0",
+    "autoprefixer": "^9.5.1",
+    "babel-loader": "^8.0.6",
+    "mocha": "^6.1.4",
+    "postcss-cli": "^6.1.2",
+    "webpack": "^4.33.0",
+    "webpack-cli": "^3.3.3"
+  },
+  "scripts": {
+    "start": "node-dev nodepost.js",
+    "webpack": "./node_modules/.bin/webpack",
+    "webpack.watch": "./node_modules/.bin/webpack -w",
+    "css.build": "sass  src/css/desktop.scss build/css/desktop.css",
+    "css.build.min": "sass --style compressed src/css/desktop.scss build/css/desktop.min.css",
+    "css.prefix": "./node_modules/.bin/postcss build/css/desktop.css --use=autoprefixer --map --no-map --output build/css/desktop.prefixed.css",
+    "css.prefix.min": "minify build/css/desktop.prefixed.css > build/css/desktop.prefixed.min.css"
+  },
+  "keywords": [
+    "blog",
+    "blogging"
+  ],
+  "author": "Shakiba Moshiri",
+  "license": "MIT"
+}
