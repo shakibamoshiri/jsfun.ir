@@ -239,7 +239,7 @@ const root = <Fragment>
     <p>At first it looks complicated but soon we will see why this pattern is important.</p>
     <p><strong>Do you remember the flow of dependency in stateless component?</strong></p>
     <p>Here it is; from the outermost nested into innermost.</p>
-    <img src="/build/img/react-stateless-component-dependency-flow.svg.png" alt="react-stateless-component-dependency-flow.svg.png" />
+    <img width="100%" src="/build/img/react-stateless-component-dependency-flow.svg.png" alt="react-stateless-component-dependency-flow.svg.png" />
     <p>This flow has an important feature that makes later change in our component very easy.</p>
     <p>Since the flow is from outside into inside, we simple can:</p>
     <ol>
@@ -295,10 +295,10 @@ const root = <Fragment>
     <p>The return value of cloneElement is a new element that has access to "this" in the OrderManager. In this way they can communicate with their parent.</p>
 
     <SubTitle>Stateful Component Communication Flow</SubTitle>
-    <img src="/build/img/react-stateful-component-communication-flow.png" alt="stateful-component-communication-flow.svg.png" />
+    <img width="100%" src="/build/img/react-stateful-component-communication-flow.png" alt="stateful-component-communication-flow.svg.png" />
 
     <SubTitle>Stateful Component Dependency Flow</SubTitle>
-    <img src="/build/img/react-stateful-component-dependency-flow.png" alt="react-stateful-component-dependency-flow.png" />
+    <img width="100%" src="/build/img/react-stateful-component-dependency-flow.png" alt="react-stateful-component-dependency-flow.png" />
 
     <p>Back <a href="../stateless-component-communication">Stateless Component Communication</a></p>
     <p>Next <a href="../lets-create-a-simple-shopping-cart">Lets Create a Simple Shopping Cart</a></p>

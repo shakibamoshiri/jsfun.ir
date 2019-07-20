@@ -233,10 +233,10 @@ const root = <Fragment>
     <SubTitle>Simple diagram of this pattern</SubTitle>
     <p>In <strong>stateless components</strong> programmer can pass arguments to a function but userscan not interact with the view.</p>
     <p>In <strong>stateful components</strong> programmer can pass arguments to a function and users also are able to interact with the view.</p>
-    <img src="/build/img/react-04-stateful-component.png" alt="react-04-stateful-component.png" />
+    <img width="100%" src="/build/img/react-04-stateful-component.png" alt="react-04-stateful-component.png" />
 
     <SubTitle>Stateful Component Diagram</SubTitle>
-    <img style={{ width: "100%" }} src="/build/img/react-stateful.component.png" alt="react-stateful.component.png" />
+    <img width="100%" src="/build/img/react-06-stateful-component-architecture.svg" alt="react-06-stateful-component-architecture.svg" />
 
     <p>Back <a href="../stateless-component">Stateless Component</a></p>
     <p>Next <a href="../component-communication">Component Communication</a></p>

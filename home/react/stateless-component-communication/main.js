@@ -176,7 +176,7 @@ Header( _obj  );`}</Prism>
     <SubTitle>Solution?</SubTitle>
     <p>Stateful Component Communication.</p>
 
-    <p>Back <a href="../stateless-component-communication">Stateless Component Communication</a></p>
+    <p>Back <a href="../component-communication">Component Communication</a></p>
     <p>Next <a href="../stateful-component-communication">Stateful Component Communication</a></p>
 </Fragment>
 

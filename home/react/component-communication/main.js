@@ -185,6 +185,7 @@ const root = <Fragment>
     <Prism>{ e4 }</Prism>
     <div id="e4" className="code-result">{ r4 }</div>
     <p>With the help of abstractoin of any tags we want - as a component - we can design our own markup language. It is amazing!, is not it?</p>
+    <img width="100%" src="/build/img/react-05-component-communicatoin.svg" alt="react-05-component-communicatoin.svg" />
     
     <p>Lets get crazy!</p>
     <Prism>{ e5 }</Prism>
