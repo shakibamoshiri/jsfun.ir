@@ -1,7 +1,7 @@
 {
   "homeTitle": "JavaScript the Fun Part",
   "baseURL": "",
-  "statPath": "/stat",
+  "statAddress": "/stat",
   "git": {
     "username" : "k-five",
     "repository": "jsfun.ir"
