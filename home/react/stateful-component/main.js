@@ -98,6 +98,11 @@ const e3 = `class H extends Component {
     // so this.setState() will be undefined / throw exception if
     // we do not bind it to the proper owner of onClick function
     // which here is H
+    //
+    // It is like:
+    // function onClick(){
+    //     this.setState({ count: this.state.count + 1 });
+    // }
     onClick(){
         this.setState({ count: this.state.count + 1 });
     }
@@ -136,22 +141,22 @@ const root = <Fragment>
     <Prism>{ stateful }</Prism>
     <div id="e1" className="code-result">{ <H /> }</div>
     <p>Lets inspect it step by step:</p>
-    <p>1. This is Object Oriented Programming idiom which means our class uses (inheritance) some features / requirements from another class.</p>
+    <p className="sub-title">1. This is Object Oriented Programming idiom which means our class uses (inheritance) some features / requirements from another class.</p>
     <p>So <strong>H</strong> is our class and <strong>Component</strong> is React class that we use.</p>
 <Prism>{`class extends Component
 ...`}</Prism>
 
-    <p>2. This is Class Property Initialize (= constructor) which initialize some variables / method and it is run just one time before anything else.</p>
+    <p className="sub-title">2. This is Class Property Initializer (= constructor) which initializes some variables / method and it is run just once before anything else.</p>
     <Prism>{`...
         constructor( props ){
 ...`}</Prism>
 
-    <p>3. This is Parent Class or Super Class Initialize (= super keyword) which pass - if needed - some arguments to the <strong>Component</strong> class.</p>
+    <p className="sub-title">3. This is Parent Class or Super Class Initializer (= super keyword, constructor for super class) which passes - if needed - some arguments to the <strong>Component</strong> class.</p>
 <Prism>{`...
         super( props );
 ...`}</Prism>
   
-    <p>4. This is our variable for storing the state of the component - if there is any - which usually is.</p>
+    <p className="sub-title">4. This is our variable for storing the state of the component - if there is any - which usually is.</p>
     <p>This variable is not available outside of the component unless we pass it on purpose.</p>
 <Prism>{`...
         this.state = {
@@ -159,14 +164,14 @@ const root = <Fragment>
         }
 ...`}</Prism>
 
-    <p>5. This is our click handler but in a somewhat strange style which just handles any click on the button - if we had any.</p>
+    <p className="sub-title">5. This is our click handler but in a somewhat strange style which just handles any click on the button - if we had any.</p>
 <Prism>{`...
         this.onClick = function(){
             this.setState({ count: this.state.count + 1 });
         }.bind( this );
 ...`}</Prism>
 
-    <p>6. The is a spacial function from <strong>Component</strong> that we override here or more specifically to specialize it for <strong>H</strong> class behavior / need</p>
+    <p className="sub-title">6. The is a spacial function from <strong>Component</strong> that we override here or more specifically to specialize it for <strong>H</strong> class behavior / need</p>
 <Prism>{`...
     render(){
         ...
@@ -176,7 +181,7 @@ const root = <Fragment>
     }
 ...`}</Prism>
 
-    <p>7. This is JSX or JSX Direct Function Call which we saw it better</p>
+    <p className="sub-title">7. This is JSX or JSX Direct Function Call which we saw it before</p>
 <Prism>{`...
     ...
         return <div>
@@ -186,12 +191,12 @@ const root = <Fragment>
     ...
 ...`}</Prism>
 
-    <p>8. Finally this is <strong>Expression Evaluator</strong> that evaluate an expression for us and injects it to the place we like / need</p>
+    <p className="sub-title">8. Finally this is <strong>Expression Evaluator</strong> that evaluates an expression for us and injects it to the place we like / need</p>
 <Prism>{`...
     ...
         ...
             ... { this.state.count } ...
-            ... ={ this.onClick }> ...
+            ... < ... { this.onClick }> ...
         ...
     ...
 ...`}</Prism>
@@ -208,13 +213,13 @@ const root = <Fragment>
         <li>It is a special React function that updates our state - if we have any - then then acts as a signal that there is a need for update the DOM with which the component is rendered again</li>
 
         <li><strong>What is the use of "bind( this )"?</strong></li>
-        <li>In JavaScript context binding is dynamic which means the keyword "this" has different usage in different places (= inside different functions). Because of that we have to make sure that wherever our onClick function is run / called "this" is bound correctly</li>
+        <li>In JavaScript context binding is dynamic which means the keyword "this" has different usages in different places (= inside different functions). Because of that we have to make sure that wherever our onClick function is run / called "this" is bound correctly</li>
     </ul>
 
 
     <SubTitle>Refactoring</SubTitle>
-    <p>Lets rewrite the H component to understand it better, specially <strong>binding</strong></p>
-    <p>So we directory name our class to <strong>H</strong> instead of assigning to <strong>const H</strong>. I just want to say that both ways are possible and in more advanced code the <strong>anonymous</strong> one is more handy.</p>
+    <p>Lets rewrite the H component to understand it better, specially <strong>binding</strong>.</p>
+    <p>So we directly name our class <strong>H</strong> instead of assigning to <strong>const H</strong>. I just want to say that both ways are possible and in more advanced code the <strong>anonymous</strong> one is more handy.</p>
     <p>We can use ES6 arrow function which does not have implicit this binding whereas if we use the keyword <strong>function</strong> it has implicit this binding.</p>
     <Prism>{ e2 }</Prism>
     <div id="e2" className="code-result">{ <H_2 />}</div>
@@ -224,6 +229,11 @@ const root = <Fragment>
     <Prism>{ e3 }</Prism>
     <div id="e3" className="code-result">{ <H_3 /> }</div>
     <p>Now play with the code and meanwhile look at the below diagram. Try to find a map between what this code dos with what is in the diagram.</p>
+
+    <SubTitle>Simple diagram of this pattern</SubTitle>
+    <p>In <strong>stateless components</strong> programmer can pass arguments to a function but userscan not interact with the view.</p>
+    <p>In <strong>stateful components</strong> programmer can pass arguments to a function and users also are able to interact with the view.</p>
+    <img src="/build/img/react-04-stateful-component.png" alt="react-04-stateful-component.png" />
 
     <SubTitle>Stateful Component Diagram</SubTitle>
     <img style={{ width: "100%" }} src="/build/img/react-stateful.component.png" alt="react-stateful.component.png" />

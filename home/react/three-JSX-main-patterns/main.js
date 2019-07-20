@@ -102,11 +102,11 @@ h1.textContent = "This is h1 tag";`}</Prism>
     <p>And for identifying it as a Component we follow the Facebook Convention and use Uppercase letter for naming it. So it becomes <strong>H1</strong> and not <strong>h1</strong>.</p>
 
     <SubTitle>3. Stateful Component or Impure Function</SubTitle>
-    <p>Along with the ability to use an argument, if we give a component the power to modify the sate of itself or others components then it become <strong>Stateless Component</strong>.</p>
+    <p>Along with the ability to use an argument, if we give a component the power to modify the sate of itself or others components then it become <strong>Stateful Component</strong>.</p>
     <p>Simple counting app with a button.</p>
     <Prism>{ stateful }</Prism>
     <div className="code-result" id="third">{ <H /> }</div>
-    <p>Again nothing special about it. We are manipulating the DOm but in an organized we that we can name it: Self State Management.</p>
+    <p>Again nothing special about it. We are manipulating the DOM but in an organized way that we can name it: Self State Management.</p>
     <p>The component keeps track of its states if it has any.</p>
 
     <SubTitle>Two Notes</SubTitle>
