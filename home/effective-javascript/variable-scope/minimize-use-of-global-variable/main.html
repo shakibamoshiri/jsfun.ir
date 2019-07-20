@@ -1,7 +1,71 @@
 <main>
 	<div class="content-r">
 		<h1>minimize-use-of-global-variable</h1>
+        <hr>
+        <p>While using global variable seem easy and we feel it is good idea, but in large project - large codebase - we run into many headaches.</p>
+        <p>Using global variables and modifying them in different places causes <strong>side effect</strong> which means we cannot be sure about the state of a variable.</p>
+<pre><code class="language-javascript">// two global variables
+let score = 10;
+let base = 2
+
+// a function to find rate
+function rate(){
+    return score * base;
+};
+
+// execute the rate();
+// ours assumptions are
+// 1. No one else uses our variables score and base
+// 2. No one modifies these two variables
+</code></pre>
         
+        <p>In large codebase these two assumptions are vary closed to be <strong>wrong</strong>.</p>
+        <p>We will have many function calls and these functions usually update variables.</p>
+        <p>So it is very hard to prevent them from <strong>unexpected</strong> side effects.</p>
+        
+        <h3 class="sub-title">Solution</h3>
+        <p>The solutions are:</p>
+        <ul>
+            <li>using <strong>constant</strong> variables as much as we can</li>
+            <li>using <strong>local</strong> variables as much as we can</li>
+        </ul>
+        <p>For above case, something like this:</p>
+<pre><code class="language-javascript">// two global variables
+const score = 10;
+const base = 2
+
+// passing arguments to the function
+function rate( s, b ){
+    return s * b;
+};
+
+// execute the rate();
+rate( score, base );
+// what we fixed
+// 1. No one else CAN modify our variables score and base
+// 2. Our function does not modify its variables
+</code></pre>
+
+        <h3 class="sub-title">no keyword for variable declaration</h3>
+        <p>In javascript if we name a variable but do not use the keywords:</p>
+        <ul>
+            <li>var</li>
+            <li>let</li>
+            <li>const</li>
+        </ul>
+        <p>then it becomes global!</p>
+        <p>Never use this.</p>
+
+<pre><code class="language-javascript">// two global variables
+
+function rate(){
+    result = 0;     // becomes global
+    result = score * base;
+    return result;
+};
+</code></pre>
+
+
 		DD_MM_YYYY
         <div class="edit-on-github">
             <a target="_blank" href="https://github.com/k-five/jsfun.ir/blob/master/home/effective-javascript/variable-scope/minimize-use-of-global-variable/main.html">Edit on Github</a>
