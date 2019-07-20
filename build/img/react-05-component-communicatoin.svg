@@ -1,0 +1,49 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 600 700" xmlns:xlink="http://www.w3.org/1999/xlink" width="600" height="700" font-family="Montserrat">
+  <rect x="0" y="0" width="600" height="700" fill="#0cf"></rect>
+
+  <g id="title">
+    <rect x="0" y="25" width="600" height="50" fill="#fe0" ></rect>
+    <text x="300" y="65" font-size="30" text-anchor="middle" fill="#000">Components Communication</text> 
+  </g>
+  <g transform="translate(-150,100)">
+    <rect x="175" y="5" width="250" height="60" fill="#fe0" ></rect>
+    <text x="300" y="45" font-size="30" text-anchor="middle" fill="#000">Unidirectional</text> 
+  </g>
+  <g transform="translate(-150,200)">
+    <rect x="175" y="5" width="250" height="120" fill="#fff" ></rect>
+    <text x="300" y="75" font-size="30" text-anchor="middle" fill="#000">Component</text> 
+    <path fill="none" stroke="#000" stroke-width="3" d="M300,250 v-100" marker-start="url(#diamond)" marker-end="url(#arrowhead)"></path>
+  </g>
+  <g transform="translate(-150,460)">
+    <rect x="175" y="5" width="250" height="120" fill="#fff" ></rect>
+    <text x="300" y="75" font-size="30" text-anchor="middle" fill="#000">Component</text> 
+  </g>
+  
+  <g transform="translate(150,100)">
+    <rect x="175" y="5" width="250" height="60" fill="#fe0" ></rect>
+    <text x="300" y="45" font-size="30" text-anchor="middle" fill="#000">Bidirectional</text> 
+  </g>
+  <g transform="translate(150,200)">
+    <rect x="175" y="5" width="250" height="120" fill="#fff" ></rect>
+    <text x="300" y="75" font-size="30" text-anchor="middle" fill="#000">Component</text> 
+    <path fill="none" stroke="#000" stroke-width="3" d="M320,140 v100" marker-start="url(#diamond)" marker-end="url(#arrowhead)"></path>
+    <path fill="none" stroke="#000" stroke-width="3" d="M280,250 v-100" marker-start="url(#diamond)" marker-end="url(#arrowhead)"></path>
+  </g>
+  <g transform="translate(150,460)">
+    <rect x="175" y="5" width="250" height="120" fill="#fff" ></rect>
+    <text x="300" y="75" font-size="30" text-anchor="middle" fill="#000">Component</text> 
+  </g>  
+  
+    <defs>
+      <marker id="arrowhead" markerWidth="10" markerHeight="7" 
+              refX="0" refY="3.5" orient="auto">
+        <polygon fill="#000" points="0 0, 5 3.5, 0 7" />
+      </marker>
+      <marker id="diamond" markerWidth="12" markerHeight="12" refX="6" refY="6" >
+        <circle fill="#000" cx="6" cy="6" r="2" stroke="context-stroke" stroke-width="2"/>
+      </marker>
+    </defs>
+    <text x="10" y="680" font-size="10" fill="#f00" style="font-weight: bold">Notice: This is an oversimplified diagram</text> 
+    <text x="10" y="695" font-size="10"  fill="#000" style="font-weight: bold">Designer and Creator: Shakiba Moshiri, 2019-07-18</text>
+</svg>
+<!--<path fill="none" stroke="#000" stroke-width="3" d="M60,50 v140 q0,30 30,30 h330 a25,25 0 0,1 0,70 h-330 a25,25 0 0,0 0,70 h330 q30,0 30,30 v100" marker-start="url(#diamond)" marker-end="url(#arrowhead)"></path>-->

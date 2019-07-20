@@ -1,0 +1,73 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 700 1100" xmlns:xlink="http://www.w3.org/1999/xlink" width="700" height="1100" font-family="Montserrat">
+  <rect x="0" y="0" width="700" height="1100" fill="#0cf"></rect>
+
+  <g id="title">
+    <rect x="0" y="25" width="700" height="50" fill="#fe0" ></rect>
+    <text x="350" y="65" font-size="30" text-anchor="middle" fill="#000">React Stateful Component Architecture</text> 
+  </g>
+  <g transform="translate(-150,100)">
+    <rect x="175" y="5" width="650" height="800" fill="#fff" ></rect>
+  </g>
+  
+  <g transform="translate(0,130)">
+    <rect x="50" y="0" width="200" height="120" fill="#fe0" ></rect>
+    <text x="150" y="70" font-size="25" text-anchor="middle" fill="#000">Constructor</text>
+    <text x="320" y="70" font-size="20" text-anchor="middle" fill="#000">initialize</text>
+    <path fill="none" stroke="#000" stroke-width="3" d="M260,90  h120" stroke-dasharray="10" marker-start="url(#diamond)" marker-end="url(#arrowhead)"></path>
+    <text x="140" y="200" font-size="20" text-anchor="middle" fill="#000" transform="rotate(90,140,200)">initialize</text>
+    <path fill="none" stroke="#000" stroke-width="3" d="M90,130  v120" stroke-dasharray="10" marker-start="url(#diamond)" marker-end="url(#arrowhead)"></path>
+  </g>
+  
+  <g transform="translate(350,130)">
+    <rect x="50" y="0" width="200" height="120" fill="#fe0" ></rect>
+    <text x="150" y="70" font-size="25" text-anchor="middle" fill="#000">State</text> 
+    
+  </g>
+
+  <g transform="translate(0,400)">
+    <rect x="50" y="0" width="200" height="120" fill="#fe0" ></rect>
+    <text x="150" y="50" font-size="25" text-anchor="middle" fill="#000">Action Manger</text> 
+    <text x="150" y="90" font-size="20" text-anchor="middle" fill="#000" style="font-weight: bold">e.g. this.onClick()</text> 
+    <text x="140" y="210" font-size="15" text-anchor="middle" fill="#000" transform="rotate(90,140,210)">request an update</text>
+    
+    <path fill="none" stroke="#000" stroke-width="3" d="M90,130  v150"  marker-start="url(#diamond)" marker-end="url(#arrowhead)"></path>
+  </g>
+  
+    <g transform="translate(0,700)">
+    <rect x="50" y="0" width="200" height="120" fill="#fe0" ></rect>
+    <text x="150" y="50" font-size="25" text-anchor="middle" fill="#000">State Manger</text> 
+    <text x="150" y="90" font-size="20" text-anchor="middle" fill="#000" style="font-weight: bold">e.g. this.setState()</text> 
+    <path fill="none" stroke="#000" stroke-width="3" d="M260,90 h120" marker-start="url(#diamond)" marker-end="url(#arrowhead)"></path>
+    <path fill="none" stroke="#000" stroke-width="3" d="M90,130  v30 q0,30 30,30 h500 q30,0 30,-30 v-640 q0,-30 -30,-30" marker-start="url(#diamond)" marker-end="url(#arrowhead)"></path>
+    <text x="200" y="170" font-size="20" fill="#000">1. first update the state</text> 
+    <text x="200" y="140" font-size="20" fill="#000">2. then request new render</text> 
+  </g>
+  
+  <g transform="translate(350,700)">
+    <rect x="50" y="0" width="200" height="120" fill="#fe0" ></rect>
+    <text x="150" y="50" font-size="25" text-anchor="middle" fill="#000">View Manger</text> 
+    <text x="150" y="90" font-size="20" text-anchor="middle" fill="#000" style="font-weight: bold">e.g. render()</text> 
+    <path fill="none" stroke="#000" stroke-width="3" d="M90,-10  v-220 q0,-30 -30,-30 h-140" marker-start="url(#diamond)" marker-end="url(#arrowhead)"></path>
+    <text x="50" y="-130" font-size="20" text-anchor="middle" fill="#000" transform="rotate(-90,50,-130)">Request an action</text> 
+    <path fill="none" stroke="#000" stroke-width="3" d="M200,-10  v-420" stroke-dasharray="10" marker-start="url(#diamond)" marker-end="url(#arrowhead)"></path>
+    <text x="180" y="-200" font-size="20" text-anchor="middle" fill="#000" transform="rotate(-90,200,-180)">Read State</text> 
+  </g>
+  
+    <g transform="translate(0,940)">
+    <rect x="50" y="0" width="200" height="120" fill="#f80" ></rect>
+    <text x="150" y="50" font-size="25" text-anchor="middle" fill="#000">User actions</text> 
+    <text x="150" y="90" font-size="20" text-anchor="middle" fill="#000" style="font-weight: bold">e.g. click</text> 
+    <path fill="none" stroke="#000" stroke-width="3" d="M260,90 h220 q30,0 30,-30 v-160" marker-start="url(#diamond)" marker-end="url(#arrowhead)"></path>
+  </g>  
+    <defs>
+      <marker id="arrowhead" markerWidth="10" markerHeight="7" 
+              refX="0" refY="3.5" orient="auto">
+        <polygon fill="#000" points="0 0, 5 3.5, 0 7" />
+      </marker>
+      <marker id="diamond" markerWidth="12" markerHeight="12" refX="6" refY="6" >
+        <circle fill="#000" cx="6" cy="6" r="2" stroke="context-stroke" stroke-width="2"/>
+      </marker>
+    </defs>
+    <text x="10" y="1095" font-size="10"  fill="#000" style="font-weight: bold">Designer and Creator: Shakiba Moshiri, 2019-07-18</text>
+</svg>
+<!--<path fill="none" stroke="#000" stroke-width="3" d="M60,50 v140 q0,30 30,30 h330 a25,25 0 0,1 0,70 h-330 a25,25 0 0,0 0,70 h330 q30,0 30,30 v100" marker-start="url(#diamond)" marker-end="url(#arrowhead)"></path>-->
