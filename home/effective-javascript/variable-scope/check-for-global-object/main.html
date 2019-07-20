@@ -1,0 +1,57 @@
+<main>
+	<div class="content-r">
+		<h1>check-for-global-object</h1>
+        <hr>
+        <p>In some cases we have to check for the presence of an object in global scope; e.g. <strong>JSON</strong>.</p>
+        <p>We know that the global object in javascript (in browsers) is <strong>window</strong>.</p>
+        <p>also we know that <strong>this</strong> in global context refers to <strong>window</strong> object.</p>
+        <p>Thus</p>
+<pre><code class="language-javascript">// check if this equals window
+this === window // true</code></pre>
+
+        <p>So if we want to check for the existence of <strong>JSON</strong> we can:</p>
+
+<pre><code class="language-javascript">// directly using window object
+if( window.JSON ){
+    // yes we have it
+} else {
+    // an alternative
+}
+</code></pre>
+        
+        <p>Since <strong>this</strong> refers to window, we also can:</p>
+<pre><code class="language-javascript">// directly this instead of window
+if( this.JSON ){
+    // yes we have it
+} else {
+    // an alternative
+}
+</code></pre>
+
+        <p>Also we have <strong>in</strong> keyword in javascript which can be used to check if an object has a property or not.</p>
+        <p>So we could:</p>
+<pre><code class="language-javascript">// directly using window object
+if( "JSON" in window ){
+    // yes we have it
+} else {
+    // an alternative
+}
+</code></pre>
+
+        <p>or using <strong>this</strong></p>
+<pre><code class="language-javascript">// if we are sure this is global object
+if( "JSON" in this ){
+    // yes we have it
+} else {
+    // an alternative
+}
+</code></pre>
+        <p>Back <a href="../minimize-use-of-global-variable">minimize-use-of-global-variable</a></p>
+        <p>Next <a href="../"></a></p>
+        
+		DD_MM_YYYY
+        <div class="edit-on-github">
+            <a target="_blank" href="https://github.com/k-five/jsfun.ir/blob/master/effective-javascript/variable-scope/check-for-global-object/main.html">Edit on Github</a>
+        </div>
+	</div>
+</main>

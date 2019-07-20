@@ -7,7 +7,8 @@
                 "prefer primitive types": ""
             },
             "variable scope": {
-                "minimize use of global variable": ""
+                "minimize use of global variable": "",
+                "check for global object": ""
             },
             "working with functions": ""
         },
