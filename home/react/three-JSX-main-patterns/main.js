@@ -67,7 +67,7 @@ this.onClick = function(){ ...
 }.bind( this )`;
 
 const root = <Fragment>
-    <p>By looking at any React Code we can identify some patterns that almost covers most part of it.</p>
+    <p>By looking at any React Code we can identify some patterns that almost cover most part of it.</p>
     <p>Since JSX is a wrapper for creating DOM but in XML fashion, everything is almost JSX but we can categorize it into two</p>
     <ol>
         <li>JSX Direct Function Call</li>

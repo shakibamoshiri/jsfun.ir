@@ -96,7 +96,11 @@ class OrderManager extends Component {
     // inherit from Component
     render(){
         return <div className="order">
-            { this.props.children.map(( child, index ) => React.cloneElement( child, { key: index, ...this } ) ) }
+        {
+            this.props.children.map(( child, index ) => {
+                return React.cloneElement( child, { key: index, ...this } )
+            })
+        }
         </div>;
     }
 };
@@ -141,7 +145,17 @@ class OrderManager extends Component {
     // inherit from Component
     render(){
         return <div className="order">
-            { this.props.children.map(( child, index ) => React.cloneElement( child, { key: index, ...this } ) ) }
+        {
+            {/*
+                Here we iterate over each child
+                then add extra poprs (passing arguments) to them
+                like:
+                { key: index }, { ...this }
+            */}
+            this.props.children.map(( child, index ) => {
+                return React.cloneElement( child, { key: index, ...this } )
+            })
+        }
         </div>;
     }
 };
@@ -225,39 +239,43 @@ const root = <Fragment>
     <Prism>{ e1 }</Prism>
     <div id="e1" className="code-result">{ r1 }</div>
 
-    <SubTitle>Example 2.talking between components</SubTitle>
+    <SubTitle>Example 2.talking between components and user as well</SubTitle>
     <Prism>{ e2 }</Prism>
     <div id="e2" className="code-result">{ r2  }</div>
-    <p>Do not worry about this one; we will go through each part one by one.</p>
     <p>Here we have three components:</p>
     <ol>
         <li>OrderManager | for managing the state</li>
         <li>OrderTitle | for showing the title and orderCount to the user</li>
         <li>OrderButton | for showing the button to the user</li>
     </ol>
-    <p>The <strong>OrderManager</strong> will hold the state for us and the other two help to create the view</p>
+    <p>The <strong>OrderManager</strong> holds the state for us and the other two help to create the view</p>
     <p>At first it looks complicated but soon we will see why this pattern is important.</p>
     <p><strong>Do you remember the flow of dependency in stateless component?</strong></p>
-    <p>Here it is; from the outermost nested into innermost.</p>
+    <p>Here it is; from the outermost to the innermost.</p>
     <img width="100%" src="/build/img/react-stateless-component-dependency-flow.svg.png" alt="react-stateless-component-dependency-flow.svg.png" />
     <p>This flow has an important feature that makes later change in our component very easy.</p>
     <p>Since the flow is from outside into inside, we simple can:</p>
     <ol>
         <li>remove</li>
-        <li>change</li>
+        <li>replace</li>
         <li>move</li>
     </ol>
-    <p>one of those component. In fact we have prevent ourselves from <strong>Dependency Injection</strong>.</p>
+    <p>one of those component. In fact we have prevented ourselves from <strong><a target="_blank" href="https://en.wikipedia.org/wiki/Dependency_inversion_principle">Dependency Inversion</a></strong>.</p>
+    <p>In simple words the inner components do not depend upon outter componnets.</p>
+    <p>We can ealiy remove, replace, move <strong>OrderTitle</strong> and <strong>OrderButton</strong>.</p>
+    <p>Yes this is not OOP programming, but this technique is very useful in this context.</p>
     <p>Lets change the order of those two components, moving the button down:</p>
     <Prism language="html" >{ e3 }</Prism>
     <div id="e3" className="code-result">{ r3 }</div>
-    <p>Not only we are able to move (change the view) but also able to <strong>replace</strong> the OrderButton with another one very easily without touching the OrderManager. Tacking the FancyOrderButton</p>
+    <p>Not only we are able to move (change the view) but also able to <strong>replace</strong> the OrderButton with another one very easily without touching the OrderManager. Tacking this <strong>FancyOrderButton</strong></p>
     <Prism language="html" >{ fob }</Prism>
     <p>And replacing it with OrderButton</p>
     <Prism language="html" >{ e3 }</Prism>
-    <p>We will have the same view with different button without touching the OrderManager</p>
+    <p>We will have the same view with different button without touching the OrderManager.</p>
     <Prism language="html" >{ e4 }</Prism>
     <div id="e4" className="code-result">{ r4 }</div>
+
+    <p>What we did is called <strong>Inversion of Control</strong> in which the API consumers will be able to customize the component without the need of API manipulations.</p>
     <p>So we have a very simple API to work with this order component. Lets see what we have.</p>
     <p>The <strong>OrderManager</strong> is just like the first <strong>Order</strong> component but instead of using static view:</p>
 <Prism language="html">{ `render(){
@@ -269,13 +287,15 @@ const root = <Fragment>
     <p>we have dynamic view:</p>
 <Prism>{`render(){
     return <div className="order">
-        { this.props.children.map(( child, index ) => {
-            React.cloneElement( child, { key: index, ...this } ) } )
-        }
+    {
+        this.props.children.map(( child, index ) => {
+            return React.cloneElement( child, { key: index, ...this } )
+        })
+    }
     </div>;
 }`}</Prism>
     <p>Why did we do that? For making the view <strong>independent</strong> from the <strong>Order</strong> component</p>
-    <p>Why is it important? Why is making them independent good? For change in the future. For prevent ourselves form Dependency Injection.</p>
+    <p>Why is it important? Why is well making them independent? For the ability to change the code in the future which is very important in Modern Software Development.</p>
     
     <SubTitle>How does dynamic view works?</SubTitle>
     <p>Remember the <a href="../">Stateless Component Communication</a> in which we learned we can pass <strong>elements</strong> to our stateless component using <strong>children</strong>.</p>
@@ -298,11 +318,12 @@ const root = <Fragment>
     <img width="100%" src="/build/img/react-stateful-component-communication-flow.png" alt="stateful-component-communication-flow.svg.png" />
 
     <SubTitle>Stateful Component Dependency Flow</SubTitle>
+    <p>This diagram is true if and if we have <strong>stateless</strong> components inside a <strong>stateful</strong> one.</p>
+    <p>Having nested stateful components has more complex flow than this.</p>
     <img width="100%" src="/build/img/react-stateful-component-dependency-flow.png" alt="react-stateful-component-dependency-flow.png" />
 
     <p>Back <a href="../stateless-component-communication">Stateless Component Communication</a></p>
     <p>Next <a href="../lets-create-a-simple-shopping-cart">Lets Create a Simple Shopping Cart</a></p>
-
 </Fragment>
 
 const div_id_root = document.getElementById( "root" );

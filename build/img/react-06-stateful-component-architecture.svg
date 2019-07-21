@@ -47,18 +47,27 @@
     <rect x="50" y="0" width="200" height="120" fill="#fe0" ></rect>
     <text x="150" y="50" font-size="25" text-anchor="middle" fill="#000">View Manger</text> 
     <text x="150" y="90" font-size="20" text-anchor="middle" fill="#000" style="font-weight: bold">e.g. render()</text> 
-    <path fill="none" stroke="#000" stroke-width="3" d="M90,-10  v-220 q0,-30 -30,-30 h-140" marker-start="url(#diamond)" marker-end="url(#arrowhead)"></path>
-    <text x="50" y="-130" font-size="20" text-anchor="middle" fill="#000" transform="rotate(-90,50,-130)">Request an action</text> 
-    <path fill="none" stroke="#000" stroke-width="3" d="M200,-10  v-420" stroke-dasharray="10" marker-start="url(#diamond)" marker-end="url(#arrowhead)"></path>
-    <text x="180" y="-200" font-size="20" text-anchor="middle" fill="#000" transform="rotate(-90,200,-180)">Read State</text> 
+<!--    <path fill="none" stroke="#000" stroke-width="3" d="M90,-10  v-220 q0,-30 -30,-30 h-140" marker-start="url(#diamond)" marker-end="url(#arrowhead)"></path>-->
+    <path fill="none" stroke="#000" stroke-width="3" d="M150,-10  v-420" marker-start="url(#diamond)" marker-end="url(#arrowhead)"></path>
+    <text x="180" y="-100" font-size="20" text-anchor="middle" fill="#000" transform="rotate(-90,180,-100)">Read State</text> 
+    <path fill="none" stroke="#000" stroke-width="3" d="M150,130  v90" marker-start="url(#diamond)" marker-end="url(#arrowhead)"></path>
   </g>
   
     <g transform="translate(0,940)">
-    <rect x="50" y="0" width="200" height="120" fill="#f80" ></rect>
+    <rect x="50" y="0" width="200" height="120" fill="#cfc" ></rect>
     <text x="150" y="50" font-size="25" text-anchor="middle" fill="#000">User actions</text> 
     <text x="150" y="90" font-size="20" text-anchor="middle" fill="#000" style="font-weight: bold">e.g. click</text> 
-    <path fill="none" stroke="#000" stroke-width="3" d="M260,90 h220 q30,0 30,-30 v-160" marker-start="url(#diamond)" marker-end="url(#arrowhead)"></path>
+    <path fill="none" stroke="#000" stroke-width="3" d="M260,60 h120" marker-start="url(#diamond)" marker-end="url(#arrowhead)"></path>
+  </g>
+    <g transform="translate(350,940)">
+    <rect x="50" y="0" width="200" height="120" fill="#fa0" ></rect>
+    <text x="150" y="50" font-size="25" text-anchor="middle" fill="#000">DOM</text> 
+    <text x="150" y="90" font-size="20" text-anchor="middle" fill="#000" style="font-weight: bold">button</text> 
+    <text x="50" y="-510" font-size="20" text-anchor="middle" fill="#000" transform="rotate(0,50,-130)">Request an action</text> 
+    <path fill="none" stroke="#000" stroke-width="3" d="M260,60 q20,0 20,-20 v-500 q0,-30 -30,-30 h-330"  marker-start="url(#diamond)" marker-end="url(#arrowhead)"></path>
   </g>  
+  
+  
     <defs>
       <marker id="arrowhead" markerWidth="10" markerHeight="7" 
               refX="0" refY="3.5" orient="auto">

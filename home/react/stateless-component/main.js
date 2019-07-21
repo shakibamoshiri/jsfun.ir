@@ -23,6 +23,8 @@ const e4 =  `// stateless component
 const H1 = ( props ) => <h1>{ props.children }</h1>
 
 // direct JXS call
+// "using props.children" is the child of our H1 component
+// it will available using props.children
 const result = <H1>using props.children</H1>;
 
 // insert to the DOM
@@ -44,8 +46,8 @@ const root = <Fragment>
     <Prism>{ e2 }</Prism>
     <div id="e2" className="code-result">{ <H1_2 content="pass this to H1 Component" /> }</div>
     <p>You sure know this <strong>content</strong> ES6 Destrcuturing feature.</p>
-    <p>Why do we destructure it? Easy. React pass an <strong>Object</strong> to our "H1" component, we are extracting just <strong>content</strong> property of that object.</p>
-    <p>And of coerce it means we do not have to destructure it. We can directly use the object.</p>
+    <p>Why do we destructure it? Easy. React pass an <strong>Object</strong> to our "H1" component, we extract just <strong>content</strong> property of that object.</p>
+    <p>And of coerce it means we do not have to destructure it. We can directly use that object.</p>
     
     <Prism>{ e3  }</Prism>
     <div id="e3" className="code-result">{ <H1_3 content="without destructuring ..." /> }</div>
@@ -54,7 +56,7 @@ const root = <Fragment>
     <p>Instead of passing an argument to our stateless component (= Explicit) we can use <strong>children</strong> which is a special property handled by React for us.</p>
     <Prism>{ e4 }</Prism>
     <div id="e4" className="code-result">{ <H1_4>using props.children</H1_4> }</div>
-    <p>What is happening here? Easy. the "using props.children" inside h1 tag is passed to the <strong>H1</strong> component using <strong>children</strong> property on the <strong>props</strong> object.</p>
+    <p>What is happening here? Easy. The text "using props.children" inside <strong>H1</strong> component - as an argument - using <strong>children</strong> property on the <strong>props</strong> object is passed to <strong>{`<h1> ... </h1>`}</strong> tag.</p>
     <p>Making it shorter by just destructring the <strong>children</strong> property.</p>
 
     <Prism>{ e5 }</Prism>

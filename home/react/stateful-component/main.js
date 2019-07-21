@@ -95,7 +95,7 @@ const e3 = `class H extends Component {
     }
 
     // below onClick function has implicit this binding
-    // so this.setState() will be undefined / throw exception if
+    // so this.setState() will be undefined / throws exception if
     // we do not bind it to the proper owner of onClick function
     // which here is H
     //
@@ -146,7 +146,7 @@ const root = <Fragment>
 <Prism>{`class extends Component
 ...`}</Prism>
 
-    <p className="sub-title">2. This is Class Property Initializer (= constructor) which initializes some variables / method and it is run just once before anything else.</p>
+    <p className="sub-title">2. This is Class Property Initializer (= constructor) which initializes some variables / methods and it is run just once before everything else.</p>
     <Prism>{`...
         constructor( props ){
 ...`}</Prism>
@@ -156,7 +156,7 @@ const root = <Fragment>
         super( props );
 ...`}</Prism>
   
-    <p className="sub-title">4. This is our variable for storing the state of the component - if there is any - which usually is.</p>
+    <p className="sub-title">4. This is our variable (could be an object) for storing the state of the component - if there is any - which usually is.</p>
     <p>This variable is not available outside of the component unless we pass it on purpose.</p>
 <Prism>{`...
         this.state = {
@@ -171,7 +171,7 @@ const root = <Fragment>
         }.bind( this );
 ...`}</Prism>
 
-    <p className="sub-title">6. The is a spacial function from <strong>Component</strong> that we override here or more specifically to specialize it for <strong>H</strong> class behavior / need</p>
+    <p className="sub-title">6. The is a spacial function from <strong>Component</strong> that we override here or more specifically to specialize it for <strong>H</strong> class behavior / need.</p>
 <Prism>{`...
     render(){
         ...
@@ -182,6 +182,7 @@ const root = <Fragment>
 ...`}</Prism>
 
     <p className="sub-title">7. This is JSX or JSX Direct Function Call which we saw it before</p>
+    <p>This is rendered and inserted to the DOM.</p>
 <Prism>{`...
     ...
         return <div>
@@ -191,7 +192,7 @@ const root = <Fragment>
     ...
 ...`}</Prism>
 
-    <p className="sub-title">8. Finally this is <strong>Expression Evaluator</strong> that evaluates an expression for us and injects it to the place we like / need</p>
+    <p className="sub-title">8. Finally this is <strong>Expression Evaluator</strong> that evaluates an expression for us and injects it to the place we like / need.</p>
 <Prism>{`...
     ...
         ...
@@ -204,13 +205,13 @@ const root = <Fragment>
     <SubTitle>FAQ</SubTitle>
     <ul>
         <li><strong>Do we have to use constructor?</strong></li>
-        <li>No. but if there are some variable and method that we have and should be initialized then the best choice will be using constructor.</li>
+        <li>No. but if there are some variables and methods that we have and should be initialized, then the best choice will be using constructor.</li>
 
         <li><strong>Do we have to use "super( ... )"?</strong></li>
         <li>Yes if have used "extends" to use / inherit from another component</li>
 
         <li><strong>What is the use of "this.setState(...)"?</strong></li>
-        <li>It is a special React function that updates our state - if we have any - then then acts as a signal that there is a need for update the DOM with which the component is rendered again</li>
+        <li>It is a special React function that updates our state - if we have any - then acts as a signal that there is a need for update the DOM with which the component is rendered again</li>
 
         <li><strong>What is the use of "bind( this )"?</strong></li>
         <li>In JavaScript context binding is dynamic which means the keyword "this" has different usages in different places (= inside different functions). Because of that we have to make sure that wherever our onClick function is run / called "this" is bound correctly</li>
@@ -228,15 +229,16 @@ const root = <Fragment>
     <p>Putting the function declaration outside of the constructor</p>
     <Prism>{ e3 }</Prism>
     <div id="e3" className="code-result">{ <H_3 /> }</div>
-    <p>Now play with the code and meanwhile look at the below diagram. Try to find a map between what this code dos with what is in the diagram.</p>
+    <p>Now play with the code and meanwhile look at the below diagram. Try to find a map between what this code does with what is in the diagram.</p>
 
     <SubTitle>Simple diagram of this pattern</SubTitle>
-    <p>In <strong>stateless components</strong> programmer can pass arguments to a function but userscan not interact with the view.</p>
+    <p>In <strong>stateless components</strong> programmer can pass arguments to a function but users cannot interact with the view.</p>
     <p>In <strong>stateful components</strong> programmer can pass arguments to a function and users also are able to interact with the view.</p>
     <img width="100%" src="/build/img/react-04-stateful-component.png" alt="react-04-stateful-component.png" />
 
-    <SubTitle>Stateful Component Diagram</SubTitle>
+    <SubTitle>Stateful Component Architecture</SubTitle>
     <img width="100%" src="/build/img/react-06-stateful-component-architecture.svg" alt="react-06-stateful-component-architecture.svg" />
+    <p>If you see mistakes in this diagram please fix it on <a target="_blank" href="https://github.com/k-five/jsfun.ir/blob/master/build/img/react-06-stateful-component-architecture.svg">github</a>. It is an SVG file.</p>
 
     <p>Back <a href="../stateless-component">Stateless Component</a></p>
     <p>Next <a href="../component-communication">Component Communication</a></p>

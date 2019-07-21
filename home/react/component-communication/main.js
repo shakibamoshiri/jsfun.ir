@@ -87,25 +87,15 @@ const e5  = `const Colorize = ({ children }) => {
         log( child );
         log( child.props );
         log( child.props.children );
-        switch( child.props.className ){
-            case "red":
-            return <p style={{ color: "#f00" }} >
-                { child.props.prefix + child.props.children }
-            </p>
-            
-            case "green":
-            return <p style={{ color: "#0f0" }} >
-                { child.props.prefix + child.props.children }
-            </p>
-            
-            case "blue":
-            return <p style={{ color: "#00f" }}>
-                { child.props.prefix + child.props.children }
-            </p>
-            
-            default:
-            return <p>{ child.props.prefix + child.props.children }</p>
-        }
+        // here children are <Line> Component
+        // each child is one Line
+        // Also each child is a Component so it has
+        // 1. props
+        // 2. props.children
+        // and we have access to them
+        return <p style={{ color: child.props.color }}>
+            { child.props.children }
+        </p>;
     });
 }
 
@@ -114,11 +104,11 @@ const Line = ({ children }) => {
 };
 
 const r5 = <Colorize>
-    <Line className="xxx"   prefix="xxx: " >this line has no color</Line>
-    <Line className="red"   prefix="red: " >this line is in red</Line>
-    <Line className="green" prefix="green: " >this line is in greenr</Line>
-    <Line className="blue"  prefix="blue: " >this line is in blue</Line>
-    <Line className="xxx"   prefix="xxx " >this line has no color</Line>
+    <Line color="xxx "   >this line has no color</Line>
+    <Line color="red "   >this line is in red</Line>
+    <Line color="green " >this line is in greenr</Line>
+    <Line color="blue "  >this line is in blue</Line>
+    <Line color="xxx "   >this line has no color</Line>
 </Colorize>;
 render( r5, document.getElementById( "e5" ) );`;
 
@@ -127,25 +117,9 @@ const Colorize = ({ children }) => {
         log( child );
         log( child.props );
         log( child.props.children );
-        switch( child.props.className ){
-            case "red":
-            return <p style={{ color: "#f00" }} >
-                { child.props.prefix + child.props.children }
-            </p>
-            
-            case "green":
-            return <p style={{ color: "#0f0" }} >
-                { child.props.prefix + child.props.children }
-            </p>
-            
-            case "blue":
-            return <p style={{ color: "#00f" }}>
-                { child.props.prefix + child.props.children }
-            </p>
-            
-            default:
-            return <p>{ child.props.prefix + child.props.children }</p>
-        }
+        return <p style={{ color: child.props.color }}>
+            { child.props.children }
+        </p>;
     });
 }
 
@@ -154,15 +128,15 @@ const Line = ({ children }) => {
 };
 
 const r5 = <Colorize>
-    <Line className="xxx"   prefix="xxx: " >this line has no color</Line>
-    <Line className="red"   prefix="red: " >this line is in red</Line>
-    <Line className="green" prefix="green: " >this line is in greenr</Line>
-    <Line className="blue"  prefix="blue: " >this line is in blue</Line>
-    <Line className="xxx"   prefix="xxx " >this line has no color</Line>
+    <Line color="xxx "   >this line has no color</Line>
+    <Line color="red "   >this line is in red</Line>
+    <Line color="green " >this line is in greenr</Line>
+    <Line color="blue "  >this line is in blue</Line>
+    <Line color="xxx "   >this line has no color</Line>
 </Colorize>;
 
 const root = <Fragment>
-    <p>We know how we can talk to to a component, right?</p>
+    <p>We know how we can talk to a component, right?</p>
     <p>Here is a simple one in which we pass an argument to it and tell it what to do with the argument.</p>
     <Prism>{ e1 }</Prism>
     <div id="e1" className="code-result">{ r1 }</div>
@@ -181,20 +155,25 @@ const root = <Fragment>
     <Prism>{ e3 }</Prism>
     <div id="e3" className="code-result">{ r3 }</div>
 
-    <p>It is no very neat. So lets add some new components to it.</p>
+    <p>It is no very neat. So lets add a new <strong>P</strong> component to the mix.</p>
     <Prism>{ e4 }</Prism>
     <div id="e4" className="code-result">{ r4 }</div>
     <p>With the help of abstractoin of any tags we want - as a component - we can design our own markup language. It is amazing!, is not it?</p>
+
+    <SubTitle>Types of Communications</SubTitle>
+    <p>Here we experienced the <strong>unidirectional</strong> communication in which the flow of communication is from <strong>innermost</strong> to the <strong>outermost</strong>.</p>
+    <p>This can happen because these components are <strong>stateless (pure function)</strong>.</p>
+    <p>We will talk more about <strong>bidirectional</strong>.</p>
     <img width="100%" src="/build/img/react-05-component-communicatoin.svg" alt="react-05-component-communicatoin.svg" />
     
-    <p>Lets get crazy!</p>
+    <SubTitle>Another Example</SubTitle>
     <Prism>{ e5 }</Prism>
     
     <div id="e5" className="code-result">{ r5 }</div>
     <p><strong>How do you feel about this code? Good or Bad?</strong></p>
     <p>If good, well.</p>
-    <p>if bad, it is signal that says woooow wait! what is going on here?</p>
-    <p>Do not worry. We will see more examples. For now just open the dev-tools and see the console.log for these:</p>
+    <p>if bad, and if it is somehow confusing, do not worry, we have more examples in up comming posts.</p>
+    <p>For now just open the dev-tools and see the console.log for these:</p>
     <ol>
         <li>log( child )</li>
         <li>log( child.props )</li>

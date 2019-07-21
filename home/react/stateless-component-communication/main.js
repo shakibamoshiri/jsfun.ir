@@ -70,23 +70,23 @@ const r2 = <Template></Template>;
 
 const e2 = `const Header = props => {
     return <div className="header"
-                style={{ height: "100px", backgroundColor: props.bg }}>
-                { props.children }
-           </div>
+        style={{ height: "100px", backgroundColor: props.bg }}>
+        { props.children }
+    </div>;
 }
 
 const Main = $ => {
     return <div className="main-part"
-                style={{ height: "300px", backgroundColor: $.bg }}>
-                { $.children }
-           </div>
+        style={{ height: "300px", backgroundColor: $.bg }}>
+        { $.children }
+    </div>;
 }
 
 const Footer = any_name_could_be => {
     return <div className="footer"
-                style={{ height: "100px", backgroundColor: any_name_could_be.bg }}>
-                { any_name_could_be.children }
-           </div>
+        style={{ height: "100px", backgroundColor: any_name_could_be.bg }}>
+        { any_name_could_be.children }
+    </div>;
 }
 
 const Template = () => <div className="template">
@@ -104,30 +104,32 @@ const root = <Fragment>
         <li>Using as a attribute on the component</li>
         <li>Using as a child on the component</li>
     </ol>
-    <p>In either way we are doing it in inner-out flow. Or child-towards-parent flow.</p>
+    <p>In either way we are doing it in inner-out flow or child(ren) towards parent component.</p>
     <p>Here is an example:</p>
     <Prism>{ e1 }</Prism>
     <div id="r1" className="code-result">{ r1 }</div>
     
     <p>Here we have nested H tags that one is the child of another.</p>
-    <p>This style is very useful for presentation and view when we want to know the logic just by looking at the view.</p>
-    <p>But since using nested H tags has no really usability it does not make sense too much. Lets have a more practical one.</p>
+    <p>This style is very useful for presentation and view when we want to know / guess the output / result just by looking at the view.</p>
+    <p>Using nested H tags have no real usability and it does not make sense very much. Lets have a more practical one.</p>
     <p>For example a template of <strong>Header</strong> and <strong>Main</strong> and <strong>Footer</strong>.</p>
     <div id="r2" className="code-result">{ r2 }</div>
     <p>Which has the code:</p>
     <Prism>{ e2 }</Prism>
     
-    <SubTitle>Step by Step Inspecting</SubTitle>
+    <SubTitle>Step by Step Inspecting | first</SubTitle>
     <Prism>{`const r2 = <Template></Template>;`}</Prism>
     <p>JSX function call that is executed and the result is assigned to r2.</p>
 
+    <SubTitle>second</SubTitle>
     <Prism>{`const Template = () => <div className="template">
     <Header bg="#fe0" >Header Part</Header>
     <Main bg="#0cf" >Main Part</Main>
     <Footer bg="#0cc">Footer Part</Footer>
 </div>;`}</Prism>
-    <p>When <strong>Template</strong> is executed this function with no argument is executed and its three JSX function calls are also executed.</p>
+    <p>When <strong>Template</strong> is executed this function with no argument is executed and its three JSX function calls are also executed. (Notice that they are Stateless Component))</p>
     
+    <SubTitle>third</SubTitle>
     <Prism>{`<Header bg="#fe0" >Header Part</Header>`}</Prism>
     <p>When <strong>Header</strong> is executed all its attributes like: <strong>bg</strong> and if there were others and also its children are packed and passed to the function.</p>
     <p>Then we can use this packed / passed object and give it a name we like:</p>
@@ -145,12 +147,14 @@ const root = <Fragment>
     props.children
 };
 ...
-const _obj = {
+...
+const attibutes = {
     bg: "#fe0",
-    children, result-of-nested-JSX-calls
+    children: < result-of-nested-JSX-calls >
 };
 ...
-Header( _obj  );`}</Prism>
+...
+Header( attibutes  );`}</Prism>
     <p>And the same is true for <strong>Main</strong> and <strong>Footer</strong>.</p>
 
 
@@ -158,6 +162,7 @@ Header( _obj  );`}</Prism>
     <p>In stateless components JSX packs either attribute or children of a component and passes it to its parents.</p>
     <p>It happens from innermost / deepest level towards outermost / shallowest level.</p>
     <p>There is no state, no user interaction and it is just components communication.</p>
+    <i>Note: in new version of React (16.8+) we have some kind of state in Stateless Componnet!</i>
 
     <SubTitle>Stateless Components Communication Flow</SubTitle>
     <img style={{ width: "100%"  }} src="/build/img/react-stateless-component-communication-flow.svg.png" alt="react-stateless-component-communication-flow.svg.png" />
@@ -171,7 +176,7 @@ Header( _obj  );`}</Prism>
 
     <SubTitle>Problem</SubTitle>
     <p><strong>What if we want to change a color by clicking on a button?</strong></p>
-    <p>Good problem. We need a better component communication to handle asynchronous communication so in any time after executing a JSX function will let us do something with them.</p>
+    <p>Good problem. We need a better component communication to handle asynchronous communication so in any time after executing a JSX function can let us do something with them.</p>
 
     <SubTitle>Solution?</SubTitle>
     <p>Stateful Component Communication.</p>
