@@ -9,7 +9,8 @@
             "variable scope": {
                 "minimize use of global variable": "",
                 "check for global object": "",
-                "get comfortable with closure": ""
+                "get comfortable with closure": "",
+                "immediately invoked function expression": ""
             },
             "working with functions": ""
         },
