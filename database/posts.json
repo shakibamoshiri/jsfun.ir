@@ -8,7 +8,8 @@
             },
             "variable scope": {
                 "minimize use of global variable": "",
-                "check for global object": ""
+                "check for global object": "",
+                "get comfortable with closure": ""
             },
             "working with functions": ""
         },
