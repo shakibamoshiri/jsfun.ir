@@ -1,0 +1,69 @@
+<main>
+	<div class="content-r">
+		<h1>immediately-invoke-function-expression</h1>
+        <hr>
+        <h3 class="sub-title">function</h3>
+        <p>We know what is a function.</p>
+        <p>It is a block of code for later / deferring execution.</p>
+<pre><code class="language-javascript">function fullname( first, last ){
+    return first + " " + last;
+}</code></pre>
+
+        <h3 class="sub-title">named function expression</h3>
+        <p>We know what is a named function expression</p>
+        <p>It is a function that has a <strong>name</strong> but we cannot use this name. In fact it is not <strong>portable</strong>. It can be used internally but not externally.</p>
+<pre><code class="language-javascript">const result = function fullname( first, last ){
+    return first + " " + last;
+    // we can use fullname() here
+    // but not outside
+}</code></pre>
+
+        <h3 class="sub-title">function expression / anonymous function</h3>
+        <p>We know what is a function expression or <strong>anonymous</strong> function expression.</p>
+        <p>It does not have a name and we assign it to a variable. That variable becomes our function.</p>
+<pre><code class="language-javascript">const fullname = function( first, last ){ return first + " " + last; }</code></pre>
+
+        <h3 class="sub-title">Invoke a function</h3>
+        <p>Also we know how to <strong>invoke</strong> a function.</p>
+<pre><code class="language-javascript">fullname( "Shakiba", "Moshiri" )</code></pre>
+
+
+        <h3 class="sub-title">Invoke a function expression</h3>
+        <p>Also we can have a function expression and invoke it!</p>
+<pre><code class="language-javascript">const fullname = (function( first, last ){ return first + " " + last; }())
+// the result is not a function
+fullname();     // TypeError: fullname is not a function
+
+// and since we did not pass value to it, it returns two undefined to us
+fullname;       // undefined undefined
+</code></pre>
+        
+
+        <h3 class="sub-title">Immediately Invoke a function expression</h3>
+        <p>So what is an Immediately Invoke Functional Expression?</p>
+        <p>Simple. A function expression that is invoked immediately. As it is declared - at the same time - it is also executed.</p>
+        <p>Why do we use this? Mostly because JavaScript (used to be) function block scope for variables. In Modern JavaScript we have <strong>let</strong> and <strong>const</strong> keywords which help us to have <strong>block scope</strong> for our variables.</p>
+        <p>So this technique is used heavily before <strong>ES6 (=2015)</strong> to create local scope for variables. With Modern JavaScript we do not use it is much as before but sometimes it can be handy.</p>
+        <p>Here is the exact example from the book, page 64.</p>
+<pre><code class="language-javascript">function wrapElement( a ){
+    var result = [];
+    for( var i = 0, n = a.length; i < n; i++ ){
+        (function( j ){
+            result[ i ] = function(){ return a[ j ]; };
+        })( i )
+    }
+    return result;
+}</code></pre>
+        <p>Shortly it is call IIFE which is pronounced "iffy".</p>
+        <p>Why this? Because we have to capture the value of <strong>i</strong> in each iteration.</p>
+        <p>Can not we capture the value of i in each iteration? We should! No we cannot because the <strong>inner function</strong> captures it <strong>by reference</strong> which means when we want to execute one of these functions inside <strong>result</strong> array, all of them (= functions) refers to the last value of i.</p>
+        <p>Why does the inner function act this way? Well, read the previous post.</p>
+        
+        
+        <p>Back <a href="../get-comfortable-with-closure">get-comfortable-with-closure</a></p>
+		DD_MM_YYYY
+        <div class="edit-on-github">
+            <a target="_blank" href="https://github.com/k-five/jsfun.ir/blob/master/effective-javascript/variable-scope/immediately-invoked-function-expression/main.html">Edit on Github</a>
+        </div>
+	</div>
+</main>

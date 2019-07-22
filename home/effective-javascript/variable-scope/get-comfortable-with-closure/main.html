@@ -1,0 +1,224 @@
+<main>
+	<div class="content-r">
+		<h1>get-comfortable-with-closure</h1>
+        <hr>
+        <p>First thing first: JavaScript's functions are <strong>First Class Object</strong> and it means:</p>
+        <p>We can store them like we do with variables</p>
+<pre><code class="language-javascript">const sayName = function( name ){ ... }</code></pre>
+
+        <p>We can pass them like a variable</p>
+<pre><code class="language-javascript">function anotherfunction( function(){...} );</code></pre>
+
+        <p>We can return them like a variable</p>
+<pre><code class="language-javascript">function anotherfunction(){
+    return function(){...}
+};</code></pre>
+        <p>The third code (a nested function) is our target here. A function inside another function.</p>
+        <p>We all know that a variable outside of a function acts like a <strong>Global Variable</strong> for the <strong>inner</strong> function.</p>
+<pre><code class="language-javascript">function greet( message, person ){
+    function concat(){
+        // capture message, and person
+        return message + " " + person;
+    }
+    const result = concat();
+    return result;
+}</code></pre>
+        <p>Why do even we do this silly thing? A function that does nothing useful? We will see why. Just focus on its features.</p>
+        <p>Not only we can run the function inside <strong>greet</strong> but also we have access to two variables:</p>
+        <ul>
+            <li>message</li>
+            <li>person</li>
+        </ul>
+        <p>Since we can return a function just like a variable, then it is completely valid to return the <strong>inner function</strong>:</p>
+
+<pre><code class="language-javascript">const log = console.log;
+
+function greet( message, person ){
+    function concat(){
+        // capture message, and person
+        return message + " " + person;
+    }
+    // execute the function and return its return value
+    // which is 
+    // return message + " " + person;
+    return concat;
+}
+const A = greet( "hello", "A" );
+const B = greet( "hello", "B" );
+const C = greet( "hello", "C" );
+</code></pre>
+        <p>And here is the interesting part. A, B, and C are now a function and we can run them just like regular function, but with <strong>predefined arguments</strong>.</p>
+
+<pre><code class="language-javascript">// functions we have
+log( A );       // [Function: concat]
+log( B );       // [Function: concat]
+log( C );       // [Function: concat]
+
+const a = A()   // A has access to message and person
+const b = B();  // B has access to message and person
+const c = C();  // C has access to message and person
+
+log( a );       // hello A
+log( b );       // hello B
+log( c );       // hello C
+</code></pre>
+        <p>This is <strong>closure</strong>. A function can have access to outer scope variable and can use them later on.</p>
+        <p>It is not the only feature it has. It has many features but it is primary one.</p>
+        <p>About how it is possible is simple because JavaScript function is an object and it can store <strong>more information</strong> about a variable when is used in its scope.</p>
+        <p>Also since the function stores a <strong>reference</strong> to those variables, it gives us this nice feature that we can modify them later on as well.</p>
+<pre><code class="language-javascript">function F(){
+    let value = 0;
+    function next( set ){
+        value = ++set || value + 1;
+        return value;
+    }
+    return next;
+}
+
+const count = F();
+log( count() );     // 1
+log( count() );     // 2
+log( count() );     // 3
+log( count() );     // 4
+log( count( 0 ) );  // 1 | set the "value" to 1
+log( count() );     // 2
+log( count() );     // 3
+log( count() );     // 4</code></pre>
+
+        <h3 class="sub-title">lets refactor</h3>
+        <p>Here we pass "hello" to greet function and assign the return of it to A, B, and C. So A, B, and C are functions.</p>
+<pre><code class="language-javascript">function greet( message, person ){
+    function concat(){
+        // capture message, and person
+        return message + " " + person;
+    }
+    // execute the function and return its return value
+    // which is 
+    // return message + " " + person;
+    return concat;
+}
+const A = greet( "hello" );     // just one argument for message
+const B = greet( "hello" );     // just one argument for message
+const C = greet( "hello" );     // just one argument for message
+</code></pre>
+
+        <p>Also</p>
+<pre><code class="language-javascript">
+log( A );         // [Function: concat]
+log( B );         // [Function: concat]
+log( C );         // [Function: concat]
+
+const a = A();    // hello ???
+const b = B();    // hello ???
+const c = C();    // hello ???
+
+log( a );         // hello undefined
+log( b );         // hello undefined
+log( c );         // hello undefined</code></pre>
+        <p>Why did we get <strong>undefined</strong>? Simple. We passed "hello" as the first argument but we did not pass the second one for <strong>person</strong>. So it became undefined.</p>
+        <p>What is the point here? We could do this and not getting undefined.</p>
+<pre><code class="language-javascript">const A = greet( "hello", "A" );     // just one argument for message
+const B = greet( "hello", "B" );     // just one argument for message
+const C = greet( "hello", "C" );     // just one argument for message</code></pre>
+        <p>Yes we could and in fact in this case we do not even need to use <strong>inner function</strong>. We could directly do this:</p>
+<pre><code class="language-javascript">function greet( message, person ){
+    return message + " " + person;
+}</code></pre>
+        <p>right?</p>
+        
+        <h3 class="sub-title">Closures use cases</h3>
+        <p>What if we do <strong>not</strong> want to pass both <strong>message</strong> and <strong>person</strong> variables when invoking <strong>greet</strong> function?</p>
+        <p>What if we want to pass just first argument to greet function and for the second argument we want someone else from somewhere else applies the second argument? </p>
+        <p>Without a helper function we cannot.</p>
+        <p>And since we are able to use function in JavaScript like a variables, then we use this helper function inside our main function.</p>
+        <p>And this ability has many use cases like:</p>
+        <ul>
+            <li>having private variable</li>
+            <li>currying technique (in function programming)</li>
+            <li>partial application technique (in function programming)</li>
+            <li>etc</li>
+        </ul>
+
+        <h3 class="sub-title">Lets solve it</h3>
+        <p>Instead of passing <strong>message</strong> and <strong>person</strong> to the <strong>greet</strong> function we can pass just message.</p>
+        <p>Then passing another variable (here name) to an inner function with a better name like <strong>person</strong>.</p>
+<pre><code class="language-javascript">function greet( message ){
+    function person( name ){
+        // capture "message" from greet function 
+        return message + " " + name;
+    }
+    return person;
+}
+const A = greet( "Hello" );     // just one argument for message
+const B = greet( "Hi" );        // just one argument for message
+const C = greet( "Hey" );       // just one argument for message</code></pre>
+
+        <p>And test them:</p>
+<pre><code class="language-javascript">
+log( A );         // [Function: person]
+log( B );         // [Function: person]
+log( C );         // [Function: person]
+
+const a = A( "C" );    // Hello ???
+const b = B( "B" );    // HI    ???
+const c = C( "C" );    // Hey   ???
+
+log( a );         // Hello A
+log( b );         // Hi B
+log( c );         // Hey C</code></pre>
+        
+        <p>So we passed a message to greet function, then executed it.</p>
+        <p>Then the greet function returned person function which accepts a name.</p>
+        <p>At this point a <strong>message</strong> is already bound to the message variable and person function has  access to it.</p>
+        <p>And this is the power of closures. Now we can run person function while we have access to message variable.</p>
+        <p>It make our person function more dynamic. We can invoke it. We can pass it around.</p>
+
+        <h3 class="sub-title">Refactoring</h3>
+
+        <p>The same code, the same logic, but shorter.</p>
+<pre><code class="language-javascript">function greet( message ){
+    return function( name ){
+        // capture "message" from greet function 
+        return message + " " + name;
+    }
+}</code></pre>
+
+        <h3 class="sub-title">Refactoring</h3>
+        <p>The same code and logic, but declaring differently.</p>
+<pre><code class="language-javascript">const greet = function( message ){
+    return function( name ){
+        return message + " " + name;
+    }
+};</code></pre>
+
+        <h3 class="sub-title">Refactoring</h3>
+        <p>The same code and logic, in Modern JavaScript.</p>
+<pre><code class="language-javascript">const greet = message => name => `${ message } ${ name }`</code></pre>
+
+        <h3 class="sub-title">More examples</h3>
+        <p>This is also closure</p>
+<pre><code class="language-javascript">function shop(){
+    let value = 0;
+    return {
+        buy: function(){ ... },     // closure
+        refund: function(){ ... }   // closure
+    };
+}
+
+const client = shop();
+client.buy();                       // has access to value variable
+client.refund();                    // has access to value variable
+</code></pre>
+        <p>Here we have created a variable the is visible for <strong>buy</strong> and <strong>refund</strong> functions but not outside of shop() function.</p>
+        <p>So this is one of features of closures with which we can have <strong>Private Variable</strong> in JavaScript.</p>
+        <p>Do not afraid of using it. Use it and you will love it; specially if you want to move to <strong>Functional Programming</strong> paradigm.</p>
+
+        <p>Back <a href="../check-for-global-object">check-for-global-object</a></p>
+        <p>Next <a href="../immediately-invoke-function-expression">immediately-invoke-function-expression</a></p>
+
+		DD_MM_YYYY
+        <div class="edit-on-github">
+            <a target="_blank" href="https://github.com/k-five/jsfun.ir/blob/master/effective-javascript/variable-scope/get-comfortable-with-closure/main.html">Edit on Github</a>
+        </div>
+	</div>
+</main>
