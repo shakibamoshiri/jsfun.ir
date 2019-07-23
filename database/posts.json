@@ -12,7 +12,12 @@
                 "get comfortable with closure": "",
                 "immediately invoked function expression": ""
             },
-            "working with functions": ""
+            "working with functions": {
+                "function method and constructor": "",
+                "higher order functions": "",
+                "using call and apply": "",
+                "using bind": ""
+            }
         },
         "react": {
             "three JSX main patterns": "",
