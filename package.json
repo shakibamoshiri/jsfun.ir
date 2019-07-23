@@ -4,6 +4,7 @@
   "description": "Bloggin in the Fun Way :)",
   "main": "",
   "dependencies": {
+    "@material-ui/core": "^4.2.1",
     "body-parser": "^1.19.0",
     "cookie-parser": "^1.4.4",
     "express": "^4.16.4",
