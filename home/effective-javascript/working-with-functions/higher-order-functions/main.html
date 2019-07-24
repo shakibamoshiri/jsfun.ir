@@ -2,13 +2,161 @@
 	<div class="content-r">
 		<h1>higher-order-functions</h1>
         <hr>
+        <p>We cannot completely understand the team <strong>Higher Order Function</strong> just by thinking of its name.</p>
+        <p>Lets see what problems we have that this technique tries to solve.</p>
+
+        <h3 class="sub-title">Simple Array</h3>
+        <p><i>How can we show / print indexes of an array?</i></p>
+        <p>Solution: using a function and call it for each index we have? Yes..</p>
+<pre><code class="language-javascript">// simple function
+function say( name ){
+    log( name );
+}
+
+const names = [ "A", "B", "C" ];
+say( names[ 0 ] );  // A
+say( names[ 1 ] );  // B
+say( names[ 2 ] );  // C
+</code></pre>
+
+        <h3 class="sub-title">Large Array</h3>
+        <p><i>What if we have a large array, thousands of names?</i></p>
+        <p>Solution: then we can use a <strong>for loop</strong> to access each index? Yes. That is right.</p>
+<pre><code class="language-javascript">// what if we had a very large array?
+// assuming this is a very large array
+const cars = [ "C1", "C2", "C3", "C4", "C5" ];
+
+// solution use a for loop
+const max = cars.length;
+for( let index = 0; index < max; ++index ){
+    say( cars[ index ] );
+}</code></pre>
+
+        <h3 class="sub-title">Many Large Array</h3>
+        <p><i>What if we had many larges array and not just one?</i></p>
+        <p>Solution: using for loop again? No <strong>DRY</strong> (= Do not Repeat Yourself).</p>
+        <p>Solution: using a function that wraps our for loop? Yes. That is right.</p>
+<pre><code class="language-javascript">// what if we have many large arrays?
+const houses = [ "H1", "H2", "H3", "H4", "H5" ];
+const animals = [ "A1", "A2", "A3", "A4", "A5" ];
+
+// solution using for loop? No DRY (=Do not Repeat Yourself)
+
+// put the loop in a function and call that function? Yes
+
+function sayName( array ){
+    const max = array.length;
+    for( let index = 0; index < max; ++index ){
+        say( array[ index ] );
+    }
+}
+
+sayName( houses );
+
+// output:
+H1
+H2
+H3
+H4
+H5</code></pre>
+
+        <h3 class="sub-title">Inversion of Control</h3>
+        <p><i>What if we want to control the output of <strong>say</strong> function?</i></p>
+        <p>Solution: modifying say function for each array? No. It is wrong.</p>
+        <p>Solution: passing an <strong>anonymous</strong> function, or name of a function so our main function can call it for us? Yes. That is right.</p>
+<pre><code class="language-javascript">// Here is the interesting part
+// We pass our array to our function sayName,
+// but we do not have the option to choose
+// our way of printing these names,
+
+// solution? Instead of adding say() function to the for loop, pass it
+
+function betterSayName( array, callback ){
+    const max = array.length;
+    for( let index = 0; index < max; ++index ){
+        callback( array[ index ] );
+    }
+}
+
+betterSayName( animals, function( animal ){
+    log( "an animal name:", animal );
+});
+
+// output:
+an animal name: A1
+an animal name: A2
+an animal name: A3
+an animal name: A4
+an animal name: A5</code></pre>
+
+        <p>Great! We created our first Higher Order Function.</p>
+<pre><code class="language-javascript">function betterSayName( array, callback ){
+    const max = array.length;
+    for( let index = 0; index < max; ++index ){
+        callback( array[ index ] );
+    }
+}</code></pre>
+        <p>So higher order functions are regular functions that deals with our tasks we give them via <strong>callbacks</strong> or other functions.</p>
+        <p>Simply, higher order functions accepts other functions as arguments or return functions as well.</p>
         
+        <h3 class="sub-title">Characteristics</h3>
+        <ul>
+            <li>Declarative Interface</li>
+            <li>Inversion of Control</li>
+        </ul>
+        
+
+        <h3 class="sub-title">Declarative Interface</h3>
+        <p>This is imperative interface. With this interface we tell the program <strong>How to do a task</strong>.</p>
+        <p>We see the details of <strong>how</strong> the task is done.</p>
+<pre><code class="language-javascript">const max = cars.length;
+for( let index = 0; index < max; ++index ){
+    say( cars[ index ] );
+}</code></pre>
+        <p>Whereas this is declarative interface with which we tell our program <strong>what to do a task</strong>.</p>
+        <p>We have abstraction and not implementation details.</p>
+<pre><code class="language-javascript">betterSayName( animals, function( animal ){
+    log( "an animal name:", animal );
+});</code></pre>
+
+
+        <h3 class="sub-title">Inversion of Control</h3>
+        <p>While this code works well, but we do not have control over the <strong>say()</strong> function.</p>
+
+<pre><code class="language-javascript">function sayName( array ){
+    const max = array.length;
+    for( let index = 0; index < max; ++index ){
+        say( array[ index ] );
+    }
+}</code></pre>
+        <p>The say() function works the same for every input and if we want to change it, we will have to modify the say function.</p>
+        <p>To prevent modifying say() function and also give ourselves a flexible way of telling sayName() what to do, we can pass a function to it.</p>
+        <p>So here the say() function controls what to do with out data.</p>
+        <p>To invert this control, we pass a function as an argument to sayName(), so we can control what to do, whenever we call sayName().</p>
+        <p>Instead of sayName() function chooses <strong>which function to use</strong> - we the user of sayName() - decides which function should be used.</p>
+
+        <h3 class="sub-title">map, forEach, reduce, etc.</h3>
+        <p>Fortunately JavaScript has several built-in functions that we can use.</p>
+
+<pre><code class="language-javascript">// built-in forEach
+animals.forEach(function( animal ){
+    log( "an animal name:", animal );
+});</code></pre>
+
+        <p>Plus there are good libraries like <strong><a target="_blank" href="https://ramdajs.com/">ramda.js</a></strong> that has many good functions we can use.</p>
+
+<pre><code class="language-javascript">// Ramda  forEach
+function animalName(){
+    log( "an animal name:", animal );
+}
+R.forEach( animalName, animals );</code></pre>
+
         <p>Back <a href="../function-method-and-constructor">function-method-and-constructor</a></p>
         <p>Next <a href="../using-call-and-apply">using-call-and-apply</a></p>
         
 		DD_MM_YYYY
         <div class="edit-on-github">
-            <a target="_blank" href="https://github.com/k-five/jsfun.ir/blob/master/effective-javascript/working-with-functions/higher-order-functions/main.html">Edit on Github</a>
+            <a target="_blank" href="https://github.com/k-five/jsfun.ir/blob/master/home/effective-javascript/working-with-functions/higher-order-functions/main.html">Edit on Github</a>
         </div>
 	</div>
 </main>

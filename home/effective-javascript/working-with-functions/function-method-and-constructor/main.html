@@ -2,12 +2,131 @@
 	<div class="content-r">
 		<h1>function-method-and-constructor</h1>
         <hr>
+        <p>While in many programming languages we think differently about</p>
+        <ul>
+            <li>a function</li>
+            <li>a method</li>
+            <li>and a constructor</li>
+        </ul>
+        <p><strong>but</strong> in JavaScript these three are the same and the usage of them in a specific context determines what it is.</p>
+
+        <h3 class="sub-title">Function</h3>
+<pre><code class="language-javascript">// very simple function
+function hello( name ){
+    return "hello " + name;
+}
+
+// invoke it
+hello( "js" );</code></pre>
+        <p>Very simple and straightforward. Using a function keyword and giving it a name that we can executed independently.</p>
+
+        <h3 class="sub-title">Method</h3>
+        <p>If we take the same function above and add it to an object as a <strong>property</strong> of that object, then our function in that context becomes a method.</p>
+<pre><code class="language-javascript">// very simple JS object
+const person = {
+    name: "JS",
+    hello: function(){
+        return "hello " + this.name
+    },
+}
+
+// invoke it
+person.hello(); // hello JS</code></pre>
+
+        <h3 class="sub-title">Constructor</h3>
+        <p>In OOP when we want to create new object (instance of a class) usually we use <strong>new</strong> keyword with class name like so:</p>
+<pre><code class="language-javascript">class Person( name ){
+    // ...
+}
+
+// creating new object of Person Class using new keyword
+const shakib = new Person( "Shakib" );</code></pre>
+        <p>but since JavaScript is <strong>prototype</strong> based language, we do not have class mechanism (and syntax) to have an instance of an object.</p>
+        <p>Yes we have class syntax in Modern JavaScript, but behind the scene it is still prototype based.</p>
+        <p>What JavaScript offers? Function.</p>
+        <p>Instead of using <strong>class</strong> keyword we can (? before ES6 we should) use function keyword like so:</p>
+
+<pre><code class="language-javascript">function Person( name ){
+    // ...
+}
+
+// creating new object of Person Class using new keyword
+const shakib = new Person( "Shakib" );</code></pre>
+
+        <p>One good thing about this interface is consistency in which we have the same keyword: function.</p>
+        <p>But the drawback of it will be confusion in large code base.</p>
+        <p>What is happening in the code below:</p>
+
+<pre><code class="language-javascript">const log = console.log;
+
+function Person( name, age ){
+    this.id = {
+        name: name,
+        age: age,
+        print: function(){
+            return myName() + " " + myAge();
+        }
+    }
+
+    // take care of implicit this binding inside each function
+    const person_this = this;
+
+    function myName(){
+        return person_this.id.name;
+    }
+
+    function myAge(){
+        return person_this.id.age;
+    }
+    
+    this.getID = function(){
+        return this.id;
+    }
+};
+
+const John = new Person( "John", "20" );
+
+log( "John.id        ", John.id );
+log( "John.id.print()", John.id.print() );
+log( "John.getID()   ", John.getID() );
+</code></pre>
+        <p>output</p>
+
+<pre><code class="language-javascript">John.id         { name: 'John', age: '20', print: [Function: print] }
+John.id.print() John 20
+John.getID()    { name: 'John', age: '20', print: [Function: print] }</code></pre>
+        <p><strong>Confusing?</strong> Welcome to the world of JavaScript :)</p>
+        <p><i>By the way the code above is wrong and we do not use such a code; it was just to show many use cases of function keyword.</i></p>
+<pre><code class="language-javascript">// Here is the interesting part
+// We pass our array to our function sayName, but we do not have the option to choose
+// our way of printing these names,
+
+// solution? Instead of adding say() function to the for loop, pass it
+
+function betterSayName( array, callback ){
+    const max = array.length;
+    for( let index = 0; index < max; ++index ){
+        callback( array[ index ] );
+    }
+}
+
+betterSayName( animals, function( animal ){
+    log( "an animal name:", animal );
+});
+
+
+// output:
+an animal name: A1
+an animal name: A2
+an animal name: A3
+an animal name: A4
+an animal name: A5</code></pre>
         
         <p>Next <a href="../higher-order-functions">higher-order-functions</a></p>
         
 		DD_MM_YYYY
         <div class="edit-on-github">
-            <a target="_blank" href="https://github.com/k-five/jsfun.ir/blob/master/effective-javascript/working-with-functions/function-method-and-constructor/main.html">Edit on Github</a>
+            <a target="_blank" href="https://github.com/k-five/jsfun.ir/blob/master/home/effective-javascript/working-with-functions/function-method-and-constructor/main.html">Edit on Github</a>
         </div>
 	</div>
 </main>
