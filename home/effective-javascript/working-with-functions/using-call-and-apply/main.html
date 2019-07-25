@@ -2,7 +2,193 @@
 	<div class="content-r">
 		<h1>using-call-and-apply</h1>
         <hr>
+        <p>We know that JavaScript object has implicit <strong>this</strong> binding, and the same is true for functions, they are object, too</p>        
+<pre><code class="language-javascript">// simple object
+const shape = {
+    x: 3,
+    y: 4,
+    sum: function(){
+        return this.x + this.y;
+    }
+};
+</code></pre>
+        <p>In the code above <strong>this</strong> refers to <strong>shape</strong> object  and not sum() function.</p>
+        <p>Then if we have another object with the same properties (x and y)  but without <strong>sum()</strong> function, we can use this sum() function if we do not have it.</p>
+
+<pre><code class="language-javascript">// simple object that does not have sum()
+const points = {
+    x: 30,
+    y: 40
+};</code></pre>
+        <p>How can we have sum() function for our <strong>points</strong> object?</p>
+        <p>A common way to achieve it is by adding the same function to the points object and then delete it.</p>
+<pre><code class="language-javascript">// adding sum() to points
+points.sum = object.sum;
+points.sum();   // 70
+delete points.sum</code></pre>
+
+        <h3 class="sub-title">call</h3>
+        <p>We can eliminate this manually adding sum() function to the points object by using <strong>call</strong> on the sum() function.</p>
+<pre><code class="language-javascript">// using call of the sum() function
+object.sum.call( points );  // 70</code></pre>
+        <p>The way it works is simple.
+        Instead of using <strong>this</strong> of the  shape object, <strong>call</strong> binds this of the points object to the sum() function.</p>
+        <p>So sum() function will see:</p>
+<pre><code class="language-javascript">    ...
+    x: 30,
+    y: 40
+    ...</code></pre>
+            <p>and not:</p>
+<pre><code class="language-javascript">    ...
+    x: 3,
+    y: 4,
+    ...</code></pre>
         
+        <p>What if we wanted to pass arguments to the function that we use?</p>
+        <p>The first argument passing to <strong>call</strong> is the receiver of <strong>this</strong>, and the rest is / are arguments for passing to the function.</p>
+<pre><code class="language-javascript">// add() function with argument
+const list = {
+    all: [],
+    add: function( item ){
+        this.all.push( item );
+    }
+}
+
+// this object does not have add() function
+const people = {
+    all: []
+};
+
+// this function does not have add() function either
+const cars = {
+    all: []
+};
+
+// adding it manually 
+cars.add = list.add;
+
+// using it
+cars.add( "Ford" );
+
+// deleting it
+delete cars.add;
+
+// add one item  to list object
+list.add( "Martin" );
+
+// using add() function of list adding to people object
+list.add.call( people, "John" );
+list.add.call( people, "Jez" );
+
+log( "list.all", list.all );
+log( "people.all", people.all );
+log( "cars.all", cars.all );
+
+// output:
+list.all [ 'Martin' ]
+people.all [ 'John', 'Jez' ]
+cars.all [ 'Ford' ]
+</code></pre>
+
+        <h3 class="sub-title">call as a super class constructor</h3>
+        <p>Because <strong>call</strong> is a property of <strong>Function</strong> object and a class in JavaScript is created by using <strong>new</strong> keyword to call a function; then we can use call to bind to a parent / super class constructor.</p>
+        <p>This is class A</p>
+<pre><code class="language-javascript">const log = console.log;
+
+function A( x, y ){
+    this.x = x;
+    this.y = y;
+}
+
+const xy = new A( 1, 2 );
+log( xy );  // A { x: 1, y: 2 }</code></pre>
+        <p>And this is class B, notice that B class does not have <strong>x</strong> and <strong>y</strong> properties. It is inherited from class A by using <strong>A.call( this, ... )</strong>.</p>
+<pre><code class="language-javascript">function B( x, y, z ){
+    A.call( this, x, y );
+    this.z = z;
+}
+
+const xyz = new B( 4, 5, 6 );
+log( xyz ); // B { x: 4, y: 5, z: 6 }</code></pre>
+        
+        <p>Switching to Modern JavaScript or Node.js we can have more readable code like below code.</p>
+        <p>Notice that class <strong>D</strong> does not have x and y properties. It is inherited from class <strong>C</strong>.</p>
+<pre><code class="language-javascript">class C {
+    constructor( x, y ){
+        this.x = x;
+        this.y = y;
+    }
+}
+
+const c = new C( 1, 2 );
+log( c );  // C { x: 1, y: 2 }
+
+class D extends C {
+    constructor( x, y, z ){
+        super( x, y );
+        this.z = z;
+    }
+}
+
+const d = new D( 4, 5, 6 );
+log( d ); // D { x: 4, y: 5, z: 6 }</code></pre>
+    
+        <h3 class="sub-title">apply</h3>
+        <p>What we said for <strong>call</strong> is also true for <strong>apply</strong> but its second argument will be an array.</p>
+        <p>If we pass an array to call( this, array ) we will not get appropriate result. Here is an example.</p>
+<pre><code class="language-javascript">const shape = {
+    x: 0,
+    y: 0,
+    z: 0,
+    set: function( x, y, z ){
+        this.x = x;
+        this.y = y;
+        this.z = z;
+    },
+    get: function(){
+        return [this.x, this.y, this.z];
+    }
+};
+
+shape.set( 1, 2, 3 );
+log( shape.get() );     // [ 1, 2, 3 ]
+
+
+// does not have set function or get
+points = {
+    x: 0,
+    y: 0,
+    x: 0
+};
+const p = [ 10, 20, 30 ];
+
+// pass p array to call() | wrong!
+shape.set.call( points, p );
+log( shape.get.call( points ) );    // [ [ 10, 20, 30 ], undefined, undefined ]
+log( points );                      // { x: [ 10, 20, 30 ], y: undefined, z: undefined }
+
+// passing p array to apply | right
+shape.set.apply( points, p );
+log( shape.get.call( points ) );    // [ 10, 20, 30 ]
+log( points );                      // { x: 10, y: 20, z: 30 }
+</code></pre>
+        
+        <p>Notice that we could do this, without array:</p>
+
+<pre><code class="language-javascript">// does not have set function or get
+points = {
+    x: 0,
+    y: 0,
+    x: 0
+};
+
+// const p = [ 10, 20, 30 ];
+
+shape.set.call( points, 10, 20, 30 );
+log( shape.get.call( points ) );    // [ 10, 20, 30 ]</code></pre>
+        
+        <p>So for separate arguments we should / can use <strong>call</strong> but for passing an array we should / can use <strong>apply</strong>.</p>
+
         <p>Back <a href="../higher-order-functions">higher-order-functions</a></p>
         <p>Next <a href="../using-bind">using-bind</a></p>
         

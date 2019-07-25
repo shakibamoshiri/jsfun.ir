@@ -2,7 +2,143 @@
 	<div class="content-r">
 		<h1>using-bind</h1>
         <hr>
-        
+        <p>In previous post <a href="../using-call-and-apply">using-call-and-apply</a> we saw what problems <strong>call</strong> and <strong>apply</strong> solve.</p>
+        <p>They would change the receiver of <strong>this</strong> for an object.</p>
+        <p>One use case of <strong>bind</strong> is this; to bind <strong>this</strong> for a fixed receiver.</p>
+<pre><code class="language-javascript">const log = console.log;
+
+// person has add() function
+const person = {
+    all: [],
+    add: function( item ){
+        this.all.push( item )
+    }
+};
+
+
+person.add( "A" );
+person.add( "B" );
+person.add( "C" );
+
+// people does not have add() function
+const people = {
+    all: []
+};</code></pre>
+        <p>How to <strong>add</strong> item to people.all array?</p>
+
+        <h3 class="sub-title">using Function.call</h3>
+<pre><code class="language-javascript">// using add() of the person object
+person.add.call( people, "call" );
+log( people.all );  // [ 'call' ]</code></pre>
+        <p>Here not only the <strong>syntax</strong> is long but always we are depended on the existence of <strong>person.add</strong> function.</p>
+        <p>What if it deleted or we want to pass it somewhere else?</p>
+
+        <h3 class="sub-title">bind to external / portable receiver</h3>
+        <p>With <strong>Function.bind</strong> we can create a new function with a fixed <strong>this</strong> that has been bound.</p>
+        <p>So the Function.bind returns a new function for us.</p>
+<pre><code class="language-javascript">const addPeople = person.add.bind( people );</code></pre>
+        <p>No longer we need to use <strong>person.all.call()</strong>. Simple we can use <strong>addPeople()</strong> function.</p>
+<pre><code class="language-javascript">// creating an add() function for people object
+// without adding to it as a property 
+// this binding with fixed receiver => addPeople() function
+const addPeople = person.add.bind( people );
+
+log( person.all );  // [ 'A', 'B', 'C' ]
+log( people.add );  // undefined
+log( people.all );  // []
+
+// adding to people.all array
+// the this is already bound
+addPeople( "D" );
+addPeople( "E" );
+
+log( people.all );  // [ 'D', 'E' ]
+log( addPeople );   // [Function: bound add]
+</code></pre>
+
+        <h3 class="sub-title">bind with argument(s)</h3>
+        <p>What if we had arguments. Simple. We will just pass it / them  as second, third, etc arguments.</p>
+        <p>Notice that this argument will be fixed!</p>
+<pre><code class="language-javascript">// we if we had arguments 
+// this binding with fixed receiver and argument
+const addC = person.add.bind( people, "F" );
+
+// this will add "F" to people.all array
+addC();
+log( addC );        // [Function: bound add]
+log( people.all );  // [ 'call', 'D', 'E', 'F' ]</code></pre>
+
+        <h3 class="sub-title">challenge</h3>
+        <p>What if we had an array and want to copy it to people.all. How can we achieve this?</p>
+        <p>One solution is to use <strong>call</strong> like so:</p>
+<pre><code class="language-javascript">// we have family.all array G, H, I
+const family = {
+    all: [ "G", "H", "I" ]
+};
+
+// copy family.all to people.all not using bind
+// using person.add.call( this, argument-1, argument-2, etc );
+family.all.forEach(function( item ){
+    person.add.call( people, item );
+});
+log( people.all );  // [ 'call', 'D', 'E', 'F', 'G', 'H', 'I' ]</code></pre>
+        <p>The other solution is to use bind.</p>
+        <p>Since we already bound <strong>person.add</strong> to people, so we simply can use <strong>addPeople()</strong> function.</p>
+        <p>We did this:</p>
+<pre><code class="language-javascript">const addPeople = person.add.bind( people );</code></pre>
+        <p>So we can do this:</p>
+<pre><code class="language-javascript">family.all.forEach( addPeople );</code></pre>
+         <p>Here for each item in family.all array addPeople is called.</p>
+
+        <h3 class="sub-title">Our dirty bind() function</h3>
+        <p>This is just for demonstration purpose and we (I, you)  should not use it!</p>
+<pre><code class="language-javascript">// lets create our bind
+function _bind( owner, fName, receiver ){
+    return function( argument ){
+        owner[ fName ].call( receiver, argument );
+    }
+}
+
+// bind person.add() function to people
+const _add = _bind( person,"add", people );
+
+// new array to add to people.all
+const pp = [ "X", "Y", "Z" ];
+
+// adding it
+pp.forEach( _add );
+log( people.all );  // [ 'call', 'D', 'E', 'F', 'G', 'H', 'I', 'X', 'Y', 'Z' ]</code></pre>
+
+        <h3 class="sub-title">currying using Function.bind</h3>
+        <p>Page 75 of the book, second paragraph:</p>
+        <p><i>The technique of binding a function to a subset of its arguments is known as <strong>currying</strong>.</i></p>
+        <p>We did it above:</p>
+<pre><code class="language-javascript">const addC = person.add.bind( people, "F" );</code></pre>
+        <p>So it is fixed and we can call <strong>addC()</strong> function without argument.</p>
+<pre><code class="language-javascript">i// this will add "F" to people.all array
+addC();
+log( addC );        // [Function: bound add]
+log( people.all );  // [ 'call', 'D', 'E', 'F' ]</code></pre>
+        <p>Speaking of <strong>Function Programming</strong> this is called <strong>Partial Application</strong>.</p>
+
+        <p>Good to Know</p>
+        <ul>
+            <li><a target="_bind" href="https://en.wikipedia.org/wiki/Partial_application">Partial application</a></li>
+            <li><a target="_blank" href="https://stackoverflow.com/questions/218025/what-is-the-difference-between-currying-and-partial-application">What is the difference between currying and partial application?</a></li>
+        </ul>
+
+
+
+
+
+
+
+
+
+
+
+
+
         <p>Back <a href="../using-call-and-apply">using-call-and-apply</a></p>
         <p>Next <a href="../"></a></p>
         
