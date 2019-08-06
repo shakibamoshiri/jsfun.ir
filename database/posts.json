@@ -17,6 +17,9 @@
                 "higher order functions": "",
                 "using call and apply": "",
                 "using bind": ""
+            },
+            "objects": {
+                "this binding in javascript": ""
             }
         },
         "react": {
