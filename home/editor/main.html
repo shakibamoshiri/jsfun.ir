@@ -1,0 +1,49 @@
+<main>
+	<div class="content-r">
+		<h1>editor</h1>
+        <hr>
+ <section id="static">
+          <pre>
+<code id="static-js" data-height="taller">const log = console.log;
+
+function A( x, y ){
+    this.x = x;
+    this.y = y;
+}
+
+const a = new A( 1, 2 );
+log( a );
+log( a.x );
+log( a.y );
+
+function B( x, y, z ){
+    A.call( this, x, y );
+    this.z = z;
+}
+
+const b = new B( 4, 5, 6 );
+log( b );
+log( b.x );
+log( b.y );
+log( b.z );</code>
+</pre>
+      </section>       
+      <section id="live" class="live hidden">
+          <header><h3>developer.mozilla.org editor</h3></header>
+          <div id="editor" class="editor"></div>
+
+          <div class="output-container">
+              <div class="buttons-container">
+                  <button id="execute" class="button run" type="button">Run &rsaquo;</button>
+                  <button id="reset" type="button" class="button">Reset</button>
+              </div>
+              <div id="console" class="output"><code></code></div>
+          </div>
+      </section>
+        
+		DD_MM_YYYY
+        <div class="edit-on-github">
+            <a target="_blank" href="https://github.com/k-five/jsfun.ir/blob/master/home/editor/main.html">Edit on Github</a>
+        </div>
+	</div>
+</main>

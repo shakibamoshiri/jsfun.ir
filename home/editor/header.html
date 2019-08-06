@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <base href="/editor/">
+    <title>JavaScript the Fun Part</title>
+    <meta name="keywords" content="js, javascript. react, node, nodejs, front-end">
+    <meta name="author" content="Shakiba Moshiri">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Useful articles, best practices, etc related to JavaScript and Web Ecosystem.">
+    <link rel="stylesheet" type="text/css" href="/build/css/desktop.css">
+
+    <link rel="shortcut icon" href="./favicon.ico" type="image/x-icon">
+    <link rel="icon" href="./favicon.ico" type="image/x-icon">
+    <link href="/build/codemirror-5-31-0.css" rel="stylesheet" />
+    <style>
+    section#static {
+        display: none;
+    }
+    .output {
+        display: flex;
+        flex: 10 150px;
+        align-items: center;
+        background-color: #f1f1f1;
+        padding: 10px;
+        border-radius: 5px;
+    }
+    .output > code {
+        width: 100%;
+        white-space: pre;
+        vertical-align: middle;
+        word-break: break-word;
+        overflow-y: auto;
+    }
+    .button {
+        border: none;
+        padding: 5px 20px;
+        margin: 10px 0;
+        box-shadow: 0 0 10px #ccc;
+        background-color: #fff;
+        cursor: pointer;
+    }
+    #editor {
+        box-shadow: 0 0 10px #ccc;
+    }
+    .CodeMirror.cm-s-default.CodeMirror-focused,
+    .CodeMirror.cm-s-default {
+        height: 500px;
+    }
+    .CodeMirror-vscrollbar {
+        overflow-y: auto;   
+    }
+    body {
+        font-size: 15px;
+    }
+    </style>
+    <script>"use strict";function postToKuma(e){window.parent.postMessage(e,"*")}postToKuma({markName:"interactive-editor-loading"}),document.addEventListener("readystatechange",function(e){switch(e.target.readyState){case"interactive":postToKuma({markName:"interactive-editor-interactive",measureName:"ie-time-to-interactive",startMark:"interactive-editor-loading",endMark:"interactive-editor-interactive"});break;case"complete":postToKuma({markName:"interactive-editor-complete",measureName:"ie-time-to-complete",startMark:"interactive-editor-loading",endMark:"interactive-editor-complete"})}});</script>
+</head>
+<body class="line-numbers">
+
+<div class="header">
+        <div class="content-r">
+          <h1>
+            <a href="/" >JavaScript the Fun Part</a>
+          </h1>
+          <hr>
+          <h1><a href="/">home</a></h1>
+        </div>
+    </div>
