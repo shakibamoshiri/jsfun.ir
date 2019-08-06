@@ -1,7 +1,81 @@
 <main>
 	<div class="content-r">
 		<h1>this-binding-in-javascript</h1>
+        <hr>
+        <p><strong>this</strong> binding in JavaScript is both interesting and meanwhile confusing. Here I will try to show you five patterns I know about this binding in JS.</p>
+        <ul>
+            <li>implicit this binding</li>
+            <li>forward this binding</li>
+            <li>manual this binding</li>
+            <li>explicit this binding</li>
+            <li>super class / parent this binding</li>
+        </ul>
+
+        <h3 class="sub-title">functions are object</h3>
+        <p>Always remember in JavaScript that functions are a special kind of object.</p>
+<pre><code class="language-javascript">function f1(){
+  console.log( "f1() called" );
+  f1.variable = "this is f1";
+}
+
+function f2(){
+  console.log( "f2() called" );
+  f2.variable = "this is f2";
+}
+
+f1();
+f2();
+
+console.log( f1.variable );
+console.log( f2.variable );
+
+// output
+"f1() called"
+"f2() called"
+"this is f1"
+"this is f2"</code></pre>
         
+        <h3 class="sub-title">implicit this binding</h3>
+        <p>Item 37, page 99</p>
+        <p class="quote">Every function in JavaScript has an implicit binding of this, whose value is determined when the function is called.</p>
+        <p>and also</p>
+        <p class="quote">By contrast, <strong>this</strong> is implicitly bound by the nersted enclosed function.</p>
+<pre><code class="language-javascript">this.go = "this is global object";
+
+function f(){
+  this.ff = "function f()";
+  ff2 = "function f() 2";
+}
+
+console.log( this.go );     // this is global object
+console.log( this.ff );     // undefined 
+f();
+console.log( this.ff );     // function f()
+console.log( this.ff2 );    // function() 2</code></pre>
+    <p>Because we did not declare variable <strong>ff2</strong> with any of:</p>
+    <ul>
+        <li>var</li>
+        <li>let</li>
+        <li>const</li>
+    </ul>
+    <p>it became <strong>global</strong> and was bound to global object.</p>
+    <p>We can prevent this implicit this biding inside f() by using <strong>"use string"//</strong> there.</p>
+<pre><code class="language-javascript">function f(){
+  "use strict";
+  this.ff = "function f()";
+  ff2 = "function f() 2";
+}
+
+f();        // Error: this is undefined</code></pre>
+
+
+<pre><code class="language-javascript"></code></pre>
+
+
+
+
+<!--        <iframe class="interactive interactive-js taller" src="/build/async.html" width="100%" height="500" frameborder="0"></iframe> -->
+        <i>Please update or clarify this post if see any mistakes</i> 
 		DD_MM_YYYY
         <div class="edit-on-github">
             <a target="_blank" href="https://github.com/k-five/jsfun.ir/blob/master/home/effective-javascript/objects/this-binding-in-javascript/main.html">Edit on Github</a>
