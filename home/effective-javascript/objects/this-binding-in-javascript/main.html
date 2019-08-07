@@ -6,75 +6,297 @@
         <ul>
             <li>implicit this binding</li>
             <li>forward this binding</li>
-            <li>manual this binding</li>
             <li>explicit this binding</li>
+            <li>manual this binding</li>
             <li>super class / parent this binding</li>
         </ul>
 
         <h3 class="sub-title">functions are object</h3>
         <p>Always remember in JavaScript that functions are a special kind of object.</p>
 <pre><code class="language-javascript">function f1(){
-  console.log( "f1() called" );
+  console.log( "f1() was called" );
   f1.variable = "this is f1";
 }
 
 function f2(){
-  console.log( "f2() called" );
+  console.log( "f2() was called" );
   f2.variable = "this is f2";
 }
 
-f1();
-f2();
+f1();                       // f1() was called
+f2();                       // f2() was called
 
-console.log( f1.variable );
-console.log( f2.variable );
-
-// output
-"f1() called"
-"f2() called"
-"this is f1"
-"this is f2"</code></pre>
+console.log( f1.variable ); // "this is f1"
+console.log( f2.variable ); // "this is f2"</code></pre>
         
         <h3 class="sub-title">implicit this binding</h3>
         <p>Item 37, page 99</p>
         <p class="quote">Every function in JavaScript has an implicit binding of this, whose value is determined when the function is called.</p>
-        <p>and also</p>
+        <p>noticed please: <strong>when the function is called</strong>. So the caller determines the value of <strong>this</strong>. And also</p>
         <p class="quote">By contrast, <strong>this</strong> is implicitly bound by the nersted enclosed function.</p>
-<pre><code class="language-javascript">this.go = "this is global object";
+<pre><code class="language-javascript">const object = {
+  x: "this is an object",
+  whoami: function(){
+    return this.x;
+  }
+};
 
-function f(){
-  this.ff = "function f()";
-  ff2 = "function f() 2";
+const r1 = object.whoami();
+log( "r1", r1 );        // r1 "this is an object"
+
+// assign it to a variable at global scope
+var w = object.whoami;
+// invoke it at global scope
+log( w() );             // undefined, because this.x is undefined
+
+// who calls w()? window
+log( this.w );          // [function]
+log( window.w );        // [Function]</code></pre>
+        <p>Here the <strong>global object</strong> invokes <strong>w()</strong> and since the global object does not have <strong>x</strong> property, the w() function return's value will be <strong>undefined</strong>.</p>
+        <p>In fact <strong>window.x</strong> is undefined.</p>
+        <p>Another example from <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Operators/this">developers.mozilla.org</a></p>
+<pre><code class="language-javascript">// An object can be passed as the first argument to call or apply and this will be bound to it.
+var obj = {a: 'Custom'};
+
+// This property is set on the global object
+var a = 'Global';
+
+function whatsThis() {
+  return this.a;  // The value of this is dependent on how the function is called
 }
 
-console.log( this.go );     // this is global object
-console.log( this.ff );     // undefined 
-f();
-console.log( this.ff );     // function f()
-console.log( this.ff2 );    // function() 2</code></pre>
-    <p>Because we did not declare variable <strong>ff2</strong> with any of:</p>
-    <ul>
-        <li>var</li>
-        <li>let</li>
-        <li>const</li>
-    </ul>
-    <p>it became <strong>global</strong> and was bound to global object.</p>
-    <p>We can prevent this implicit this biding inside f() by using <strong>"use string"//</strong> there.</p>
-<pre><code class="language-javascript">function f(){
-  "use strict";
-  this.ff = "function f()";
-  ff2 = "function f() 2";
+whatsThis();          // 'Global'
+whatsThis.call(obj);  // 'Custom'
+whatsThis.apply(obj); // 'Custom'</code></pre>
+
+        <h3 class="sub-title">forward this binding</h3>
+<pre><code class="language-javascript">const log = console.log;
+
+// constructor
+function People( msg ){
+  this.list = [];
+  this.greeting = msg;
 }
 
-f();        // Error: this is undefined</code></pre>
+// add mothid
+People.prototype.push = function( person ){
+  this.list.push( person );
+}
 
+// add mothid
+People.prototype.greetAll = function(){
+  return this.list.map(function( person ){
+    return this.greeting + " " + person;
+  });
+}
 
-<pre><code class="language-javascript"></code></pre>
+const p = new People( "hello" );
 
+p.push( "John" );
+p.push( "Sarah" );
 
+const all = p.greetAll();
+log( all ); // Array ["undefined John", "undefined Sarah"]</code></pre>
+        <p>Why did we get <strong>undefined</strong>? Because in this part:</p>
+<pre><code class="language-javascript">  return this.list.map(function( person ){
+    return this.greeting + " " + person;
+  });</code></pre>
+        <p>Simple. <strong>map</strong> runs the function and where the function is run, it does not have <strong>greeting</strong> property. So <strong>this.greeting</strong> is undefined and we get two undefined.</p>
+        <p>The solution is simple. Passing <strong>this</strong> as a second argument to <strong>map</strong>. Forwarding it to map.</p>
+<pre><code class="language-javascript">// add mothid
+People.prototype.greetAll = function(){
+  return this.list.map(function( person ){
+    return this.greeting + " " + person;
+  }, this); // forward this
+}
 
+const p = new People( "hello" );
 
-<!--        <iframe class="interactive interactive-js taller" src="/build/async.html" width="100%" height="500" frameborder="0"></iframe> -->
+p.push( "John" );
+p.push( "Sarah" );
+
+const all = p.greetAll();
+log( all ); // Array ["hello John", "hello Sarah"]</code></pre>
+        <p>Notice that we could use <a target="_blank" href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Functions/Arrow_functions">Arrow Functions</a> to eliminate the issue with this binding. Like so</p>
+<pre><code class="language-javascript">// add mothid
+People.prototype.greetAll = function(){
+  // using arrow function
+  return this.list.map(( person ) => {
+    return this.greeting + " " + person;
+  });
+}</code></pre>
+        <p><strong>it retains the this value of the enclosing lexical context</strong>. You can read more: <a target="_blank" href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Operators/this">this</a></p>
+
+        <h3 class="sub-title">explicit this binding</h3>
+        <p>What if a higher order function or any other functions we are using did not accept the this for binding?</p>
+        <p>No problem. We can bind it simply by the function we use. All functions has a method named: <strong>bind</strong> or <a target="_blank" href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Function/bind">Function.prototype.bind</a>  and we can explicitly bind this.</p>
+<pre><code class="language-javascript">// add mothid
+People.prototype.greetAll = function(){
+  return this.list.map(function( person ){
+    return this.greeting + " " + person;
+  }.bind( this )); // explicitly binding this
+}
+</code></pre>
+        <p>Explicit this binding is very common is <strong>React</strong>.</p>
+<pre><code class="language-javascript">class H extends Component {
+    constructor( props ){
+        super( props );
+        this.state = {
+            count: 0
+        }
+
+        // explicit this binding because onClick has implict this binding
+        this.onClick = this.onClick.bind( this );
+    }
+
+    // below onClick function has implicit this binding
+    // so this.setState() will be undefined / throws exception if
+    // we do not bind it to the proper owner of onClick function
+    // which here is H
+    //
+    // It is like:
+    // function onClick(){
+    //     this.setState({ count: this.state.count + 1 });
+    // }
+    onClick(){
+        this.setState({ count: this.state.count + 1 });
+    }
+    render(){
+        return &lt;div&gt;
+            &lt;h1&gt;h1 tag, Stateful Component { this.state.count }&lt;/h1&gt;
+            &lt;button onClick={ this.onClick }&gt;increase ...&lt;/button&gt;
+        &lt;/div&gt;;
+    }
+ }</code></pre>
+
+        <p>And here is why.</p>
+        <p>In the code below we have function constructor that has another function inside itself.</p>
+        <p>If we call <strong>a.method()</strong> we get error because it is not a method of A class</p>
+<pre><code class="language-javascript">const log = console.log;
+
+function A( arg ) {
+  this.xxx = arg;
+
+  function method(){
+    return this.xxx;
+  }
+}
+
+const a = new A( "JS" );
+log( a.method() );  // Error: a.method is not a function</code></pre>
+        <p>And if we make it as a method of the class A, it works but ...</p>
+<pre><code class="language-javascript">const log = console.log;
+
+function A( arg ) {
+  this.xxx = arg;
+  this.method = method;
+
+  function method(){
+    return this.xxx;
+  }
+}
+
+const a = new A( "JS" );
+log( a.method() );      // "JS"
+
+// use a.method globally
+const m = a.method;
+log( m() );             // undefined</code></pre>
+        <p>Why did we get undefined for <strong>m()</strong>? Because it is invoked at global scope. How we can fix it? How can we be sure that everywhere our function is called, it will work correctly?</p>
+        <p>Answer: Explicit This Binding.</p>
+<pre><code class="language-javascript">const log = console.log;
+
+function A( arg ) {
+  this.xxx = arg;
+  // explicit this binding
+  this.method = method.bind( this );
+
+  function method(){
+    return this.xxx;
+  }
+}
+
+const a = new A( "JS" );
+log( a.method() );      // "JS"
+
+// use this method globally
+const m = a.method;
+log( m() );             // "JS"</code></pre>
+
+        <h3 class="sub-title">manual this binding</h3>
+        <p>Because JavaScript captures the outer variables, we can assign our <strong>this</strong> to a variable and let other functions use it.</p>
+<pre><code class="language-javascript">// add mothid
+People.prototype.greetAll = function(){
+  // manual this binding
+  const self = this;
+  return this.list.map(function( person ){
+    // self here refers to "this"
+    // and "this" refers to "People"
+    return self.greeting + " " + person;
+  });
+}
+</code></pre>
+        <p>We bound <strong>this</strong> manually.</p>
+          
+        <h3 class="sub-title">super class this binding</h3>
+        <p>If we add another a function constructor (= class) that inherits from <strong>People</strong> then we can bind the <strong>this</strong> of that class to <strong>People</strong> class.</p>
+<pre><code class="language-javascript">const log = console.log;
+
+// constructor
+function People( msg ){
+  this.list = [];
+  this.greeting = msg;
+}
+
+// add mothid
+People.prototype.push = function( person ){
+  this.list.push( person );
+}
+
+// add mothid
+People.prototype.greetAll = function(){
+  // manual this binding
+  const self = this;
+  return this.list.map(function( person ){
+    return self.greeting + " " + person;
+  });
+}
+
+function Company( name, msg ){
+  // here "this" refers to Company
+  // we pass it to People and
+  // People.greeting
+  // People.list
+  // are initialized for Company as well
+  People.call( this, msg );
+  this.name = name;
+}
+
+// for method assignment we could do this, but notice
+//
+// Company.prototype = People.prototype;
+//
+// that this assignment is by reference
+// and later on if someone does this:
+//
+// delete People.prototype.greetAll;
+//
+// then Company.prototype.greetAll is removed, too!
+
+// create a copy of People methods and assign to Company
+Company.prototype = Object.assign( {}, People.prototype );
+
+const c = new Company( "Ford", "hello" )
+
+c.push( "John" );
+c.push( "Sarah" );
+
+log( c.name );          // "Ford"
+log( c.list );          // Array ["John", "Sarah"]
+log( c.greeting );      // "hello"
+log( c.greetAll() );    // Array ["hello John", "hello Sarah"]</code></pre>
+        <p>In ES6 (= 2015) we can use <strong>super()</strong> inside <strong>constructor()</strong>.</p>
+
         <i>Please update or clarify this post if see any mistakes</i> 
 		DD_MM_YYYY
         <div class="edit-on-github">
