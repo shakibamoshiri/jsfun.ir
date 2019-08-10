@@ -1,0 +1,39 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 500 650" xmlns:xlink="http://www.w3.org/1999/xlink" width="500" height="650" font-family="Montserrat">
+  <rect x="0" y="0" width="500" height="650" fill="#fd0"></rect>
+
+  <g class="title">
+<!--    <rect x="0" y="35" width="500" height="40" fill="#000"></rect>-->
+  </g>
+
+  <g transform="translate(0,170)" font-family="Ubuntu" font-size="50"  text-anchor="middle" style="font-weight: bold">
+    <text x="250" y="20" font-size="150" fill="#000">JS</text>
+  </g>
+  
+  <g transform="translate(0,320)" font-family="Montserrat" fill="none" stroke="#000" stroke-width="2.5">
+    <text x="250" y="60" font-size="35" fill="#000" stroke="none" text-anchor="middle" font-weight="bold" xml:space="preserve">The Wor d o  JavaScript</text>
+    <path d="M195,170 v-260 q0,-40 -40,-40"></path>
+    <path d="M195,170 v-250 q0,-40 40,-40"></path>
+    <path d="M195,170 v-190 q0,-40 -40,-40 h-20 q-10,0 -10,-10"></path>
+    <path d="M195,170 v-140 q0,-50 50,-50 h40 q10,0 10,-10"></path>
+    <path d="M262,170 v-220 q0,-50 50,-50 h20"></path>
+  </g>
+  
+  <g transform="translate(0,500)" font-family="Montserrat" text-anchor="middle" font-weight="bold">
+    <text x="250" y="20" font-size="20"  >to understand <tspan fill="#f00">peculiarities</tspan> of JavaScript</text>
+    <text x="250" y="70" font-size="26" fill="#fff">from 1991 till 2015 releasing ES6</text>
+    <text x="250" y="110" font-size="25" >follow new series</text>
+  </g>
+  
+  <defs>
+    <marker id="arrow" markerWidth="10" markerHeight="7" 
+            refX="0" refY="3.5" orient="auto">
+      <polygon fill="#000" points="0 0, 5 3.5, 0 7" />
+    </marker>
+    <marker id="diamond" markerWidth="12" markerHeight="12" refX="6" refY="6" >
+      <circle fill="#fff" cx="6" cy="6" r="2" stroke="context-stroke" stroke-width="2"/>
+    </marker>
+  </defs>
+
+  <text x="10" y="645" font-size="10"  fill="#000" style="font-weight: bold">Designer and Creator: Shakiba Moshiri, 2019-08-06</text>
+<!--<path fill="none" stroke="#000" stroke-width="3" d="M60,50 v140 q0" marker-start="url(#diamond)" marker-end="url(#arrowhead)"></path>-->
+</svg>
