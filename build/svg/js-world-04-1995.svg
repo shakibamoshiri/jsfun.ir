@@ -1,0 +1,37 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 500 650" xmlns:xlink="http://www.w3.org/1999/xlink" width="500" height="650" font-family="Montserrat">
+  <rect x="0" y="0" width="500" height="650" fill="#fd0"></rect>
+
+  <g class="title">
+    <rect x="0" y="35" width="500" height="40" fill="#000"></rect>
+    <text x="250" y="65" font-size="25" text-anchor="middle" fill="#fff" font-weight="bold">The World of JavaScript</text>
+  </g>
+
+  <g transform="translate(0,140)" font-weight="bold" font-size="30" fill="000" text-anchor="middle">
+    <text x="245" y="30" >Browsers War</text>
+    <text x="245" y="70" fill="#f00" >Microsoft vs. Netscape</text>
+  </g>
+  
+  <g transform="translate(0,340)">
+    <circle cx="250" cy="20" r="80" fill="#000"></circle>
+    <text x="250" y="40" font-size="50" fill="#fff" text-anchor="middle" font-weight="bold">1995</text>
+    <path fill="none" stroke="#000" stroke-width="3" d="M130,10 h30 a90,82 0 0,1 180,0 h30" transform="rotate(90,250,20)" marker-start="url(#diamond)"  marker-end="url(#arrowhead)"></path>
+    <path fill="none" stroke="#000" stroke-width="3" d="M130,30 h30 a90,82 0 0,0 180,0 h30" transform="rotate(90,250,20)" marker-start="url(#diamond)"  marker-end="url(#arrowhead)"></path>
+  </g>
+  
+  <g transform="translate(0,510)" font-weight="bold" font-size="30" fill="#000" text-anchor="middle">
+    <text x="245" y="30" >JavaScript</text>
+    <text x="245" y="70" fill="#f00">Brendan Eich</text>
+  </g>
+  <defs>
+    <marker id="arrowhead" markerWidth="10" markerHeight="7" 
+            refX="0" refY="3.5" orient="auto">
+      <polygon fill="#000" points="0 0, 5 3.5, 0 7" />
+    </marker>
+    <marker id="diamond" markerWidth="12" markerHeight="12" refX="6" refY="6" >
+      <circle fill="#000" cx="6" cy="6" r="2" stroke="context-stroke" stroke-width="2"/>
+    </marker>
+  </defs>
+
+  <text x="10" y="645" font-size="10"  fill="#000" font-weight="bold">Designer and Creator: Shakiba Moshiri, 2019-08-08</text>
+<!--<path fill="none" stroke="#000" stroke-width="3" d="M60,50 v140 q0" marker-start="url(#diamond)" marker-end="url(#arrowhead)"></path>-->
+</svg>
