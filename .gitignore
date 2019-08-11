@@ -16,3 +16,4 @@ clean.sh
 
 build/react/
 build/css/
+build/codemirror/
