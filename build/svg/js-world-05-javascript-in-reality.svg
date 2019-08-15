@@ -13,24 +13,24 @@
   
   <g transform="translate(0,220)" font-weight="bold" font-size="30" fill="000" text-anchor="middle">
     <text x="245" y="30" >before ES6</text>
-    <text x="245" y="70" fill="#f00" font-size="25" >implementation to standardization</text>
+    <text x="245" y="70" fill="#f00" font-size="20" >implementation to standardization</text>
     <circle cx="100" cy="140" r="60" fill="#0c0"></circle>
-    <text x="100" y="150" fill="#fff" font-size="25" >standard</text>
+    <text x="100" y="150" fill="#fff" font-size="20" >standard</text>
     <text x="250" y="130" font-size="25" >behind</text>
     <circle cx="400" cy="140" r="60" fill="#c00"></circle>
-    <text x="400" y="150" fill="#fff" font-size="25" >browsers</text>
+    <text x="400" y="150" fill="#fff" font-size="20" >browsers</text>
     <path fill="none" stroke="#000" stroke-width="3" d="M170,140 h150" marker-start="url(#diamond)" marker-end="url(#arrowhead)"></path>
   </g>
   
   <g transform="translate(0,420)" font-weight="bold" font-size="30" fill="#000" text-anchor="middle">
     <text x="245" y="30" >after ES6</text>
-    <text x="245" y="70" fill="#f00" font-size="25">standardization to implementation</text>
+    <text x="245" y="70" fill="#f00" font-size="20">standardization to implementation</text>
     <text x="245" y="110" fill="#f00"></text>
     <circle cx="100" cy="140" r="60" fill="#c00"></circle>
-    <text x="100" y="150" fill="#fff" font-size="25" >browsers</text>
+    <text x="100" y="150" fill="#fff" font-size="20" >browsers</text>
     <text x="250" y="130" font-size="25" >behind</text>
     <circle cx="400" cy="140" r="60" fill="#0c0"></circle>
-    <text x="400" y="150" fill="#fff" font-size="25" >standard</text>
+    <text x="400" y="150" fill="#fff" font-size="20" >standard</text>
     <path fill="none" stroke="#000" stroke-width="3" d="M170,140 h150" marker-start="url(#diamond)" marker-end="url(#arrowhead)"></path>
   </g>
   <defs>
