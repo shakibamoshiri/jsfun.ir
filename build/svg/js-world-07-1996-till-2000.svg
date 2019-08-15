@@ -1,0 +1,36 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 500 650" xmlns:xlink="http://www.w3.org/1999/xlink" width="500" height="650" font-family="Montserrat">
+  <rect x="0" y="0" width="500" height="650" fill="#fd0"></rect>
+
+  <g class="title" >
+    <rect x="0" y="35" width="500" height="40" fill="#000"></rect>
+    <text x="250" y="65" font-size="25" text-anchor="middle" fill="#fff" font-weight="bold">The World of JavaScript</text>
+  </g>
+  <g transform="translate(250,150)" font-weight="bold" font-size="30" fill="000" text-anchor="middle">
+    <text x="0" y="0" font-size="30">from 1996 till 2000</text>
+  </g>
+  
+  <g transform="translate(250,270)" font-weight="bold" font-size="30" fill="000" text-anchor="middle">
+    <circle cx="0" cy="20" r="70"></circle>
+    <text x="0" y="40" fill="#fff" font-size="40">1996</text>
+    <path fill="none" stroke="#000" stroke-width="3" d="M-130,-80 h130 a100,100 0 1,1 0,200 a100,100 0 0,0 0,200 h130" marker-start="url(#diamond)" marker-end="url(#arrowhead)"></path>
+  </g>
+  
+  <g transform="translate(250,470)" font-weight="bold" font-size="30" fill="#000" text-anchor="middle">
+    <circle cx="0" cy="20" r="70"></circle>
+    <text x="0" y="40" fill="#fff" font-size="40">2000</text>
+  </g>
+  
+  
+  <defs>
+    <marker id="arrowhead" markerWidth="10" markerHeight="7" 
+            refX="0" refY="3.5" orient="auto">
+      <polygon fill="#000" points="0 0, 5 3.5, 0 7" />
+    </marker>
+    <marker id="diamond" markerWidth="12" markerHeight="12" refX="6" refY="6" >
+      <circle fill="#000" cx="6" cy="6" r="2" stroke="context-stroke" stroke-width="2"/>
+    </marker>
+  </defs>
+
+  <text x="10" y="645" font-size="10"  fill="#000" font-weight="bold">Designer and Creator: Shakiba Moshiri, 2019-08-15</text>
+<!--<path fill="none" stroke="#000" stroke-width="3" d="M60,50 v140 q0" marker-start="url(#diamond)" marker-end="url(#arrowhead)"></path>-->
+</svg>
