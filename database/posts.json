@@ -39,6 +39,9 @@
                 "this binding in javascript": ""
             }
         },
+        "effective javascript 2": {
+            "var let const": ""
+        },
         "react": {
             "three JSX main patterns": "",
             "JSX direct function call": "",
