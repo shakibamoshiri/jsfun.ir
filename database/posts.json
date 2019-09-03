@@ -40,7 +40,9 @@
             }
         },
         "effective javascript 2": {
-            "var let const": ""
+            "effective js 2 start": "",
+            "var let const": "",
+            "type of functions": ""
         },
         "react": {
             "three JSX main patterns": "",
