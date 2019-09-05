@@ -1,0 +1,36 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 500 650" xmlns:xlink="http://www.w3.org/1999/xlink" width="500" height="650" font-family="Montserrat">
+  <rect x="0" y="0" width="500" height="650" fill="#fd0"></rect>
+
+  <g class="title" >
+    <rect x="0" y="35" width="500" height="40" fill="#000"></rect>
+    <text x="250" y="65" font-size="25" text-anchor="middle" fill="#fff" font-weight="bold">Effective JavaScript</text>
+  </g>
+  
+  <g transform="translate(250,150)" font-weight="bold" font-size="25" fill="#000" text-anchor="middle">
+    <text x="0" y="0" fill="#f00">IIFE</text>
+    <text x="0" y="40" font-size="20">Immediately Invoked Function Expression</text>
+    <text x="0" y="100" fill="#f00">HOF: Higher Order Function</text>
+    <text x="0" y="140">input / output function passing</text>
+    <text x="0" y="200" fill="#f00">callback function</text>
+    <text x="0" y="240">function's result of async operation</text>
+    <text x="0" y="300" fill="#f00">(ES6) arrow function () => { ... }</text>
+    <text x="0" y="340">function with no this binding</text>
+    <rect x="-70" y="367" fill="#fff" width="140" height="50" rx="10"></rect>
+    <text x="0" y="400" fill="#f00">closure</text>
+    <text x="0" y="440" font-size="18">function that has reference / link to outer scope</text>
+  </g>
+  
+  <defs>
+    <marker id="arrowhead" markerWidth="10" markerHeight="7" 
+            refX="0" refY="3.5" orient="auto">
+      <polygon fill="#000" points="0 0, 5 3.5, 0 7" />
+    </marker>
+    <marker id="diamond" markerWidth="12" markerHeight="12" refX="6" refY="6" >
+      <circle fill="#000" cx="6" cy="6" r="2" stroke="context-stroke" stroke-width="2"/>
+    </marker>
+  </defs>
+
+  <text x="10" y="645" font-size="10"  fill="#000" font-weight="bold">Designer and Creator: Shakiba Moshiri, 2019-09-05</text>
+  <text x="370" y="645" font-size="12"  fill="#000" font-weight="bold">blog: http://jsfun.ir</text>
+<!--<path fill="none" stroke="#000" stroke-width="3" d="M60,50 v140 q0" marker-start="url(#diamond)" marker-end="url(#arrowhead)"></path>-->
+</svg>
