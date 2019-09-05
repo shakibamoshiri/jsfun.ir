@@ -1,6 +1,65 @@
 <main>
 	<div class="content-r">
 		<h1>type-of-functions</h1>
+        <hr>
+        <p>Some type of functions in JavaScript you may already know.</p>
+
+        <h3 class="sub-title">1. Regular function</h3>
+        <p>Pretty straight forward why of using a function.</p>
+        <p>First we declare the function.</p>
+        <p>Then we invoke it.</p>
+        
+
+        <h3 class="sub-title">2. Method</h3>
+        <p>A function that is assigned as a property of an object.</p>
+        <p>The object that gets assignment can call that function.</p>
+        <p>So first declaration in scope of an object.</p>
+        <p>Then invocation using an object.</p>
+        
+
+        <h3 class="sub-title">3. Constructor</h3>
+        <p>If we declare a function and then call it using <strong>new</strong> keyword, then the function acts as a constructor for us.</p>
+        <p>Thus first declaration.</p>
+        <p>Then invocation using new keyword.</p>
+        
+
+        <h3 class="sub-title">4. Function expression</h3>
+        <p>This kind of function relates to functional languages that treats function as a first class object.</p>
+        <p>In the style we treat a function as a <strong>value</strong> or <strong>date</strong> and store it in a variable, or passing it around e.g as a argument for another function.</p>
+        <p>So it is kind of first declaration and then passing or assigning.</p>
+<pre><code class="language-javascript">// function expression, assignment
+const add = function( x ,y ){ return x + y; }
+const sub = function( x, y ){ return x - y; }
+
+const addAndSub = function( _add, _sub, x, y ){
+    const a = _add( x, y );
+    const s = _sub( x, y );
+    return [ a, s ];
+}
+
+// function expression passing it around
+const r = addAndSub( add, sub, 10, 5 ); // Array [ 15, 5 ]
+</code></pre>
+        
+
+        <h3 class="sub-title">5. Named function expression</h3>
+        <p>A function expression that has name. This name is useful for:</p>
+        <ul>
+            <li>readability</li>
+            <li>recursive call</li>
+        </ul>
+<pre><code class="language-javascript">// function expression that has name
+const sum = function _sum( first, second, ...rest ){
+    if( !rest.length ) return first + second;
+    return _sum( first + second, ...rest );
+}
+
+sum( 1, 1, 1, 1, 1, 0, 1 ); // 6
+
+// it is not accessible outside
+_sum( 1, 2, 3 ); // ReferenceError: _sum is not defined
+</code></pre>
+
         
 		DD_MM_YYYY
         <div class="edit-on-github">
