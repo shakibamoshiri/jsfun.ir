@@ -1,7 +1,44 @@
 <main>
 	<div class="content-r">
 		<h1>var-let-const</h1>
+        <hr>
+        <p>We know that JavaScript is a <strong>dynamic typed language</strong>.</p>
+        <p>Thus it lets us easily change the type of variables or date we have.</p>
+        <p>For example</p>
+<pre><code class="language-javascript">// declare a variable using let
+let name = "JS"; // type is string
+
+// change the type to number
+name = 2019</code></pre>
         
+        <p>If we change the type of variable often, we encounter two problems:</p>
+        <ol>
+            <li>Compiler Overhead Optimization</li>
+            <li>Side Effect Propagation</li>
+        </ol>
+
+        <p>In modern JS engine we have two phases:</p>
+        <ol>
+            <li>Baseline Compilation (= Interpreter)</li>
+            <li>Compiler Optimization (= Compiler)</li>
+        </ol>
+
+        <p>In fact at first JS engine reads the JS code as an <strong>interpreter</strong> and for optimizing it one more time tries to compile it to machine code.</p>
+        <p>So the second phase is for making the code faster.</p>
+        <p>If we change the type of data we have, then the optimization phase cannot be succeeded and passes the code to another phase which is <strong>de-optimize</strong> phase.</p>
+        <p>Result? Overhead</p>
+        <p>The lesson here is that as much as we can, we should avoid changing the type of data we use.</p>
+        <p>Since we have:</p>
+        <ol>
+            <li>var</li>
+            <li>let</li>
+            <li>const</li>
+        </ol>
+        <p>the best one for us will be <strong>const</strong> keyword.</p>
+        <p>I know that const keyword for <strong>Array</strong> and <strong>Object</strong> has no effect and cannot prevent them from modification but as a best practice it is preferable to use const.</p>
+        <p>And not just for avoiding compiler overhead but also to practice <strong>Functional Programming</strong> technique that we become familiar with it in other posts.</p>
+        <p>For better understanding of what I am saying please watch this video on youtube.com</p>
+        <p><a href="https://www.youtube.com/watch?v=p-iiEDtpy6I">Franziska Hinkelmann: JavaScript engines - how do they even? | JSConf EU</a></p>
 		DD_MM_YYYY
         <div class="edit-on-github">
             <a target="_blank" href="https://github.com/k-five/jsfun.ir/blob/master/home/effective-javascript-2/var-let-const/main.html">Edit on Github</a>
