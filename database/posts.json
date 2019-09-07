@@ -43,7 +43,8 @@
             "effective js 2 start": "",
             "var let const": "",
             "type of functions": "",
-            "type of functions 2": ""
+            "type of functions 2": "",
+            "type of this binding": ""
         },
         "react": {
             "three JSX main patterns": "",
