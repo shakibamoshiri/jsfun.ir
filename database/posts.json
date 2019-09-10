@@ -44,7 +44,8 @@
             "var let const": "",
             "type of functions": "",
             "type of functions 2": "",
-            "type of this binding": ""
+            "type of this binding": "",
+            "object create assign freeze": ""
         },
         "react": {
             "three JSX main patterns": "",

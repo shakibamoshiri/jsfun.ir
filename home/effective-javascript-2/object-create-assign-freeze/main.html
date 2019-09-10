@@ -1,0 +1,122 @@
+<main>
+	<div class="content-r">
+		<h1>object-create-assign-freeze</h1>
+        <hr>
+        <p>We know that in JavaScript when we create an object, e.g</p>
+        <ul>
+            <li>const object = new Object();</li>
+            <li>const array = new Array();</li>
+            <li>const object2 = {}</li>
+            <li>const array2 = []</li>
+            <li>etc</li>
+        </ul>
+        <p>when these objects are created, a reference to those is given to our variables. Which means if you have:</p>
+<pre><code class="language-javascript">// first object
+const obj1 = { x: 10 };
+
+// object to will be a reference to "obj1"
+const obj2 = obj1;
+
+// we can prove this very simply
+obj2.x = 10 * 2;
+
+// obj1.x has changed!
+console.log( obj1.x ); // 20
+</code></pre>
+        <p>So we should be careful we assigning an object to another one.</p>
+        
+        <h3 class="sub-title">Object.create</h3>
+        <p class="quote">The  <strong>Object.create()</strong> method creates a new object, using an existing object as the prototype of the newly created object.</p>
+        <ul>
+            <li><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object/create">reference</a></li>
+        </ul>
+        <p>The arguments to this function are:</p>
+        <ol>
+            <li>prototype of other object</li>
+            <li>property for new object</li>
+        </ol>
+<pre><code class="language-javascript">// simple example
+const object = {
+    value: 10,
+    printValue: function(){
+        console.log( "value is ", this.value );
+    }
+};
+
+// prototype of object is added to objectCopy
+const objectCopy = Object.create( object );
+
+console.log( objectCopy.value );        // 10
+console.log( objectCopy.printValue );   // function printValue()
+
+// so both properties have been inherited, and these are copies not reference
+objectCopy.value = 20;
+console.log( object.value );            // 10
+</code></pre>
+        <p>So it creates a copy of an existing objects.</p>
+        <p>Also note that empty object</p>
+
+        <h3 class="sub-title">Object.assign</h3>
+        <p class="quote">
+
+        The Object.assign() method is used to copy the values of all enumerable own properties from one or more source objects to a target object. It will return the target object.</p>
+        <ul>
+            <li><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object/assign">reference</a></li>
+        </ul>
+        <p>Lets see it in action:</p>
+
+<pre><code class="language-javascript">// creating two objects
+const o1 = { x: 10 };
+const o2 = { y: 20 };
+
+// copy o1, o2 into a new object
+// then assign it into o3
+const o3 = Object.assign( {}, o1, o2 );
+console.log( o3 );  // { x: 10, y: 20 }
+</code></pre>
+        <p>Note that if we place <strong>o1</strong> as the first argument, then o2 is copied into o1.</p>
+<pre><code class="language-javascript">// creating two objects
+const o1 = { x: 10 };
+const o2 = { y: 20 };
+
+// copy o2 into o1 and return a copy of o1
+// then assign it into o3
+const o3 = Object.assign( o1, o2 );
+console.log( o1 );  // { x: 10, y: 20 }   o1 and o2
+console.log( o2 );  // { x: 10 }          o2
+console.log( o3 );  // { x: 10, y: 20 }   o1 and o2
+</code></pre>
+
+        <h3 class="sub-title">Object.freeze</h3>
+        <p class="quote">The Object.freeze() method freezes an object. A frozen object can no longer be changed; freezing an object prevents new properties from being added to it, existing properties from being removed, prevents changing the enumerability, configurability, or writability of existing properties, and prevents the values of existing properties from being changed. In addition, freezing an object also prevents its prototype from being changed. freeze() returns the same object that was passed in.</p>
+        <ul>
+            <li><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object/freeze">reference</a></li>
+        </ul>
+
+<pre><code class="language-javascript">// create an freeze 
+const freezeOjbect = Object.freeze.bind( Object );
+const o1 = freezeOjbect( { x: 10 } );
+o1.x = 100;             // has no effect 
+console.log( o1.x )     // 10
+
+// also freezing on existing object
+const o2 = { y: 20 };
+o2.y = 2019;
+console.log( o2.y );    // 2019
+
+freezeOjbect( o2 );
+o2.y = "ha ha ha";      // has no effect
+console.log( o2.y );    // 2019
+
+// in strict mode, it throws an Error
+</code></pre>
+        
+        <p>So to limit the side effect in your program, make your object read-only by Object.freeze.</p>
+        <p>If you want to pass them around, create a copy of them, because they are passed by reference not value.</p>
+        
+		DD_MM_YYYY
+        <div class="edit-on-github">
+            <a target="_blank" href="https://github.com/k-five/jsfun.ir/blob/master/home/effective-javascript-2/object-create-assign-freeze/main.html">Edit on Github</a>
+        </div>
+	</div>
+</main>
