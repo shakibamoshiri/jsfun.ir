@@ -45,7 +45,9 @@
             "type of functions": "",
             "type of functions 2": "",
             "type of this binding": "",
-            "object create assign freeze": ""
+            "object create assign freeze": "",
+            "four ways of creating an object": "",
+            "types of for loop": ""
         },
         "react": {
             "three JSX main patterns": "",
