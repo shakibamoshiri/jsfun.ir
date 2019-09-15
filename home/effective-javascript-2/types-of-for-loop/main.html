@@ -1,6 +1,200 @@
 <main>
 	<div class="content-r">
 		<h1>types-of-for-loop</h1>
+        <hr>
+        <p>Quick reviewing of three types of for loop in JavaScript.</p>
+
+        <h3 class="sub-title">for loop</h3>
+        <p>A common for loop we can find in any other programming languages with these structure:</p>
+        <ul>
+            <li>An initialization step</li>
+            <li>condition or break point</li>
+            <li>expression for changing the state of initialized variable</li>
+        </ul>
+        <p>This for loop is based on <string>indexing</string> which means usually we use it when we have an array and want to iterator over it.</p>
+<pre><code class="language-javascript">// simple array
+const log = console.log.bind( console );
+const array = [ 1, 2, 3 ];
+const max = array.length;
+for( let index = 0; index &lt; max; ++index ){
+    log( array[ index ] ); // accessing by using index of the array
+}
+
+// output
+1
+2
+3</code></pre>
+        <p>Two issues with this for are</p>
+        <ol>
+            <li>noticing the array length boundary</li>
+            <li>using <strong>index</strong> variable for the array</li>
+        </ol>
+        <p>And since other that using arrays we use too much object and wants to iterate over them we will face something like this:</p>
+<pre><code class="language-javascript">// simple object
+const log = console.log.bind( console );
+
+const object = {
+    x: "this is x",
+    y: "this is y",
+    z: "this is z"
+};
+
+log( object.length ); // undefined
+
+// extract the keys method with fixed this binding 
+const keys = Object.keys.bind( Object );
+
+// array of keys
+const objectKyes = keys( object );
+
+// length of array
+const objectLength = objectKyes.length;
+
+// iterating over the object
+for( let index = 0; index &lt; objectLength; ++index ){
+    // each key
+    // x, y, z
+    const key = objectKyes[ index ];
+    log( object[ key ] );
+}
+
+// output
+this is x
+this is y
+this is z
+</code></pre>
+        <p>Maybe someone simplify it to this:</p>
+<pre><code class="language-javascript">// forEach method of Array
+keys( object ).forEach(function( key ){ log( object[ key ] )});
+
+// output
+this is x
+this is y
+this is z</code></pre>
+        <p>This way is okay, but we know what the forEach method does.</p>
+        <p><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/for">More Info</a></p>
+        
+        <h3 class="sub-title">for in</h3>
+        <p class="quote">The <strong>for ... in</strong> statement iterates over all non-<a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Symbol">Symbol</a>, <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Enumerability_and_ownership_of_properties">enumerable properties</a> of an object.</p>
+        <ul>
+            <li><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/for...in">reference</a></li>
+        </ul>
+        <p>So the main purpose of <strong>for ... in</strong> is to iterator over an object that has <strong>enumerable properties</strong>.</p>
+        <p>When we have enumerable properties:</p>
+<pre><code class="language-javascript"> // create an empty object, no inheritance
+const log = console.log.bind( console );
+const emptyOjbect = Object.create.bind( Object, null );
+
+const object = emptyOjbect();
+object.x = "this is x";
+object.y = "this is y";
+object.z = "this is z";
+
+for( const key in object ){
+    log( object[ key ) );
+}
+
+// output
+this is x
+this ix y
+this is z
+</code></pre>
+        <p>When we do not have it:</p>
+<pre><code class="language-javascript"> // create an empty object, no inheritance
+const log = console.log.bind( console );
+const emptyOjbect = Object.create.bind( Object, null );
+
+const object = emptyOjbect({
+    x: {
+        value: 'this is x'
+    },
+    y: {
+        value: 'this is y'
+    },
+    z: {
+        value: 'this is z'
+    }
+});
+
+for( const key in object ){
+    log( object[ key ] );
+}
+
+// output
+undefined
+</code></pre>
+        <p><strong>Why?</strong></p>
+        <p>Simply because here each property in our object has an attribute named: <strong>enumerable</strong> and the way we created above set them to false so the for ... in loop cannot iterator over it.</p>
+        <p>Thus for .. in cannot iterator over non-enumerable properties.</p>
+        <p>Please notice that we declaring <strong>key</strong> variable we used <strong>const</strong> keyword and it worked.</p>
+        <p>Using the constant variable means that for each iteration this variable is created and assigned. So three different ones, separately, each time.</p>
+        <p>Just for testing lets make one of them enumerable</p>
+<pre><code class="language-javascript"> // create an empty object, no inheritance
+const log = console.log.bind( console );
+const emptyOjbect = Object.create.bind( Object, null );
+
+const object = emptyOjbect({
+    x: {
+        value: 'this is x'
+    },
+    y: {
+        value: 'this is y',
+        enumerable: true
+    },
+    z: {
+        value: 'this is z'
+    }
+});
+
+for( const key in object ){
+    log( object[ key ] );
+}
+
+// output, only object.y is enumerable, not x,z
+this is y
+</code></pre>
+
+
+        <h3 class="sub-title">for of</h3>
+        <p class="quote">The for...of statement creates a loop iterating over iterable objects, including: built-in String, Array, Array-like objects (e.g., arguments or NodeList), TypedArray, Map, Set, and user-defined iterables. It invokes a custom iteration hook with statements to be executed for the value of each distinct property of the object.</p>
+        <ul>
+            <li><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/for...of">reference</a></li>
+        </ul>
+        <p>While for ... in is a specific statement for iterating over objects, <strong>for ... of</strong> which added in ES6 is for iterable objects.</p>
+        <p>Iterable objects means these that we can use their index, a kind of array.</p>
+        <p>for ... of with an object:</p>
+<pre><code class="language-javascript">for( const key of { x: 'X', y: 'Y' } ) console.log( key );
+
+// output
+TypeError: ({x:"X", y:"Y"}) is not iterable</code></pre>
+        <p>for ... in with the same object:</p>
+
+<pre><code class="language-javascript">for( const key in { x: 'X', y: 'Y' } ) console.log( key );
+
+// output
+x
+y</code></pre>
+
+
+        <p>Thus keep in mind that objects are not iterable, they are enumerable.</p>
+        <p>But arrays are both iterable and enumerable!</p>
+        <p>Using for ... of with an array:</p>
+<pre><code class="language-javascript">for( const key of [ 10, 20, 30 ] ) console.log( key );
+
+// outout
+10
+20
+30</code></pre>
+
+        <p>Using for ... in with the same array:</p>
+<pre><code class="language-javascript">for( const key in [ 10, 20, 30 ] ) console.log( key );
+
+// output ( indexes of our array )
+0
+1
+2</code></pre>
+        <p>And finally for loop is faster than for ... in or for ... of, but not safer.</p>
+        <p>for ... in, for ... of are safer and simpler to use.</p>
         
 		DD_MM_YYYY
         <div class="edit-on-github">
