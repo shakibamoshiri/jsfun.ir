@@ -97,15 +97,201 @@ Z    defunct ("zombie") process, terminated but not reaped by its parent</code><
  ...
  5282  5304 ?        00:00:00 Timer
  ...</code></pre>
+        <p>To better understand these threads I asked a question on Stack-Overflow and there is no answer to it.</p>
+        <p><a target="_blnak" href="https://stackoverflow.com/questions/57959772/what-are-js-watchdog-js-helper-timer-threads-inside-a-web-browsers-process">What are JS Watchdog, JS Helper, Timer threads inside a web browser's process</a></p>
+        <p>So if I could not find the correct answers the explanation will be my best guess!</p>
         
         <h3 class="sub-title">JS Watchdog</h3>
-        
+        <i>This section maybe wrong, please clarify me!</i>
+        <p>What I found through searching:</p>
+        <ul>
+            <li><a href="https://bugzilla.mozilla.org/show_bug.cgi?id=472702"> using watchdog thread in js shell to trigger operation callback</a></li>
+            <li><a href="https://bugzilla.mozilla.org/show_bug.cgi?id=871079">Don't trigger operation callback from watchdog unless JS has been running long enough</a></li>
+            <li><a href=""https://www.google.com/url?sa=t&rct=j&q=&esrc=s&source=web&cd=4&cad=rja&uact=8&ved=2ahUKEwiJgIyT_NfkAhVMzKQKHcNiCyUQFjADegQIAhAB&url=https%3A%2F%2Fen.wikipedia.org%2Fwiki%2FWatchdog_timer&usg=AOvVaw1aVlNm4ua9Aya5GfLXPg7Y>Watchdog timer - Wikipedia</a></li>
+        </ul>
+       <p>None of these  directly explain the role of <strong>JS Watchdog thread</strong>.</p>
+       <p>My best guess is that this thread takes care of running long time operation to prevent browser crash.</p>
+       <p>For example:</p>
+       <ul>
+           <li>infinite for loop</li>
+           <li>too much recursive function calls</li>
+       </ul>
+       <p>In such cases the threads tries to stop that operation!</p>
+<pre><code class="language-javascript">// sample for too long call stack
+(function ff(){ ff() })();
+
+// output on devtools
+InternalError: too much recursion</code></pre>
 
         <h3 class="sub-title">JS Helper</h3>
-        
+        <i>This section maybe wrong, please clarify me!</i>
+        <p>My best guess about these two <strong>JS Helper thread</strong> is that they are responsible for main JS code and Asynchronous code.</p>
+        <p>In face one of them is kind of main thread JS and the other one is the helper thread for running asynchronous events.</p>
+        <p>We know that in modern JS we have:</p>
+        <ul>
+            <li>Main Task</li>
+            <li>Macro Task</li>
+            <li>Micro Task</li>
+        </ul>
+        <p>The my best guess is that these two threads are for Main Task and Micro Task.</p>
+        <p>Because I know that Timer functionality in JS is Macro Task.</p>
+        <p>We will see in code.</p>
+<pre><code class="language-javascript">// sample
+|const log = console.log.bind( console );
+
+log( "start of main task" );
+
+setTimeout(function(){
+    log( "this is a Macro Task" );
+}, 1000 );
+// declare a function 
+function f(){
+    log( "this is function f()" );
+}
+
+// invoke it
+f();
+
+log( "end of main task" );
+
+// output
+--- start of main task ---
+this is function f()
+--- end of main task ---
+this is a Macro Task
+</code></pre>
+        <p>As you can see the Macro Task is done of the Main Tasks are done.</p>
+        <p>In fact we the JS file is executed the <strong>setTimeout()</strong> function has asynchronous nature and therefor it is put on a helper thread to be executed after 1000 milliseconds.</p>
+        <p>So when the main JS thread's tasks are all done, the tasks on Event Queue is executed and here the setTimeout() is on the Event Queue.</p>
+        <p><strong>How about Micro Tasks?</strong></p>
+        <p>It is the same as Macro Task, but has higher priority. Like what? Like Promise.</p>
+<pre><code class="language-javascript">const log = console.log.bind( console );
+
+log( "--- start of main task ---" );
+
+async function  microTask(){
+    await null;
+    log( "this is a Micro Task" );
+}
+
+// registered for later execution
+setTimeout(function(){
+    log( "this is a Macro Task" );
+},0);
+
+// run after setTimeout
+// registered for later execution
+microTask();
+
+// declare a function 
+function f(){
+    log( "this is function f()" );
+}
+
+// executed right now
+f();
+
+log( "--- end of main task ---" );
+
+// output
+--- start of main task ---
+this is function f()
+--- end of main task ---
+this is a Micro Task
+this is a Macro Task</code></pre>
 
         <h3 class="sub-title">Timer</h3>
+        <i>This section maybe wrong, please clarify me!</i>
+        <p>And my best guess for <strong>Timer threads</strong> is that it takes care of asynchronous operations related to:</p>
+        <ul>
+            <li>setTimer() function</li>
+            <li>setInterval() function</li>
+        </ul>
+        <p>if we change our function added for setTimeout to a promise, we will get the same output again.</p>
+<pre><code class="language-javascript">const log = console.log.bind( console );
+
+log( "--- start of main task ---" );
+
+async function  microTask(){
+    await null;
+    log( "This is a Micro Task" );
+}
+
+setTimeout(async function(){
+    log( "this is a Macro Task with Promise" );
+},0);
+
+// run after setTimeout
+microTask();
+
+// declare a function 
+function f(){
+    log( "this is function f()" );
+}
+
+// invoke it
+f();
+
+log( "--- end of main task ---" );
+
+
+// output:
+--- start of main task ---
+this is function f()
+--- end of main task ---
+This is a Micro Task
+this is a Macro Task with Promise</code></pre>
+        <p>Because still setTimeout() function has less priority.</p>
+        <p>How about adding extra operation to a micro task? Can we make it to be executed after a Macro task. No.</p>
+<pre><code class="language-javascript">// notice the for loop inside the promise
+const log = console.log.bind( console );
+
+log( "--- start of main task ---" );
+
+async function  microTask(){
+    await null;
+    let index = 0;
+    log( "index:", index );
+    for( ; index < 1000000000; ++index);
+    log( "index:", index );
+    log( "This is a Micro Task" );
+}
+
+setTimeout(async function(){
+    log( "this is a Macro Task with Promise" );
+},0);
+
+// run after setTimeout
+microTask();
+
+// declare a function
+function f(){
+    log( "this is function f()" );
+}
+
+// invoke it
+f();
+
+log( "--- end of main task ---" );
+
+
+// output
+--- start of main task ---
+this is function f()
+--- end of main task ---
+index: 0
+index: 1000000000
+This is a Micro Task
+this is a Macro Task with Promise
+</code></pre>
+        <p>As you can see although we added a long running for loop but setTimeout() function has to wait till finishing the for loop operation.</p>
+        <p>The two points here are:</p>
+        <ul>
+            <li>Micro tasks have higher priority</li>
+            <li>the asynchronous operations on the helper thread are queued if we have many!</li>
+        </ul>
         
+
 		DD_MM_YYYY
         <div class="edit-on-github">
             <a target="_blank" href="https://github.com/k-five/jsfun.ir/blob/master/home/effective-javascript-2/inside-the-browser-firefox/main.html">Edit on Github</a>
