@@ -1,0 +1,69 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 500 650" xmlns:xlink="http://www.w3.org/1999/xlink" width="500" height="650" font-family="Montserrat">
+  <rect x="0" y="0" width="500" height="650" fill="#fd0"></rect>
+
+  <g class="title" >
+    <rect x="0" y="35" width="500" height="40" fill="#000"></rect>
+    <text x="250" y="65" font-size="25" text-anchor="middle" fill="#fff" font-weight="bold">Inside the browser Firefox</text>
+  </g>
+  
+  <g transform="translate(250,130)" font-weight="bold" font-size="25" fill="#000" text-anchor="middle">
+    <rect x="-200" y="0" width="100" height="50"></rect>
+    <text x="-80" y="-10" >Main Process = PPID</text>
+    <text x="-100" y="210" transform="rotate(-90,-110,270)">Children of Main Process</text>
+    <text x="-150" y="35" fill="#fff">1000</text>
+    <path d="M-150,60 v60 h30" stroke="#000" stroke-width="3" fill="none" marker-end="url(#arrowhead)" marker-start="url(#bullet)"></path>
+    <path d="M-150,60 v300 h30" stroke="#000" stroke-width="3" fill="none" marker-end="url(#arrowhead)" marker-start="url(#bullet)"></path>
+    <path d="M-150,60 v366 h30" stroke="#000" stroke-width="3" fill="none" marker-end="url(#arrowhead)" marker-start="url(#bullet)"></path>
+  </g>
+
+  <g transform="translate(350,230)" font-weight="bold" font-size="25" fill="#00c800" text-anchor="middle">
+    <rect x="-200" y="0" width="100" height="50"></rect>
+    <text x="-50" y="-10" >Active Process (open tab)</text>
+    <text x="-150" y="35" fill="#fff">1001</text>
+    <path d="M-150,60 v20 h60" stroke="#000" stroke-width="2" fill="none" marker-end="url(#arrowhead)" marker-start="url(#bullet)"></path>
+    <path d="M-150,60 v50 h60" stroke="#000" stroke-width="2" fill="none" marker-end="url(#arrowhead)" marker-start="url(#bullet)"></path>
+    <path d="M-150,60 v80 h60" stroke="#000" stroke-width="2" fill="none" marker-end="url(#arrowhead)" marker-start="url(#bullet)"></path>
+    <path d="M-150,60 v110 h60" stroke="#000" stroke-width="2" fill="none" marker-end="url(#arrowhead)" marker-start="url(#bullet)"></path>
+  </g>
+  <g transform="translate(480,300)" font-weight="bold" font-size="20" fill="#0cc" text-anchor="middle">
+    <rect x="-200" y="0" width="150" height="25"></rect>
+    <text x="-150" y="-10" fill="#000" >Threads</text>
+    <text x="-125" y="20" fill="#fff">JS Watchdog</text>
+  </g>
+  <g transform="translate(480,330)" font-weight="bold" font-size="20" fill="#0cc" text-anchor="middle">
+    <rect x="-200" y="0" width="150" height="25"></rect>
+    <text x="-125" y="20" fill="#fff">JS Helper</text>
+  </g>
+  <g transform="translate(480,360)" font-weight="bold" font-size="20" fill="#0cc" text-anchor="middle">
+    <rect x="-200" y="0" width="150" height="25"></rect>
+    <text x="-125" y="20" fill="#fff">JS Helper</text>
+  </g>
+  <g transform="translate(480,390)" font-weight="bold" font-size="20" fill="#0cc" text-anchor="middle">
+    <rect x="-200" y="0" width="150" height="25"></rect>
+    <text x="-125" y="20" fill="#fff">Timer</text>
+  </g>
+  
+  <g transform="translate(350,470)" font-weight="bold" font-size="25" fill="#ccc" text-anchor="middle">
+    <rect x="-200" y="0" width="100" height="50"></rect>
+    <text x="-100" y="-10" fill="#000" >Reserved Process</text>
+    <text x="-150" y="35" fill="#fff">1002</text>
+  </g>
+  <g transform="translate(350,530)" font-weight="bold" font-size="25" fill="#ccc" text-anchor="middle">
+    <rect x="-200" y="0" width="100" height="50"></rect>
+    <text x="-150" y="35" fill="#fff">1003</text>
+  </g>
+  
+  <defs>
+    <marker id="arrowhead" markerWidth="10" markerHeight="7" 
+            refX="0" refY="3.5" orient="auto">
+      <polygon fill="#000" points="0 0, 5 3.5, 0 7" />
+    </marker>
+    <marker id="bullet" markerWidth="12" markerHeight="12" refX="6" refY="6" >
+      <circle fill="#000" cx="6" cy="6" r="2" stroke="context-stroke" stroke-width="2"/>
+    </marker>
+  </defs>
+
+  <text x="10" y="645" font-size="10"  fill="#000" font-weight="bold">Designer and Creator: Shakiba Moshiri, 2019-09-17</text>
+  <text x="250" y="30" font-size="15"  fill="#000" font-weight="bold" text-anchor="middle">more info on the blog: jsfun.ir</text>
+<!--<path fill="none" stroke="#000" stroke-width="3" d="M60,50 v140 q0" marker-start="url(#diamond)" marker-end="url(#arrowhead)"></path>-->
+</svg>
