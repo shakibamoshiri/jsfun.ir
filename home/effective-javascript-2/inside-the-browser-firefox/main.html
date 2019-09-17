@@ -9,7 +9,7 @@
         <p>Then open your Firefox and do not do anything with it. It should have one tab opened.</p>
         
         <h3 class="sub-title">Processes</h3>
-        <p>On you Terminal type:</p>
+        <p>On your Terminal type to get all processes related to Firefox</p>
 <pre><code class="language-javascript">pidof firefox | tr ' ' '\n' | sort -h
 
 // which gives you something like this
@@ -17,12 +17,21 @@
 5282
 5597
 5822</code></pre>
-        <p>The first one <strong>4084</strong> is the parent process id.</p>
-        <p>The second one is the child process id which is active tab we have.</p>
+        <p>The first one <strong>4084</strong> is the parent process id or main process id for Firefox itself.</p>
+        <p>The second one is the child process id which is the active tab we have.</p>
         <p>The other two are also children and are reserved processes.</p>
 
         <h3 class="sub-title">Parent and Children</h3>
-        <p>We can see the them in tree mode of the <strong>ps</strong> command.</p>
+        <p>We can see them in tree mode of the <strong>ps</strong> command.</p>
+        <ul>
+            <li><strong>parent</strong: 4084></li>
+            <li><strong>children</strong></li>
+            <ul>
+                <li><strong>child</strong>: 5282</li>
+                <li><strong>child</strong>: 5597</li>
+                <li><strong>child</strong>: 5822</li>
+            </ul>
+        </ul>
         <p>try:</p>
 <pre><code class="language-javascript"> ps -ocmd,ppid,pid,nlwp,state --forest $(pidof firefox)
 
