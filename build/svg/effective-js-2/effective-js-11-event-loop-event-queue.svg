@@ -1,0 +1,57 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 500 650" xmlns:xlink="http://www.w3.org/1999/xlink" width="500" height="650" font-family="Montserrat">
+  <rect x="0" y="0" width="500" height="650" fill="#fd0"></rect>
+
+  <g class="title" >
+    <rect x="0" y="35" width="500" height="40" fill="#000"></rect>
+    <text x="250" y="65" font-size="25" text-anchor="middle" fill="#fff" font-weight="bold">Event Loop - Event Queue</text>
+  </g>
+  <g transform="translate(50,150)" font-weight="bold" font-size="20" fill="#0c0" text-anchor="">
+    <text x="0" y="-10" fill="#">Call Stack</text>
+    <rect x="0" y="0" width="150" height="250"></rect>
+    <text x="35" y="30" fill="#fff">priority 1</text>
+    <text x="35" y="60" fill="#fff" text-decoration="line-through">priority 2</text>
+    <text x="35" y="90" fill="#fff" text-decoration="line-through">priority 3</text>
+    <text x="35" y="120" fill="#fff">priority 1</text>
+    <text x="35" y="150" fill="#fff">priority 1</text>
+    <text x="35" y="180" fill="#fff">priority 1</text>
+    <text x="35" y="210" fill="#fff" text-decoration="line-through">priority 3</text>
+    <text x="35" y="240" fill="#fff" text-decoration="line-through">priority 2</text>
+    <path  d="M170,60 h50" fill="none" stroke="#000" stroke-width="3" marker-start="url(#bullet)" marker-end="url(#arrowhead)" ></path>
+    <path  d="M170,90 h50" fill="none" stroke="#000" stroke-width="3" marker-start="url(#bullet)" marker-end="url(#arrowhead)" ></path>
+    <path  d="M170,210 h50" fill="none" stroke="#000" stroke-width="3" marker-start="url(#bullet)" marker-end="url(#arrowhead)" ></path>
+    <path  d="M170,240 h50" fill="none" stroke="#000" stroke-width="3" marker-start="url(#bullet)" marker-end="url(#arrowhead)" ></path>
+  </g>
+  <g transform="translate(300,150)" font-weight="bold" font-size="20" fill="#0cc" text-anchor="">
+    <text x="0" y="-10" fill="#">Web API</text>
+    <rect x="0" y="0" width="150" height="250"></rect>
+    <text x="35" y="60" fill="#fff">priority 2</text>
+    <text x="35" y="90" fill="#fff">priority 3</text>
+    <text x="35" y="210" fill="#fff">priority 3</text>
+    <text x="35" y="240" fill="#fff">priority 2</text>
+    <path  d="M70,270 v100" fill="none" stroke="#000" stroke-width="3" marker-start="url(#bullet)" marker-end="url(#arrowhead)" ></path>
+  </g>
+  <g transform="translate(50,490)" font-weight="bold" font-size="20" fill="#000" text-anchor="">
+    <path  d="M160,-40 a50,50 0 1,1 0,50" fill="none" stroke="#000" stroke-width="3" marker-start="url(#bullet)" marker-end="url(#arrowhead)" ></path>
+    <text x="130" y="-10">event loop</text>
+  </g>
+  <g transform="translate(50,550)" font-weight="bold" font-size="20" fill="#000" text-anchor="">
+    <path  d="M70,-20 v-100" fill="none" stroke="#000" stroke-width="3" marker-start="url(#bullet)" marker-end="url(#arrowhead)" ></path>
+    <rect x="0" y="0" width="400" height="50"></rect>
+    <text x="25" y="30" fill="#fff">Task | Tasks | Task | ...</text>
+    <text x="50" y="70">event queue or callback queue</text>
+  </g>
+    
+  <defs>
+    <marker id="arrowhead" markerWidth="10" markerHeight="7" 
+            refX="0" refY="3.5" orient="auto">
+      <polygon fill="#000" points="0 0, 5 3.5, 0 7" />
+    </marker>
+    <marker id="bullet" markerWidth="12" markerHeight="12" refX="6" refY="6" >
+      <circle fill="#000" cx="6" cy="6" r="2" stroke="context-stroke" stroke-width="2"/>
+    </marker>
+  </defs>
+
+  <text x="10" y="645" font-size="10"  fill="#000" font-weight="bold">Designer and Creator: Shakiba Moshiri, 2019-09-20</text>
+  <text x="250" y="30" font-size="15"  fill="#000" font-weight="bold" text-anchor="middle" letter-spacing="3px">more info on the blog: jsfun.ir</text>
+<!--<path fill="none" stroke="#000" stroke-width="3" d="M60,50 v140 q0" marker-start="url(#diamond)" marker-end="url(#arrowhead)"></path>-->
+</svg>
