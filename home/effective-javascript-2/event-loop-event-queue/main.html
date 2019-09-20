@@ -1,7 +1,170 @@
 <main>
 	<div class="content-r">
 		<h1>event-loop-event-queue</h1>
+        <hr>
+        <p>Two simple concepts that you do not have to even think about them to run you JS code, but understanding them helps you became a better JS developer.</p>
+
+        <h3 class="sub-title">Event Loop</h3>
+        <p>Since JS engine has priority for doing tasks, some of them that has less priority should be executed later.</p>
+        <p>When are these tasks executed? When the JS engine is idle.</p>
+        <p>The event loop picks a task from event queue and delivers it to JS engine to be executed; that is it.</p>
         
+        <h3 class="sub-title">Event Queue</h3>
+        <p>Tasks that have less priority are queued for later execution. We call this place event queue because it contains of tasks that should be done, but right now JS engine is busy.</p>
+        <p>When JS engine does not have anything to do, tasks from this queue is delivered to the engine.</p>
+
+        <h3 class="sub-title">Single Thread</h3>
+        <p>We know and said that JS is a single thread environment which means JS engine only does one task at the same time.</p>
+        <p>Asynchronous operations using callbacks are not really asynchronous. Saying this I mean parallel execution.</p>
+        <p>If you do not know about parallel execution here is a simple C programming for running two <strong>threads</strong> at the same time.</p>
+        
+        <h3 class="sub-title">Example of single thread execution in C</h3>
+        <p>Here we only have one thread, main thread.</p>
+<pre><code class="language-javascript">// only on thread 
+#include &lt;stdio.h&gt;
+#include &lt;unistd.h&gt;
+
+int main(void) {
+
+    printf( ".......... start of main thread ..........\n" );
+
+    for( int index = 0; index &lt; 9999; ++index ){
+        for( int index2 = 0; index2 &lt; 99999; ++index2 ){
+
+        }
+    }
+    printf( "end of [first] loop in main thread\n" );
+
+    for( int index = 0; index &lt; 9999; ++index ){
+        for( int index2 = 0; index2 &lt; 99999; ++index2 ){
+
+        }
+    }
+    printf( "end of [second] loop in main thread\n" );
+
+    printf( "........... end of main thread ...........\n" );
+    return 0;
+}
+
+// compile it using GCC
+gcc single-thread-execution.c -o single-thread-execution
+
+// notice the time, each loop will take about 3 seconds
+time ./single-thread-execution 
+.......... start of main thread ..........
+end of [first] loop in main thread
+end of [second] loop in main thread
+........... end of main thread ...........
+
+real	0m7.013s
+user	0m7.011s
+sys	0m0.000s
+</code></pre>
+        <p>What we have here is simple. First loop will take about 3 seconds and then second loop also will take about 3 seconds. The tasks are done one by one, from top to bottom.</p>
+        
+        <h3 class="sub-title">Example of two threads execution in C</h3>
+        <p>Here we are using POSIX thread or short <strong>pthread</strong>.</p>
+<pre><code class="language-javascript">// two threads
+#include &lt;stdio.h&gt;
+#include &lt;unistd.h&gt;
+#include &lt;pthread.h&gt;
+
+void* thread_function( void* arg ){
+    for( int index = 0; index &lt; 9999; ++index ){
+        for( int index2 = 0; index2 &lt; 99999; ++index2 ){
+
+        }
+    }
+
+    printf( "end of for loop in child thread\n" );
+    return NULL;
+}
+
+int main(void) {
+    printf( ".......... start of main thread ..........\n" );
+
+    pthread_t thr;
+    pthread_create( &amp;thr, NULL, thread_function, NULL );
+
+// ignore this loop
+//    for( int index = 0; index &lt; 9999; ++index ){
+//        for( int index2 = 0; index2 &lt; 99999; ++index2 ){
+//
+//        }
+//    }
+
+    for( int index = 0; index &lt; 9999; ++index ){
+        for( int index2 = 0; index2 &lt; 99999; ++index2 ){
+
+        }
+    }
+    printf( "end of for loop in main thread\n" );
+
+    // join the child thread
+    pthread_join( thr, NULL );
+
+    printf( "........... end of main thread ...........\n" );
+
+    return 0;
+}
+
+
+// compile it
+gcc  two-threads-execution.c -lpthread -o two-threads-execution
+
+// run it
+time ./two-threads-execution
+.......... start of main thread ..........
+end of for loop in main thread
+end of for loop in child thread
+........... end of main thread ...........
+
+real	0m3.559s
+user	0m6.992s
+sys	0m0.000s
+</code></pre>
+        <p>You can test and run it as many times as you like; it will be always around 3 seconds, because both loop are run in parallel.</p>
+        <p>We do NOT have such a thing is JS. The browsers e.g Firefox child processes can have other threads, but the JS engine itself has only one thread to execute codes.</p>
+
+        <h3 class="sub-title">Why should we can about this single thread behavior?</h3>
+        <p>It is not that important when we run codes. The important part is about <string>rendering</string> the page.</p>
+        <p>Rendering page happens JS engine is idle. If you add / run to much task, then their is no time / chance for other threads to update DOM.</p>
+        <p>Simple example of this behavior can be seen using a simple SVG animation.</p>
+        <p>Here is a simple SVG animation that is rendered periodically. Adding an infinite loop, will stop it.</p>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" xmlns:xlink="http://www.w3.org/1999/xlink" width="100" height="100" font-family="Montserrat">
+          <rect x="0" y="0" width="100" height="100" fill="#fd0"></rect>
+          <g font-weight="bold" font-size="25" fill="#00c800" text-anchor="middle">
+            <path id="handle" d="M50,50  h35" stroke="#000" stroke-width="2" fill="none" marker-end="url(#arrowhead)" marker-start="url(#bullet)"></path>
+          </g>
+          <defs>
+            <marker id="arrowhead" markerWidth="10" markerHeight="7"
+                    refX="0" refY="3.5" orient="auto">
+              <polygon fill="#000" points="0 0, 5 3.5, 0 7" />
+            </marker>
+            <marker id="bullet" markerWidth="12" markerHeight="12" refX="6" refY="6" >
+              <circle fill="#000" cx="6" cy="6" r="2" stroke="context-stroke" stroke-width="2"/>
+            </marker>
+          </defs>  <defs>
+            <style type="text/css"><![CDATA[
+              @-webkit-keyframes rotate {
+                100% { transform: rotate(360deg) } }
+              @keyframes rotate {
+                100% { transform: rotate(360deg) }
+              }
+              path#handle {
+                transform-origin: 50px 50px;
+                animation-name: rotate;
+                animation-duration: 2s;
+                animation-timing-function: linear;
+                animation-iteration-count: infinite;
+          }
+              ]]></style>
+          </defs>
+        </svg>
+        <p>While watching this animation, open you Dev-Tools and add this infinite while loop:</p>
+<pre><code class="language-javascript">while( true ) console.log( "infinite loop" );</code></pre>
+        <p>You may not encounter any kind of delay if you have a powerful CPU, but for me it will stop rotating.</p>
+
 		DD_MM_YYYY
         <div class="edit-on-github">
             <a target="_blank" href="https://github.com/k-five/jsfun.ir/blob/master/home/effective-javascript-2/event-loop-event-queue/main.html">Edit on Github</a>
