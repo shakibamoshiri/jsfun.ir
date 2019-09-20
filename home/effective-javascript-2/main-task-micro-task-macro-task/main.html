@@ -1,0 +1,99 @@
+<main>
+	<div class="content-r">
+		<h1>main-task-micro-task-macro-task</h1>
+        <hr>
+        <p>We know or at least hear that JavaScript is a single threaded engine.</p>
+        <p>Also we hear about <strong>asynchronous</strong> things in JavaScript.</p>
+        <p>If it seems wired to you, you are right.</p>
+        <p>How a single threaded engine does asynchronous operations? We will understand it here.</p>
+        
+        <h3 class="sub-title">Main Task</h3>
+        <p>Main tasks are those the engine has to run and they are <strong>pure</strong> JavaScript code.</p>
+        <p>Which means no API calls to the DOM, no event listeners, etc.</p>
+        <p>These task should be done first, and therefor <strong>main tasks</strong> priority is 1. No others kinds of tasks will be run, unless there is no main tasks.</p>
+        <p>For example if we add an infinite while loop in our JS file when loading a page, it is considered as a main task with priority of 1 and nothing else will be run till finishing this task.</p>
+<pre><code class="language-javascript">// infinite while loop
+while( true ){
+    console.log( "infinite loop" );
+}</code></pre>
+        <p>When we encounter an infinite loop like above, you can test it, then page responsiveness will be gone. Why?</p>
+        <p>Very simple. What is the purpose of using JavaScript in a web browser? Yes, manipulating the DOM.</p>
+        <p>So when the JavaScript engine is busy with our infinite while loop, it implicitly means <strong>hey browser, do not render the page, I am busy with it</strong>.</p>
+        <p>In fact no other tasks, button clicks, scrolling, animations, etc will work. Everything stops because the JS engine is 100% busy with the infinite while loop.</p>
+        
+
+        <h3 class="sub-title">Micro Task</h3>
+        <p>These kind of tasks are related to Web API. AJAX calls, event listeners, etc.</p>
+        <p>The JavaScript engine does not know how to do them. We will code these events in our JS file, but they are delivered to another threaded managed by the browser.</p>
+        <p>For example for an AJAX request, we cannot predict when is will be finished. So it does not make sense to keep the engine busy till AJAX does its tasks.</p>
+        <p>The proper way of doing an AJAX request is the handed to another thread, that thread does the task, and gives the result back to us.</p>
+        <p>We already did this. How? Callback functions.</p>
+
+        <h3 class="sub-title">Macro Task</h3>
+        <p>These tasks are like Micro ones, but they have lower priority.</p>
+        <p>So the order of priority is</p>
+        <ol>
+            <li>Main tasks</li>
+            <li>Micro tasks</li>
+            <li>Macro tasks</li>
+        </ol>
+        
+        <h3 class="sub-title">Example</h3>
+        <p>Notice that the order is NOT important, the <strong>priority</strong> is important.</p>
+        <i>Test this with Node.js, browser will give you error for empty for loop.</i>
+<pre><code class="language-javascript">const log = console.log.bind( console );
+log( "............ start of the main task ............" );
+
+// micro task, priority 2
+async function micro(){
+    // break the flow and go to the event queue
+    await null;
+    let index = 0;
+    for( ; index < 100000000; ++index );
+    log( "micro index:", index );
+}
+// go to event queue
+micro();
+
+// macro priority 3
+function macro(){
+    let index = 0;
+    for( ; index < 100000000; ++index );
+    log( "macro index:", index );
+}
+// go the event queue 
+setTimeout( macro, 0 );
+
+// main task, priority 1
+// DO IT RIGHT NOW
+let index = 0;
+for( ; index < 100000000; ++index );
+log( "main index:", index );
+
+log( "............. end of the main task ............." );
+
+
+// output
+............ start of the main task ............
+main index: 100000000
+............. end of the main task .............
+micro index: 100000000
+macro index: 100000000</code></pre>
+        <p>Why happens here? Simple.</p>
+        <p>First <strong>micro()</strong> function since does not have priority is added is separated from main task and added to event queue for alter execution.</p>
+        <p>Second, our <strong>macro()</strong> function is part of the main task, but running it with <strong>setTimeout()</strong> will reduce the priority of it, and also will added the event queue for later execution.</p>
+        <p>Third the third for loop is part of the main task and should be run immediately and will.</p>
+        <p>Finally JavaScript engine after finishing all the main tasks, will be idle.</p>
+        <p>But!</p>
+        <p>Since we have two other tasks in the event queue, event loop will deliver the micro task to JS engine.</p>
+        <p>Do we have anything else? Yes, our macro task, then delivered to JS engine.</p>
+
+        <p><strong>What are event loop, and event queue?</strong> We will see it in next post.</p>
+        
+       
+		DD_MM_YYYY
+        <div class="edit-on-github">
+            <a target="_blank" href="https://github.com/k-five/jsfun.ir/blob/master/home/effective-javascript-2/main-task-micro-task-macro-task/main.html">Edit on Github</a>
+        </div>
+	</div>
+</main>
