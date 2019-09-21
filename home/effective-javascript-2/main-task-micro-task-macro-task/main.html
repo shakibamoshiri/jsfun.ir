@@ -10,23 +10,31 @@
         <h3 class="sub-title">Main Task</h3>
         <p>Main tasks are those the engine has to run and they are <strong>pure</strong> JavaScript code.</p>
         <p>Which means no API calls to the DOM, no event listeners, etc.</p>
-        <p>These task should be done first, and therefor <strong>main tasks</strong> priority is 1. No others kinds of tasks will be run, unless there is no main tasks.</p>
+        <p>These tasks should be done first, and therefore <strong>main tasks</strong> priority is 1. No other kinds of tasks will be run, unless there is no main task.</p>
         <p>For example if we add an infinite while loop in our JS file when loading a page, it is considered as a main task with priority of 1 and nothing else will be run till finishing this task.</p>
 <pre><code class="language-javascript">// infinite while loop
 while( true ){
     console.log( "infinite loop" );
 }</code></pre>
-        <p>When we encounter an infinite loop like above, you can test it, then page responsiveness will be gone. Why?</p>
+        <p>When we encounter an infinite loop like above, you can test it that page responsiveness will be gone. Why?</p>
         <p>Very simple. What is the purpose of using JavaScript in a web browser? Yes, manipulating the DOM.</p>
         <p>So when the JavaScript engine is busy with our infinite while loop, it implicitly means <strong>hey browser, do not render the page, I am busy with it</strong>.</p>
         <p>In fact no other tasks, button clicks, scrolling, animations, etc will work. Everything stops because the JS engine is 100% busy with the infinite while loop.</p>
+        <p>It is not happen for everyone. If we have a powerful CPU then we have a kind of response of the page not complete freezing.</p>
+        <p>But with a weak CPU we may encounter a complete freeze of the page.</p>
+
+        <h4 class="sub-title">Real Scenario</h4>
+        <p>Imagine you have a heavy animation on you home page. And it is done using JavaScript, so it is run as main task.</p>
+        <p>Now if we add an event listener on <strong>scroll</strong> event of the page, interesting things happen.</p>
+        <p>Since JS Call Stack is busy running animation and meanwhile we are scrolling, many scroll events are queued in <strong>event queue.</strong>.</p>
+        <p>Result? Very simple. Those events (scrolling) do not get change to be run since JavaScript engine is busy with animation.</p>
         
 
         <h3 class="sub-title">Micro Task</h3>
-        <p>These kind of tasks are related to Web API. AJAX calls, event listeners, etc.</p>
+        <p>These kind of tasks are related to Web API, e.g. AJAX calls, event listeners, etc.</p>
         <p>The JavaScript engine does not know how to do them. We will code these events in our JS file, but they are delivered to another threaded managed by the browser.</p>
-        <p>For example for an AJAX request, we cannot predict when is will be finished. So it does not make sense to keep the engine busy till AJAX does its tasks.</p>
-        <p>The proper way of doing an AJAX request is the handed to another thread, that thread does the task, and gives the result back to us.</p>
+        <p>For example for an AJAX request, we cannot predict when it will be finished. So it does not make sense to keep the engine busy till AJAX does its tasks.</p>
+        <p>The proper way of doing an AJAX request is to hand it to another thread, and that thread does the task, and gives the result back to us.</p>
         <p>We already did this. How? Callback functions.</p>
 
         <h3 class="sub-title">Macro Task</h3>
@@ -79,9 +87,9 @@ main index: 100000000
 ............. end of the main task .............
 micro index: 100000000
 macro index: 100000000</code></pre>
-        <p>Why happens here? Simple.</p>
-        <p>First <strong>micro()</strong> function since does not have priority is added is separated from main task and added to event queue for alter execution.</p>
-        <p>Second, our <strong>macro()</strong> function is part of the main task, but running it with <strong>setTimeout()</strong> will reduce the priority of it, and also will added the event queue for later execution.</p>
+        <p>What happens here? Simple.</p>
+        <p>First <strong>micro()</strong> function is run; since does not have priority is separated from main task and added to event queue for alter execution.</p>
+        <p>Second, our <strong>macro()</strong> function is part of the main task, but running it with <strong>setTimeout()</strong> will reduce the priority of it, and also will added to the event queue for later execution.</p>
         <p>Third the third for loop is part of the main task and should be run immediately and will.</p>
         <p>Finally JavaScript engine after finishing all the main tasks, will be idle.</p>
         <p>But!</p>
