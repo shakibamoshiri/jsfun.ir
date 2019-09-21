@@ -52,6 +52,9 @@
             "main task micro task macro task": "",
             "event loop event queue": ""
         },
+        "modern javascript": {
+            "modern javascript start": ""
+        },
         "react": {
             "three JSX main patterns": "",
             "JSX direct function call": "",
