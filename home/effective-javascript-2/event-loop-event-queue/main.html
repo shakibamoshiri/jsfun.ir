@@ -2,7 +2,7 @@
 	<div class="content-r">
 		<h1>event-loop-event-queue</h1>
         <hr>
-        <p>Two simple concepts that you do not have to even think about them to run you JS code, but understanding them helps you became a better JS developer.</p>
+        <p>Two simple concepts that you do not even have to think about them to run your JS code, but understanding them helps you became a better JS developer.</p>
 
         <h3 class="sub-title">Event Loop</h3>
         <p>Since JS engine has priority for doing tasks, some of them that has less priority should be executed later.</p>
@@ -16,7 +16,7 @@
         <h3 class="sub-title">Single Thread</h3>
         <p>We know and said that JS is a single thread environment which means JS engine only does one task at the same time.</p>
         <p>Asynchronous operations using callbacks are not really asynchronous. Saying this I mean parallel execution.</p>
-        <p>If you do not know about parallel execution here is a simple C programming for running two <strong>threads</strong> at the same time.</p>
+        <p>If you do not know about parallel execution here is two simple C programs for running two <strong>threads</strong> at the same time.</p>
         
         <h3 class="sub-title">Example of single thread execution in C</h3>
         <p>Here we only have one thread, main thread.</p>
@@ -63,7 +63,7 @@ sys	0m0.000s
         <p>What we have here is simple. First loop will take about 3 seconds and then second loop also will take about 3 seconds. The tasks are done one by one, from top to bottom.</p>
         
         <h3 class="sub-title">Example of two threads execution in C</h3>
-        <p>Here we are using POSIX thread or short <strong>pthread</strong>.</p>
+        <p>Here we use POSIX thread or short <strong>pthread</strong>.</p>
 <pre><code class="language-javascript">// two threads
 #include &lt;stdio.h&gt;
 #include &lt;unistd.h&gt;
@@ -126,11 +126,11 @@ sys	0m0.000s
         <p>You can test and run it as many times as you like; it will be always around 3 seconds, because both loop are run in parallel.</p>
         <p>We do NOT have such a thing is JS. The browsers e.g Firefox child processes can have other threads, but the JS engine itself has only one thread to execute codes.</p>
 
-        <h3 class="sub-title">Why should we can about this single thread behavior?</h3>
+        <h3 class="sub-title">What can we do about this single thread behavior?</h3>
         <p>It is not that important when we run codes. The important part is about <string>rendering</string> the page.</p>
-        <p>Rendering page happens JS engine is idle. If you add / run to much task, then their is no time / chance for other threads to update DOM.</p>
+        <p>Rendering a page happens when JS engine is idle. If we add / run too much tasks, then there is no time / chance for other tasks to be processed and rendering page is also a task with less priority than main tasks..</p>
         <p>Simple example of this behavior can be seen using a simple SVG animation.</p>
-        <p>Here is a simple SVG animation that is rendered periodically. Adding an infinite loop, will stop it.</p>
+        <p>Here is a simple SVG animation that is rendered periodically. Adding an infinite loop, will stop it if we have a weak CPU.</p>
         <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" xmlns:xlink="http://www.w3.org/1999/xlink" width="100" height="100" font-family="Montserrat">
           <rect x="0" y="0" width="100" height="100" fill="#fd0"></rect>
           <g font-weight="bold" font-size="25" fill="#00c800" text-anchor="middle">
@@ -162,8 +162,12 @@ sys	0m0.000s
           </defs>
         </svg>
         <p>While watching this animation, open you Dev-Tools and add this infinite while loop:</p>
-<pre><code class="language-javascript">while( true ) console.log( "infinite loop" );</code></pre>
+<pre><code class="language-javascript">function f(){ console.log( "f()" ); f() };
+f();</code></pre>
         <p>You may not encounter any kind of delay if you have a powerful CPU, but for me it will stop rotating.</p>
+        <p>For a better test, find a page that has a heavy animation and then try the code there.</p>
+        <p>And if you use a modern browser you will get something like this, that warns you and wants you to stop it.</p>
+        <img width="100%" src="/build/img/infinite-loop.png" alt="infinite-loop.png">
 
 		DD_MM_YYYY
         <div class="edit-on-github">
