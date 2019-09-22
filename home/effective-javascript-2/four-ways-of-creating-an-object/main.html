@@ -1,16 +1,42 @@
 <main>
 	<div class="content-r">
-		<h1>four-ways-of-creating-an-object</h1>
+		<h1>four-ways-of-creating-an-object (incomplete)</h1>
         <hr>
         <p>In JavaScript there are more than one way to create an object.</p>
         <p>The most common one is <strong>Object Literal</strong>.</p>
         <p>Although at first it seems that we create a <strong>variable</strong> but in reality we create an object (= instance) that inherits from Object.</p>
 <pre><code class="language-javascript">// create and object that inherits from Object
-const object = {};
+const person = {};
 
 // inherited property
-object.toString;    // function
-object.valueOf;     // function</code></pre>
+person.toString;    // function toString()
+person.valueOf;     // function valueOf()</code></pre>
+        <p>Where is the inherited part? Here</p>
+<pre><code class="language-javascript">person.prototype</code></pre>
+        <p>A note here is that if we are going to use a name-pair value just for storing data, we do not need this inheritance.</p>
+        <p>And for this we can create an object that is truly empty.</p>
+<pre><code class="language-javascript">// truly empty object
+const person = Object.create( null );
+
+person.toString;    // undefined
+person.valueOf;     // undefined</code></pre>
+        <p>This object is completely empty. It does not have any methods.</p>
+        <p>And if you wonder how it works, here is a quick review.</p>
+        <p><strong>Object.create()</strong> will take a prototype of an object or null. If you pass null then the receiver will not have prototype.</p>
+        <p>Notice this example:</p>
+<pre><code class="language-javascript">// using Object.prototype
+const o1 = Object.create( Object.prototype );
+
+o1.toString;        // function ...
+o1.valueOf;         // function ...</code></pre>
+        <p>Yes it is strange to us if we have used to create object in this way</p>
+<pre><code class="language-javascript">// common way of creating an object
+const person = new Object();
+
+person.toString;    // function ...
+person.valueOf;     // function ...</code></pre>
+        <p>Here we used Object constructor to create a new object. Also inheritance happens here.</p>
+        
         
 		DD_MM_YYYY
         <div class="edit-on-github">
