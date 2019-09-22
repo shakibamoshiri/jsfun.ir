@@ -11,7 +11,7 @@
         
         <h3 class="sub-title">Event Queue</h3>
         <p>Tasks that have less priority are queued for later execution. We call this place event queue because it contains of tasks that should be done, but right now JS engine is busy.</p>
-        <p>When JS engine does not have anything to do, tasks from this queue is delivered to the engine.</p>
+        <p>When JS engine does not have anything to do, tasks from this queue are delivered to the engine.</p>
 
         <h3 class="sub-title">Single Thread</h3>
         <p>We know and said that JS is a single thread environment which means JS engine only does one task at the same time.</p>
@@ -161,7 +161,7 @@ sys	0m0.000s
               ]]></style>
           </defs>
         </svg>
-        <p>While watching this animation, open you Dev-Tools and add this infinite while loop:</p>
+        <p>While watching this animation, open your Dev-Tools and add this infinite loop:</p>
 <pre><code class="language-javascript">function f(){ console.log( "f()" ); f() };
 f();</code></pre>
         <p>You may not encounter any kind of delay if you have a powerful CPU, but for me it will stop rotating.</p>
