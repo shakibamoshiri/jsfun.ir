@@ -1,0 +1,173 @@
+<main>
+	<div class="content-r">
+		<h1>why-promises</h1>
+        <hr>
+        <p>Explanation about promises are a lot. Mastering them in a single approach is not possible. So here we first see <strong>what kind of problems we have</strong>, and then we look at how it works.</p>
+
+        <h3 class="sub-title">Event Driven Architecture</h3>
+        <p>If you ever worked with a browser, coding some JS, then you have experienced</p>
+        <ul>
+            <li>register an event</li>
+            <li>listen for an event</li>
+            <li>handing and event</li>
+            <li>error happening for events</li>
+            <li>etc</li>
+        </ul>
+        <p>even if you have gone deep to the JS ecosystem then you are familiar with</p>
+        <ul>
+            <li>single threaded environment</li>
+            <li>Event Loop</li>
+            <li>Event Queue</li>
+            <li>Asynchronous programming</li>
+            <li>etc</li>
+        </ul>
+        <p>All of these are related to <strong>Event Driven Architecture</strong> or <strong>EDA</strong> for short.</p>
+        <p>And yes, you guessed it, Web Browsers that we use for surfing the web are based on this architecture.</p>
+        <p>Asynchronous nature of user interaction with a browser forces them (= browsers) to have this model at their core.</p>
+        <p>Since JS is the heart of DOM manipulation; it has to deal with these events all the time.</p>
+        <p>Result? JS has to handle asynchronous events and manage them all the time.</p>
+
+        <h3 class="sub-title">Exception Handling</h3>
+        <p>There is no system with no error and we have to take care about errors not just for catching them, but for catching them as soon as they occur.</p>
+        <p>Is it possible to catch an <strong>exception</strong> when actions are based on asynchronous stuff? No.</p>
+        <p>One drawback of Event Driven Architecture is the hardiness of <strone>exception handling</strone> because events happen in background, they happen when we are doing something else and therefore occurring an error can be easily overlooked.</p>
+        <p>And when we have many asynchronous events then managing their exceptions become harder and harder.</p>
+
+        <h3 class="sub-title">Asynchronous Synchronization</h3>
+        <p>Happening at any time later and not be able to rely on an event causes us to easily lose needed data.</p>
+        <p>Here is an example that we assign a string to a variable <strong>asynchronously</strong>.</p>
+<pre><code class="language-javascript">const log = console.log.bind( console );
+
+log( "--- start ---" );
+
+let name = "";
+
+// asynchronous stuff
+// it happens later as a macro Task
+// after call stack is empty
+setTimeout(function rename(){
+    name = "JS";
+}, 0 );
+
+// name is empty at this point
+log( "name is:", name ); // has not been set!!!
+
+log( "---- end ----" );
+</code></pre>
+        <p>output</p>
+<pre><code class="language-html">--- start ---
+name is: 
+---- end ----</code></pre>
+
+        <p>This was just one example. What if we have 100 of them in our program? What is the solution?</p>
+        <p><strong>Solution</strong>: using functions recursively so they happen after each other..</p>
+        <p>When we have asynchronous operations, for synchronizing them we have add them inside each other. In above case we has to print it inside that function.</p>
+
+ <pre><code class="language-javascript">const log = console.log.bind( console );
+
+log( "--- start ---" );
+
+let name = "";
+
+// asynchronous stuff
+// it happens later as a macro Task
+// after call stack is empty
+setTimeout(function rename(){
+    name = "JS";
+    log( "inside rename functin:", name );
+}, 0 );
+
+// name is empty at this point
+log( "name is:", name ); // has not been set!!!
+
+log( "---- end ----" );
+</code></pre>
+
+        <p>output</p>
+<pre><code class="language-html">--- start ---
+name is: 
+---- end ----
+inside rename functin: JS</code></pre>
+        
+        <p>So if we had 100 asynchronous rename function we had to use them inside each other like so</p>
+<pre><code class="language-javascript">const log = console.log.bind( console );
+
+log( "--- start ---" );
+
+const o1 = {
+    word: ""
+}
+
+const o2 = {
+    word: ""
+}
+
+const o3 = {
+    word: ""
+}
+
+function setWord( input, value ){
+    input.word = value
+}
+
+
+// asynchronous stuff
+// it happens later as a macro Task
+// after call stack is empty
+setTimeout(function(){
+    setWord( o1, "JS" );
+    setTimeout(function(){
+        setWord( o2, " is " );
+        setTimeout(function(){
+            setWord( o3, "great!" );
+            const sentence = o1.word + o2.word + o3.word;
+            log( "sentence:", sentence );
+        }, 0 );
+    }, 0 );
+}, 0 );
+
+const sentence = o1.word + o2.word + o3.word;
+log( "sentence:", sentence );
+
+log( "---- end ----" );
+</code></pre>
+
+        <p>output</p>
+<pre><code class="language-html">--- start ---
+sentence: 
+---- end ----
+sentence: JS is great!</code></pre>
+
+        <h3 class="sub-title">Callback Hell or Pyramid of doom</h3>
+        <p>There is a pattern if look at it carefully. An much as we have more asynchronous operation, we have more nested functions, so a <strong>V</strong> style shape.</p>
+        <p>It has an actual name called Pyramid of doom.</p>
+        <p>This is also a drawback of synchronizing asynchronous operations.</p>
+<pre><code class="language-javascript">setTimeout(function(){
+    setWord( o1, "JS" );
+    setTimeout(function(){
+        setWord( o2, " is " );
+        setTimeout(function(){
+            setWord( o3, "great!" );
+            const sentence = o1.word + o2.word + o3.word;
+            log( "sentence:", sentence );
+        }, 0 );
+    }, 0 );
+}, 0 );
+</code></pre>
+
+        <h3 class="sub-title">Solution?</h3>
+        <p>In ES6 we have a <strong>function constructor</strong> which as its names implies it is called <strong>Promise</strong>.</p>
+        <p>It has been got through JS language for solving the problems we saw here. Lets go the next part to see what it is.</p>
+
+        <p class="sub-title">some resources</p>
+        <ul>
+            <li><a href="https://en.wikipedia.org/wiki/Event-driven_architecture">Event-driven architecture</a></li>
+            <li><a href="https://en.wikipedia.org/wiki/Pyramid_of_doom_(programming)">Pyramid of doom</a></li>
+        </ul>
+
+		DD_MM_YYYY
+        <div class="edit-on-github">
+            <a target="_blank" href="https://github.com/k-five/jsfun.ir/blob/master/home/modern-javascript/why-promises/main.html">Edit on Github</a>
+        </div>
+	</div>
+</main>
