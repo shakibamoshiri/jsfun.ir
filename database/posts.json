@@ -55,7 +55,8 @@
         "modern javascript": {
             "modern javascript preface": "",
             "compiler vs transpiler": "",
-            "why promises": ""
+            "why promises": "",
+            "promises": ""
         },
         "react": {
             "three JSX main patterns": "",
