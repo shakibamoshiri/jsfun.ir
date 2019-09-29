@@ -1,7 +1,169 @@
 <main>
 	<div class="content-r">
 		<h1>promises</h1>
-        
+        <hr>
+        <p>We know that <strong>function</strong> keyword in jS has many use cases; e.g.</p>
+        <ul>
+            <li>regular function</li>
+            <li>IIFE</li>
+            <li>function constructor</li>
+            <li>etc</li>
+        </ul>
+        <p>and promises are <strong>function constructor</strong> which means it is a class that we got an instance of it to work with.</p>
+        <p>The first and only argument this constructor takes is a <strong>callback</strong>. So just one argument.</p>
+        <p>Then this callback itself takes two callbacks.</p>
+        <ol>
+            <li>first callback will be for resolving ...</li>
+            <li>second callback will be for rejecting ...</li>
+        </ol>
+
+        <h3 class="sub-title">New features</h3>
+        <p>It is important to notice that promises are not a new feature to the <strong>core</strong> of the JavaScript Language. They are wrapper to make coding in JS much easier to solve problems we have with</p>
+        <ul>
+            <li>exception handing</li>
+            <li>synchronizing asynchronous operations</li>
+            <li>avoiding pyramid of doom (= callback hell)</li>
+        </ul>
+<pre><code class="language-javascript">const log = console.log.bind( console );
+log( "--- start ---" );
+
+setTimeout(function(){
+    log( "This is a Macro task ..." );
+}, 0);
+
+function callback( fn1, fn2 ){
+    log( "before fn1, fn2" );
+    fn1( "This is for resolving ..." );
+    log( "between fn1, fn2" );
+    fn1( "This is for rejecting ..." );
+    log( "after fn1, fn2" );
+}
+
+const p = new Promise( callback );
+p.then( r => log( r ) ).catch( e => log( e ) );
+
+log( "---- end ----" );
+</code></pre>
+        <p>and the output</p>
+<pre><code class="language-javascript">--- start ---
+before fn1, fn2
+between fn1, fn2
+after fn1, fn2
+---- end ----
+This is for resolving ...
+This is a Macro task ...</code></pre>
+        <p>from the output we simply can understand that both</p>
+        <ul>
+            <li>fn1</li>
+            <li>fn2</li>
+        </ul>
+        <p>functions did not run as a <strong>main task</strong>. Also we have a setTimeout function which has less priority than main task.</p>
+        <p>And since we see the output of resolve() function, before setTimeout function; it means it has more priority than setTimeout but less than main task.</p>
+        <p>A kind of better setTimeout and main task.</p>
+        <p>Also we should notice that all three console.log are run immediately.</p>
+        <p>lets reverse the order of fn1, fn2</p>
+<pre><code class="language-javascript">function callback( fn1, fn2 ){
+    log( "before fn1, fn2" );
+    fn2( "This is for rejecting ..." );
+    
+    log( "between fn1, fn2" );
+    
+    fn1( "This is for resolving ..." );
+    log( "after fn1, fn2" );
+}</code></pre>
+        <p>the output</p>
+<pre><code class="language-javascript">--- start ---
+before fn1, fn2
+between fn1, fn2
+after fn1, fn2
+---- end ----
+This is for rejecting ...
+This is a Macro task ...
+</code></pre>
+
+        <p>from the output can see / say that since the <strong>fn2</strong> is before <strong>fn1</strong> it is run by promise as the result.</p>
+        <p>And this simply means both case are not happen. Either <storng>resolve()</storng> or <strong>reject()</strong> is happen. Which one comes first happens.</p>
+        <p>Also resolve() (= first fn) is delivered to <strong>then()</strong> and reject() (= second fn) is delivered to <strong>catch()</strong> block.</p>
+
+        <h3 class="sub-title">Core Idea</h3>
+        <p>As you saw above delivering the result (either success or failure) by two callbacks which have less priority than main task is the essence of promises.</p>
+        <p>There are also things like</p>
+        <ul>
+            <li>pending state</li>
+            <li>fulfilled state</li>
+            <li>resolved state</li>
+            <li>promise chaining</li>
+            <li>etc</li>
+        </ul>
+        <p>which is important but not as much as the above core concept.</p>
+
+        <h3 class="sub-title">Simple Example</h3>
+        <p>Using this idea we are going to do a simple task in the back-end and bring the result back to us.</p>
+        <p><strong>setInterval()</strong> has been used to simulate Main Task.</p>
+        <p><strong>setTimeout()</strong> has been used to put the task for later execution.</p>
+        <p><strong>Empty while loop</strong> has been used to simulate delay.</p>
+<pre><code class="language-javascript">const log = console.log.bind( console );
+log( "--- start ---" );
+
+setInterval(function(){
+    log( "simulating main task is running ..." );
+}, 1000);
+
+function backendStuff( index, resolve, reject ){
+    setTimeout(function(){
+        try{ 
+            // throw "we have error in network!";
+            while( ++index < 100000000 );
+            resolve( "backendStuff done: " + index );
+        } catch( ex ){
+            reject( "backendStuff exception: " + ex );
+        }
+    }, 3000);
+    // this is run as main task
+    return index;
+}
+
+function callback( fn1, fn2 ){
+    const r = backendStuff( 0, fn1, fn2 );
+    // this is run as main task
+    log( "start from:", r );
+}
+
+const p = new Promise( callback );
+p.then( r => log( r ) ).catch( e => log( e ) );
+log( p );
+log( "---- end ----" );</code></pre>
+
+        <p>And here is the output</p>
+<pre><code class="language-html">--- start ---
+start from: 0
+Promise { &lt;pending&gt; }
+---- end ----
+simulating main task is running ...
+simulating main task is running ...
+backendStuff done: 100000000
+simulating main task is running ...
+simulating main task is running ...
+simulating main task is running ...</code></pre>
+
+        <p>And if we simulate and error like soo</p>
+<pre><code class="language-javascript">throw "we have error in network!";</code></pre>
+        <p>then output will be</p>
+<pre><code class="language-html">--- start ---
+start from: 0
+Promise { &lt;pending&gt; }
+---- end ----
+simulating main task is running ...
+simulating main task is running ...
+simulating main task is running ...
+backendStuff exception: we have error in network!
+simulating main task is running ...
+simulating main task is running ...
+simulating main task is running ...
+</code></pre>
+        <p>So without blocking the Main Tasks (= Main thread) we are able to do our tasks.</p>
+        <p>We will see more about promises in next posts.</p>
+
 		DD_MM_YYYY
         <div class="edit-on-github">
             <a target="_blank" href="https://github.com/k-five/jsfun.ir/blob/master/home/modern-javascript/promises/main.html">Edit on Github</a>
