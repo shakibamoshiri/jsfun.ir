@@ -1,6 +1,224 @@
 <main>
 	<div class="content-r">
 		<h1>promises-confusing-part</h1>
+        <hr>
+        <p>We saw the good part of the promises which was handing two functions for us asynchronously, <strong>fn1</strong>, <strong>fn2</strong>.</p>
+        <p>Here is the code from previous post:</p>
+<pre><code class="language-javascript">const log = console.log.bind( console );
+log( "--- start ---" );
+
+setInterval(function(){
+    log( "simulating main task is running ..." );
+}, 1000);
+
+function backendStuff( index, resolve, reject ){
+    setTimeout(function(){
+        try{ 
+            // throw "we have error in network!";
+            while( ++index < 100000000 );
+            resolve( "backendStuff done: " + index );
+        } catch( ex ){
+            reject( "backendStuff exception: " + ex );
+        }
+    }, 3000);
+    // this is run as main task
+    return index;
+}
+
+function callback( fn1, fn2 ){
+    const r = backendStuff( 0, fn1, fn2 );
+    // this is run as main task
+    log( "start from:", r );
+}
+
+const p = new Promise( callback );
+p.then( r => log( r ) ).catch( e => log( e ) );
+log( p );
+log( "---- end ----" );</code></pre>
+        <p>and it outputs:</p>
+<pre><code class="language-javascript">--- start ---
+start from: 0
+Promise { &lt;pending&gt; }
+---- end ----
+simulating main task is running ...
+simulating main task is running ...
+backendStuff done: 100000000
+simulating main task is running ...
+simulating main task is running ...
+simulating main task is running ...</code></pre>
+
+        <h3 class="sub-title">Synchronizing the output</h3>
+        <p>If you look at this part:</p>
+<pre><code class="language-javascript">function callback( fn1, fn2 ){
+    const r = backendStuff( 0, fn1, fn2 );
+    // this is run as main task
+    log( "start from:", r );
+}</code></pre>
+        <p>You can see that it is more like a regular function that has a <strong>return</strong> value which is going to be assigned to the variable <strong>r</strong>.</p>
+        <p>But based on the output we can realize that this does not happen.</p>
+<pre><code class="language-javascript">--- start ---
+start from: 0                 // it is 0 but we want 100000000
+Promise { &lt;pending&gt; }
+---- end ----</code></pre>
+            <p>How can we solve this problem? How can we use a promise just like a regular function that has a return statement.</p>
+
+
+            <h3 class="sub-title">Return value of a promise</h3>
+            <p>For understanding it lets look at a simpler example.</p>
+<pre><code class="language-javascript">const log = console.log.bind( console );
+log( "--- start ---" );
+
+function toUpperCaseLater( string ){
+    return new Promise(function( resolve ){
+        setTimeout(function(){
+            resolve( string.toUpperCase() );
+        }, 3000);
+    });
+}
+
+
+function asycn2UpperCase( input ){
+    const lowerCase = input;
+    log( "lowerCase:", lowerCase );
+    const  upperCase = toUpperCaseLater( lowerCase );
+    log( "upperCase:", upperCase );
+}
+
+asycn2UpperCase( "how are you today?" )
+console.log( "---- end ----" );</code></pre>
+        <p>it outputs:</p>
+<pre><code class="language-javascript">--- start ---
+lowerCase: how are you today?
+upperCase: Promise { &lt;pending&gt; }
+---- end ----
+</code></pre>
+        <p>And you can see the output is a Promise Object with the state of pending.</p>
+        <p>At this point we can say ohhhh! We did not use <strong>then()</strong> method part of a promise. Good idea. Lets try it.</p>
+<pre><code class="language-javascript">function asycn2UpperCase( input ){
+    const lowerCase = input;
+    log( "lowerCase:", lowerCase );
+    const  upperCase = toUpperCaseLater( lowerCase ).then( r =&gt; r );
+    log( "upperCase:", upperCase );
+}
+</code></pre>
+        <p>It outputs:</p>
+<pre><code class="language-javascript">--- start ---
+lowerCase: how are you today?
+upperCase: Promise { &lt;pending&gt; }
+---- end ----</code></pre>
+
+        <p>If it seems wired to do not worry. Lets try print the output from <strong>then()</strong> method.</p>
+<pre><code class="language-javascript">function asycn2UpperCase( input ){
+    const lowerCase = input;
+    log( "lowerCase:", lowerCase );
+    const  upperCase = toUpperCaseLater( lowerCase ).then( r =&gt; { log( r ) } );
+    log( "upperCase:", upperCase );
+}</code></pre>
+
+        <p>output</p>
+<pre><code class="language-javascript">--- start ---
+lowerCase: how are you today?
+upperCase: Promise { &lt;pending&gt; }
+---- end ----
+HOW ARE YOU TODAY?</code></pre>
+        <p>Okay now we are able to see the output but we want to be assigned to <strong>upperCase</strong> variable. In fact we want that it can be seen as a regular function!</p>
+
+        <h3 class="sub-title">Reviewing core idea</h3>
+        <p>Lets review the core idea to see what happens here.</p>
+        <p>In the previous post we realized that two registered functions <strong>fn1 and fn2</strong> will be run later as a micro task and not part of the main task.</p>
+        <p>And this means the promise (= toUpperCaseLater()) function we have when it is called it returns nothing valuable for us, just like the first example</p>
+<pre><code class="language-javascript">    }, 3000);
+    // this is run as main task
+    return index;
+}</code></pre>
+        <p>This return statement is part of main task. The same is true for toUpperCaseLater() function which means it returns a promise and that is why we see </p>
+<pre><code class="language-javascript">upperCase: Promise { &lt;pending&gt; }</code></pre>
+        <p>It is the <strong>state</strong> of the promise right now.</p>
+
+        <h3 class="sub-title">Solution</h3>
+        <p>How can we synchronize our code with toUpperCaseLater() function?</p>
+        <p>Simple! By passing a function to be executed later by the <strong>then()</strong> method of our promise.</p>
+<pre><code class="language-javascript">const log = console.log.bind( console );
+log( "--- start ---" );
+
+function toUpperCaseLater( string ){
+    return new Promise(function( resolve ){
+        setTimeout(function(){
+            resolve( string.toUpperCase() );
+        }, 3000);
+    });
+}
+/*
+function asycn2UpperCase( input ){
+    const lowerCase = input;
+    log( "lowerCase:", lowerCase );
+    const  upperCase = toUpperCaseLater( lowerCase ).then( r => { log( r )} );
+    log( "upperCase:", upperCase );
+}
+*/
+function asycn2UpperCase( input ){
+    const lowerCase = input;
+    log( "lowerCase:", lowerCase );
+    
+    // wrap our code in a wrapper function
+    function sync( data ){
+        const upperCase = data;
+        log( "upperCase:", upperCase );
+    }
+
+    // pass wrapper function to then()
+    toUpperCaseLater( lowerCase ).then( r => sync( r ) );
+
+    // no code after toUpperCaseLater() function
+}
+asycn2UpperCase( "how are you today?" )
+console.log( "---- end ----" );</code></pre>
+        <p>And the output</p>
+<pre><code class="language-javascript">--- start ---
+lowerCase: how are you today?
+---- end ----
+upperCase: HOW ARE YOU TODAY?</code></pre>
+
+        <h3 class="sub-title">Refactoring</h3>
+        <p>We can do it differently. We can pass our <strong>sync()</strong> function to be run later.</p>
+<pre><code class="language-javascript">const log = console.log.bind( console );
+log( "--- start ---" );
+
+function toUpperCaseLater( string, sync ){
+    // bind first argument to sync
+    sync = sync.bind( null, string );
+
+    return new Promise(function( resolve ){
+        setTimeout(function(){
+            resolve( sync );
+        }, 1000);
+    });
+}
+
+function asycn2UpperCase( input ){
+    const lowerCase = input;
+    log( "lowerCase:", lowerCase );
+
+    toUpperCaseLater( lowerCase, sync ).then( r => r() );
+
+    // these lines are asynchronous
+    function sync( data ){
+        const upperCase = data.toUpperCase();
+        log( "upperCase:", upperCase );
+    }
+}
+asycn2UpperCase( "how are you today?" )
+console.log( "---- end ----" );</code></pre>
+        <p>output</p>
+<pre><code class="language-javascript">--- start ---
+lowerCase: how are you today?
+---- end ----
+upperCase: HOW ARE YOU TODAY?</code></pre>
+
+        <h3 class="sub-title">Async-await</h3>
+        <p>What you saw is what <strong>async-await</strong> does for us. In fact the reason why we have async-await is because of simplifying this strange look and usage of promises.</p>
+        <p>We review async-await in next post.</p>
+        
         
 		DD_MM_YYYY
         <div class="edit-on-github">
