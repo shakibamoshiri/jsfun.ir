@@ -1,0 +1,174 @@
+<main>
+	<div class="content-r">
+		<h1>await-and-parallelism</h1>
+        <hr>
+        <p>In previous post we saw that using multi await does not really seem like running multi-tasks in parallel.</p>
+<pre><code class="language-javascript">consconsole.log.bind( console );
+log( "--- start ---" );
+
+function toUpperCaseLater( string, sync ){
+    return new Promise(function( resolve ){
+        setTimeout(function(){
+            resolve( string.toUpperCase() );
+        }, 1000);
+    });
+}
+
+async function asycn2UpperCase( list ){
+    log( `convert all ${list} to uppercase` );
+    const how = await toUpperCaseLater( list.shift() );
+    log( "list[0]:", how );
+    
+    const are = await toUpperCaseLater( list.shift() );
+    log( "list[1]:", are );
+    
+    const you = await toUpperCaseLater( list.shift() );
+    log( "list[2]:", you );
+    
+    const today = await toUpperCaseLater( list.shift() );
+    log( "list[3]:", today );
+}
+
+asycn2UpperCase( [ "how", "are", "you", "today?" ] );
+log( "---- end ----" );</code></pre>
+        <p>It outputs:</p>
+<pre><code class="language-javascript">--- start ---
+convert  all how,are,you,today? to uppercase
+---- end ----
+list[0]: HOW
+list[1]: ARE
+list[2]: YOU
+list[3]: TODAY?</code></pre>
+        <p>And we realized that it takes much time:</p>
+<pre><code class="language-javascript">time node  async-await-2.js 
+--- start ---
+convert all how,are,you,today? to uppercase
+---- end ----
+list[0]: HOW
+list[1]: ARE
+list[2]: YOU
+list[3]: TODAY?
+
+real	0m4.150s
+user	0m0.129s
+sys	0m0.022s</code></pre>
+
+
+        <h3 class="sub-title">Slow and Fast</h3>
+        <p>The code above was a sample of slow code that has been used to <strong>synchronize</strong> return value of a promise.</p>
+        <p>For each <strong>await</strong> there will be a <strong>pause</strong> operation that prevent other part of <strong>async function</strong> to be executed; just like main thread.</p>
+        <p>You can read about it on <a target="_blank" href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/async_function">MDN Web docs</a></p>
+        <p>Now lets change our code to do our tasks faster.</p>
+<pre><code class="language-javascript">const log = console.log.bind( console );
+log( "--- start ---" );
+
+function toUpperCaseLater( string, sync ){
+    return new Promise(function( resolve ){
+        setTimeout(function(){
+            resolve( string.toUpperCase() );
+        }, 1000);
+    });
+}
+
+function asycn2UpperCase( list ){
+    log( `convert all ${list} to uppercase` );
+    
+    list.forEach(async function( item, index ){
+        const r = await toUpperCaseLater( item );
+        log( `list[${index}]:`, r );
+    });
+}
+
+asycn2UpperCase( [ "how", "are", "you", "today?" ] );
+log( "---- end ----" );</code></pre>
+        <p>output and time:</p>
+<pre><code class="language-javascript">time node  async-await-4.js 
+--- start ---
+convert all how,are,you,today? to uppercase
+---- end ----
+list[0]: HOW
+list[1]: ARE
+list[2]: YOU
+list[3]: TODAY?
+
+real	0m1.147s
+user	0m0.132s
+sys	0m0.013s
+</code></pre>
+
+        <h3 class="sub-title">Using Promise.then</h3>
+        <p>It is not too hard to do the same (= faster) with Promise.then.</p>
+<pre><code class="language-javascript">const log = console.log.bind( console );
+log( "--- start ---" );
+
+function toUpperCaseLater( string, sync ){
+    return new Promise(function( resolve ){
+        setTimeout(function(){
+            resolve( string.toUpperCase() );
+        }, 1000);
+    });
+}
+
+function asycn2UpperCase( list ){
+    log( `convert all ${list} to uppercase` );
+    
+    function sync( index, data ){
+        log( `list[${index}]:`, data );
+    }
+
+    list.forEach(function( item, index ){
+        toUpperCaseLater( item ).then( r => sync( index, r ) );
+    });
+}
+
+asycn2UpperCase( [ "how", "are", "you", "today?" ] );
+log( "---- end ----" );</code></pre>
+        <p>output and time:</p>
+<pre><code class="language-javascript">time node  async-await-3.js 
+--- start ---
+convert all how,are,you,today? to uppercase
+---- end ----
+list[0]: HOW
+list[1]: ARE
+list[2]: YOU
+list[3]: TODAY?
+
+real	0m1.141s
+user	0m0.135s
+sys	0m0.009s</code></pre>
+
+        <h3 class="sub-title">Which one? Slow or Fast?</h3>
+        <p>If you wonder which one should be used; it is simple.</p>
+        <p>If we want to <strong>synchronize</strong> asynchronous operations that each one depends on previous one, then multi-await is preferable.</p>
+        <p>In this case:</p>
+<pre><code class="language-javascript">async function asycn2UpperCase( list ){
+    log( `convert all ${list} to uppercase` );
+    const how = await toUpperCaseLater( list.shift() );
+    log( "list[0]:", how );
+    
+    const are = await toUpperCaseLater( list.shift() );
+    log( "list[1]:", are );
+    
+    const you = await toUpperCaseLater( list.shift() );
+    log( "list[2]:", you );
+    
+    const today = await toUpperCaseLater( list.shift() );
+    log( "list[3]:", today );
+}
+</code></pre>
+    <p>The function we have <strong>toUpperCaseLate</strong> does not depend on previous variable (= state) of the program, so <strong>why should we wait?</strong></p>
+
+        <h3 class="sub-title">Briefly</h3>
+        <p>Here is a quote from MDN</p>
+        <p class="quote">The purpose of async/await functions is to simplify the behavior of using promises synchronously and to perform some behavior on a group of Promises. Just as Promises are similar to structured callbacks, async/await is similar to combining generators and promises.</p>
+        <ul>
+            <li><a target="_blank"  href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/async_function">async function</a></li>
+        </ul>
+        <p>So lets see what is <strong>generators</strong>.</p>
+
+		DD_MM_YYYY
+        <div class="edit-on-github">
+            <a target="_blank" href="https://github.com/k-five/jsfun.ir/blob/master/home/modern-javascript/await-and-parallelism/main.html">Edit on Github</a>
+        </div>
+	</div>
+</main>

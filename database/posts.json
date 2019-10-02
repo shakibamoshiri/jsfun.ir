@@ -58,7 +58,8 @@
             "why promises": "",
             "promises": "",
             "promises confusing part": "",
-            "async await": ""
+            "async await": "",
+            "await and parallelism": ""
         },
         "react": {
             "three JSX main patterns": "",
