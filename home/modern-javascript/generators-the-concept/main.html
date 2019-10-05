@@ -159,15 +159,15 @@ log( "s1", s1 );                // s1 { value: 1, done: false }
 
 // run the second yield and pause
 const s2 = iterator.next( 10 ); // send 10 to first yield
-log( "s2", s2 );                // s2 { value: 2, done: false }
+log( "s2", s2 );                // s2 { value: 20, done: false }
 
 // run the third yield and pause
 const s3 = iterator.next( 11 ); // send 11 to second yield
-log( "s3", s3 );                // s3 { value: 3, done: false }
+log( "s3", s3 );                // s3 { value: 33, done: false }
 
 // run the return and finishes it
 const rt = iterator.next( 12 ); // send 12 to third yield
-log( "rt", rt );                // rt { value: 4, done: true }
+log( "rt", rt );                // rt { value: 48, done: true }
 
 log( ".... end ...." );</code></pre>
 
