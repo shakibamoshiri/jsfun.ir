@@ -7,10 +7,10 @@
 
         <h3 class="sub-title">State Machine</h3>
         <p>For having a state machine, implementing in code, we have to code lines of lines and also taking care of state, etc.</p>
-        <p>Instead JavaScript added a new keyword to the language named: <strong>yield</strong> which yield the state for us.</p>
+        <p>Instead JavaScript added a new keyword to the language named: <strong>yield</strong> which yields the state for us.</p>
         <p>Where does this happen? <strong>Inside of generator</strong>. The yield is used inside of a generator.</p>
-        <p>In fact when we create a generator function, actually we are setting up our state. Since we do not go to the low level of managing the state and simply using yield keyword, it is is called <strong>declarative state machine</strong>.</p>
-        <p>So using yield we declare our state in our function generator.</p>
+        <p>In fact when we create a generator function, actually we are setting up our states. Since we do not go to the low level of managing the state and simply using yield keyword, it is is called <strong>declarative state machine</strong>.</p>
+        <p>So using yield we declare our states in our function generator.</p>
 
         <h3 class="sub-title">Iterator Manager</h3>
         <p>We already could create an iterator in JavaScript. Did you do that before?</p>
@@ -53,21 +53,21 @@ TypeError: it is not iterable</code></pre>
         <p>Can we create an iterator in this way? Yes. But it requires lines of coding and also we are not able to using in for-of loop!</p>
         <p>The definition from MDN:</p>
         <p class="quote">In JavaScript an iterator is an object which defines a sequence and potentially a return value upon its termination. More specifically an iterator is any object which implements the Iterator protocol by having a next() method which returns an object with two properties: value, the next value in the sequence; and done, which is true if the last value in the sequence has already been consumed. If value is present alongside done, it is the iterator's return value.</p>
-        <p>So using an <string>iterator</string> we will be able to forward, to go to a sequence of something. What is that? Our state inside generator.</p>
+        <p>So using an <string>iterator</string> we will be able to forward, to go to a sequence of something. What could it be? Our states inside a generator.</p>
 
         <h3 class="sub-title">Inside Generator versus Outside Generator</h3>
         <p>Okay, we have a declarative state inside our generator.</p>
         <p>When we invoke a generator function we get back an <strong>iterator</strong>.</p>
-        <p>When it returns (= give us) an iterator then we can forward it to manage our state. To manage what? Our yield we have inside the generator function.</p>
+        <p>When it returns (= gives us) an iterator then we can forward it to manage our states. To manage what? Our yield we have inside the generator function.</p>
         <p>So there is a connection or I should say a kind of <strong>communication</strong> between generator function and our iterator manager. </p>
         <p><strong>Inside of generator</strong> function we have a series or steps (= state) that we go through.</p>
-        <p><strong>Outside of generator</strong> function we have an iterator that helps forwarding the state.</p>
+        <p><strong>Outside of generator</strong> function we have an iterator that helps forwarding the states.</p>
 
 
         <h3 class="sub-title">pull and push</h3>
-        <p>Since there is communication between our yield inside our generator function and our iterator it is like a bidirectional data flow.</p>
+        <p>Since there is communication between our yield inside our generator function and our iterator; it looks like a bidirectional data flow.</p>
         <p>When we invoke an generator function, it returns back to us an iterator. It is like pulling. We get something from generator.</p>
-        <p>Also when we forward our generator, using <strong>next()</strong> method on our iterator, we can send data to our generator. It is like pushing. We push something to it.</p>
+        <p>Also when we forward our generator's states, using <strong>next()</strong> method on our iterator, we can send data to our generator. It is like pushing. We push something to it.</p>
 
         <h3 class="sub-title">Simple example (just pulling)</h3>
         <p>Here is a simple example of the whole concept.</p>
