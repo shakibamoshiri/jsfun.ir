@@ -1,7 +1,194 @@
 <main>
 	<div class="content-r">
 		<h1>generators-the-concept</h1>
-        
+        <hr>
+        <p>One of the most confusing part of ES6 feature is <strong>generators</strong>. But not if you understand the concept</p>
+        <p>For understanding generators we need to understand concepts that generators stand upon them.</p>
+
+        <h3 class="sub-title">State Machine</h3>
+        <p>For having a state machine, implementing in code, we have to code lines of lines and also taking care of state, etc.</p>
+        <p>Instead JavaScript added a new keyword to the language named: <strong>yield</strong> which yield the state for us.</p>
+        <p>Where does this happen? <strong>Inside of generator</strong>. The yield is used inside of a generator.</p>
+        <p>In fact when we create a generator function, actually we are setting up our state. Since we do not go to the low level of managing the state and simply using yield keyword, it is is called <strong>declarative state machine</strong>.</p>
+        <p>So using yield we declare our state in our function generator.</p>
+
+        <h3 class="sub-title">Iterator Manager</h3>
+        <p>We already could create an iterator in JavaScript. Did you do that before?</p>
+        <p>Here is a simple one, this example has been taken form <a target="_blank" href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Iterators_and_generators">Mozilla Developer Network</a>.</p>
+<pre><code class="language-javascript">function makeRangeIterator(start = 0, end = Infinity, step = 1) {
+    let nextIndex = start;
+    let iterationCount = 0;
+
+    const rangeIterator = {
+       next: function() {
+           let result;
+           if (nextIndex < end) {
+               result = { value: nextIndex, done: false }
+               nextIndex += step;
+               iterationCount++;
+               return result;
+           }
+           return { value: iterationCount, done: true }
+       }
+    };
+    return rangeIterator;
+}</code></pre>
+        <p>How to use it? Simple.</p>
+
+<pre><code class="language-javascript">let it = makeRangeIterator(1, 10, 2);
+
+let result = it.next();
+while (!result.done) {
+    console.log(result.value); // 1 3 5 7 9
+    result = it.next();
+}</code></pre>
+        <p>Can we use this in <strong>for-of</strong> loop? No! We get an error:</p>
+<pre><code class="language-javascript">for( const item of it ){
+    console.log( "item:", item );
+}
+
+for( const item of it ){
+                   ^
+TypeError: it is not iterable</code></pre>
+        <p>Can we create an iterator in this way? Yes. But it requires lines of coding and also we are not able to using in for-of loop!</p>
+        <p>The definition from MDN:</p>
+        <p class="quote">In JavaScript an iterator is an object which defines a sequence and potentially a return value upon its termination. More specifically an iterator is any object which implements the Iterator protocol by having a next() method which returns an object with two properties: value, the next value in the sequence; and done, which is true if the last value in the sequence has already been consumed. If value is present alongside done, it is the iterator's return value.</p>
+        <p>So using an <string>iterator</string> we will be able to forward, to go to a sequence of something. What is that? Our state inside generator.</p>
+
+        <h3 class="sub-title">Inside Generator versus Outside Generator</h3>
+        <p>Okay, we have a declarative state inside our generator.</p>
+        <p>When we invoke a generator function we get back an <strong>iterator</strong>.</p>
+        <p>When it returns (= give us) an iterator then we can forward it to manage our state. To manage what? Our yield we have inside the generator function.</p>
+        <p>So there is a connection or I should say a kind of <strong>communication</strong> between generator function and our iterator manager. </p>
+        <p><strong>Inside of generator</strong> function we have a series or steps (= state) that we go through.</p>
+        <p><strong>Outside of generator</strong> function we have an iterator that helps forwarding the state.</p>
+
+
+        <h3 class="sub-title">pull and push</h3>
+        <p>Since there is communication between our yield inside our generator function and our iterator it is like a bidirectional data flow.</p>
+        <p>When we invoke an generator function, it returns back to us an iterator. It is like pulling. We get something from generator.</p>
+        <p>Also when we forward our generator, using <strong>next()</strong> method on our iterator, we can send data to our generator. It is like pushing. We push something to it.</p>
+
+        <h3 class="sub-title">Simple example (just pulling)</h3>
+        <p>Here is a simple example of the whole concept.</p>
+<pre><code class="language-javascript">const log = console.log.bind( console );
+log( "... start ..." );
+
+// declare the generator function
+function* generatorF(){
+    log( "start of generatorF() ..." );
+
+    yield 1;    // give 1 to iterator and pause
+    yield 2;    // give 2 to iterator and pause
+    yield 3;    // give 3 to iterator and pause
+
+    return 4;   // give 4 to iterator and finish
+}
+
+// invoke it and get an iterator back
+// we just get an iterator, nothing else happens 
+const iterator = generatorF();
+
+// first run of our iterator using next() method
+// the first line is executed
+// and the first yield is evaluated
+// then it pauses
+const s1 = iterator.next();     // start of generatorF() ...
+log( "s1", s1 );                // s1 { value: 1, done: false }
+
+// run the second yield and pause
+const s2 = iterator.next();
+log( "s2", s2 );                // s2 { value: 2, done: false }
+
+// run the third yield and pause
+const s3 = iterator.next();
+log( "s3", s3 );                // s3 { value: 3, done: false }
+
+// run the return and finishes it
+const rt = iterator.next();
+log( "rt", rt );                // rt { value: 4, done: true }
+
+log( ".... end ...." );</code></pre>
+
+        <p>And it outputs:</p>
+<pre><code class="language-javascript">... start ...
+start of generatorF() ...
+s1 { value: 1, done: false }
+s2 { value: 2, done: false }
+s3 { value: 3, done: false }
+rt { value: 4, done: true }
+.... end ....</code></pre>
+
+        <h3 class="sub-title">Simple example (pull and push)</h3>
+        <p>Here is a simple example that both pull and push happen.</p>
+<pre><code class="language-javascript">const log = console.log.bind( console );
+log( "... start ..." );
+
+// declare the generator function
+function* generatorF(){
+    log( "start of generatorF() ..." );
+
+    const y1 = yield 1;
+    // yield 1, send it to iterator
+    // y1 === 10
+    log( "y1", y1 );
+
+    const y2 = yield 2 * y1;
+    // yield 20, send it to iterator
+    // y2 === 11
+    log( "y2", y2 );
+
+    const y3 = yield 3 * y2;
+    // yield 48, send it to iterator
+    // y3 === 12
+    log( "y3", y3 );
+
+    return 4 * y3;
+}
+
+// invoke it and get an iterator back
+// we just get an iterator, nothing else happens 
+const iterator = generatorF();
+
+// first run of our iterator using next() method
+// the first line is executed
+// and the first yield is evaluated
+// then it pauses
+const s1 = iterator.next();     // start of generatorF() ...
+log( "s1", s1 );                // s1 { value: 1, done: false }
+
+// run the second yield and pause
+const s2 = iterator.next( 10 ); // send 10 to first yield
+log( "s2", s2 );                // s2 { value: 2, done: false }
+
+// run the third yield and pause
+const s3 = iterator.next( 11 ); // send 11 to second yield
+log( "s3", s3 );                // s3 { value: 3, done: false }
+
+// run the return and finishes it
+const rt = iterator.next( 12 ); // send 12 to third yield
+log( "rt", rt );                // rt { value: 4, done: true }
+
+log( ".... end ...." );</code></pre>
+
+        <p>It outputs:</p>
+<pre><code class="language-javascript">... start ...
+start of generatorF() ...
+s1 { value: 1, done: false }
+y1 10
+s2 { value: 20, done: false }
+y2 11
+s3 { value: 33, done: false }
+y3 12
+rt { value: 48, done: true }
+.... end ....
+</code></pre>
+
+        <p>Is it crazy?</p>
+        <p>Is it confusing?</p>
+        <p>Why do we do these?</p>
+        <p>I will try to answer them in next post.</p>
+
 		DD_MM_YYYY
         <div class="edit-on-github">
             <a target="_blank" href="https://github.com/k-five/jsfun.ir/blob/master/home/modern-javascript/generators-the-concept/main.html">Edit on Github</a>
