@@ -61,7 +61,8 @@
             "async await": "",
             "await and parallelism": "",
             "generators the concept": "",
-            "generators use case": ""
+            "generators use case": "",
+            "generators and promises": ""
         },
         "react": {
             "three JSX main patterns": "",
