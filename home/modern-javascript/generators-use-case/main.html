@@ -1,6 +1,183 @@
 <main>
 	<div class="content-r">
 		<h1>generators-use-case</h1>
+        <hr>
+        <p>Previous post was about concepts of generators; in this one we will see why we have them and where they are useful for us.</p>
+
+        <h3 class="sub-title">Parallel requests</h3>
+        <p>If we send three requests in parallel to back-end side using AJAX ...</p>
+        <ol>
+            <li>Which request does come back first?</li>
+            <li>What will be the order of request when they are coming back?</li>
+        </ol>
+        <p>Not only it is easy to work with codes when they are synchronous but also it is easy to read them.</p>
+<pre><code class="language-javascript">// synchronous code
+const a = "This is a";
+console.log( a );
+const b = "This is b";
+console.log( b );</code></pre>
+        <p>But the same is not true for asynchronous codes.</p>
+<pre><code class="language-javascript">// asynchronous code
+const log = console.log.bind( console );
+log( "... start ..." );
+
+function callback( resolve, reject ){
+    resolve( "this is resolve()" );
+    reject( "this is reject()" );
+}
+
+const r = new Promise( callback );
+log( r );   // it is not the result directly
+
+log( ".... end ...." );</code></pre>
+        <p>output:</p>
+<pre><code class="language-javascript">... start ...
+Promise { 'this is resolve()' }
+.... end ....
+</code></pre>
+        <p>What if we want something like this? Is it possible?</p>
+<pre><code class="language-javascript">... start ...
+this is resolve()
+.... end ....
+</code></pre>
+
+        <h3 class="sub-title">async-await</h3>
+        <p>It may this pattern reminds you the usage of <strong>async-await</strong> keyword like so</p>
+<pre><code class="language-javascript">const log = console.log.bind( console );
+log( "... start ..." );
+
+function callback( resolve, reject ){
+    resolve( "this is resolve()" );
+    reject( "this is reject()" );
+}
+
+const r = new Promise( callback );
+log( "r in main thread:", r );   // it is not the result directly
+
+async function asyncF(){
+    const r = await new Promise( callback );
+    log( "r inside asyncF():", r );
+}
+
+asyncF();
+
+log( ".... end ...." );</code></pre>
+        <p>output:</p>
+<pre><code class="language-javascript">... start ...
+r inside main thread: Promise { 'this is resolve()' }
+.... end ....
+r inside asyncF(): this is resolve()</code></pre>
+
+        <h3 class="sub-title">Promises</h3>
+        <p>Promises solve an asynchronous result for us but not completely. While we can pass two callbacks (= resolve, reject) for later invocation, but our code can be still messy, e.g. chaining many <strong>.then</strong> methods.</p>
+
+        <h3 class="sub-title">Generators</h3>
+        <p>Because we can <strong>pause</strong> the execution of codes inside a generator function, also pull and pushing data from it, we can implement a simple data flow between our generator function and its iteration part.</p>
+<pre><code class="language-javascript">const log = console.log.bind( console );
+log( "... start ..." );
+
+function* generatorF(){
+    log( "start of generatorF()" );
+    const a = yield 1;
+    const b = yield 2;
+    const c = yield 3;
+    const d = yield 4;
+    const e = yield 5;
+    const r = a + b + c + d + e;
+    log( "final result is", r );
+    return "it is ready: " + r;
+}
+
+var iterator = generatorF();
+
+let step = iterator.next();
+log( "step:", step );
+
+// loop over the iterator till is is done
+while( !step.done ){
+    step = iterator.next( step.value );
+    log( "step:", step );
+}
+
+log( ".... end ...." );</code></pre>
+        <p>output</p>
+<pre><code class="language-javascript">... start ...
+start of generatorF()
+step: { value: 1, done: false }
+step: { value: 2, done: false }
+step: { value: 3, done: false }
+step: { value: 4, done: false }
+step: { value: 5, done: false }
+final result is 15
+step: { value: 'it is ready: 15', done: true }
+.... end ....
+</code></pre>
+    
+    <h3 class="sub-title">Asynchronous synchronization</h3>
+    <p>Here is a simple example to sum numbers</p>
+<pre><code class="language-javascript">const log = console.log.bind( console );
+log( "... start ..." );
+
+// inside generatorF() it looks like doing 
+// synchronous codes :)
+// a, b, c, d, e are available when they are assigned 
+function* generatorF(){
+    log( "start of generatorF()" );
+    const a = yield asyncF( 1 );
+    const b = yield asyncF( 2 );
+    const c = yield asyncF( 3 );
+    const d = yield asyncF( 4 );
+    const e = yield asyncF( 5 );
+    const r = a + b + c + d + e;
+    log( "end of generatorF(), sum:", r );
+    return "it is ready: " + r;
+}
+
+var iterator = generatorF();
+iterator.next();
+
+// using a function instead of while loop
+// after first call, the iterator is forwarded using the function itself
+function asyncF( input ){
+    const deley = Math.round( Math.random() * 1000 );
+    setTimeout(function(){
+        log( `asyncF( ${input} ) ...`);
+        const step = iterator.next( input );
+        log( "step:", step );
+    }, deley );
+
+    return "not ready yet!";
+}
+log( ".... end ...." );</code></pre>
+        <p>output</p>
+<pre><code class="language-javascript">... start ...
+start of generatorF()
+.... end ....
+asyncF( 1 ) ...
+step: { value: 'not ready yet!', done: false }
+asyncF( 2 ) ...
+step: { value: 'not ready yet!', done: false }
+asyncF( 3 ) ...
+step: { value: 'not ready yet!', done: false }
+asyncF( 4 ) ...
+step: { value: 'not ready yet!', done: false }
+asyncF( 5 ) ...
+end of generatorF(), sum: 15
+step: { value: 'it is ready: 15', done: true }</code></pre>
+
+        <p>As you can see this part is much easier to read and it looks like synchronous codes.</p>
+<pre><code class="language-javascript">    const a = yield asyncF( 1 );
+    const b = yield asyncF( 2 );
+    const c = yield asyncF( 3 );
+    const d = yield asyncF( 4 );
+    const e = yield asyncF( 5 );
+    const r = a + b + c + d + e;</code></pre>
+        <p>So while we are doing asynchronous stuff, our code still looks like synchronous style. It it more readable and easy to think of it.</p>
+
+        <h3 class="sub-title">Generators and Promises</h3>
+        <p>Now a new question arises. How can we synchronize <strong>generators</strong> with <strong>promises</strong>?</p>
+        <p>Promises can simplify our codes by later notification using a registered callback and generators can make our codes more readable.</p>
+        <p>It seems like a good and powerful combination. We will see this pattern in next post.</p>
         
 		DD_MM_YYYY
         <div class="edit-on-github">
