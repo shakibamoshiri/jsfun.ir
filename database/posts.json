@@ -60,7 +60,8 @@
             "promises confusing part": "",
             "async await": "",
             "await and parallelism": "",
-            "generators the concept": ""
+            "generators the concept": "",
+            "generators use case": ""
         },
         "react": {
             "three JSX main patterns": "",
