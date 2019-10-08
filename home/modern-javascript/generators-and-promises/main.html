@@ -1,7 +1,338 @@
 <main>
 	<div class="content-r">
 		<h1>generators-and-promises</h1>
+        <hr>
+        <p>While promises are a little bit confusing, at least at first, and generators are more, how much does it for combination of both?</p>
+        <p>We will review it, but you should know that the pattern is more complex and at the same time powerful and because of these JS community decided to wrap these powerful pattern is a more friendly style which finally became <strong>async-await</strong>.</p>
         
+        <h3 class="sub-title">co-routine</h3>
+        <p>In the previous post we saw an example of using a simple async function, here is the generator function part:</p>
+<pre><code class="language-javascript">function* generatorF(){
+    log( "start of generatorF()" );
+    const a = yield asyncF( 1 );
+    const b = yield asyncF( 2 );
+    const c = yield asyncF( 3 );
+    const d = yield asyncF( 4 );
+    const e = yield asyncF( 5 );
+    const r = a + b + c + d + e;
+    log( "end of generatorF(), sum:", r );
+    return "it is ready: " + r;
+}</code></pre>
+
+        <p>and we simulate the forwarding part of its iterator in this way:</p>
+<pre><code class="language-javascript">function asyncF( input ){
+    const deley = Math.round( Math.random() * 1000 );
+    setTimeout(function(){
+        log( `asyncF( ${input} ) ...`);
+        const step = iterator.next( input );
+        log( "step:", step );
+    }, deley );
+
+    return "not ready yet!";
+}</code></pre>
+
+        <p>So when we run the (= start) the generator function in this way:</p>
+<pre><code class="language-javascript">var iterator = generatorF();
+iterator.next();</code></pre>
+
+        <p>Then by calling <strong>asyncF( number )</strong> the next step happens inside the function and we can forward the states.</p>
+        <p>With promises we almost do the same except that instead of dealing with a simple data like a number, we are facing a more complex kind of data which is the promises method and also the iterator part of our generator function..</p>
+        <p>By now you should see that cycle happens here. A communication or a kind of synchronization between our generator function and out iterator.</p>
+        <p>And for this pattern we have libraries to do this part for us, so we do not be forced to code it manually; e.g:</p>
+        <ul>
+            <li><a href="https://github.com/kriskowal/q">q</a></li>
+            <li><a href="https://github.com/tj/co">co</a></li>
+            <li><a href="https://github.com/getify/asynquence">asynquence</a></li>
+        </ul>
+
+        <h3 class="sub-title">Example 1</h3>
+        <p>Here we just double the number, that is it.</p>
+<pre><code class="language-javascript">const log = console.log.bind( console );
+log( "... start of main ..." );
+
+function* generatorF(){
+    log( "start of generatorF() ..." );
+    
+    const y1 = yield promiseF( 1 );
+    log( "y1", y1 );
+    
+    const y2 = yield promiseF( 2 );
+    log( "y2", y2 );
+    
+    const y3 = yield promiseF( 3 );
+    log( 'y3', y3 );
+
+    const y4 = yield promiseF( 4 );
+    log( 'y4', y4 );
+
+    log( "end of generatorF() ..." );
+};
+
+// create the iterator part
+const iterator = generatorF();
+
+// trigger the generator (= start to run)
+iterator.next();
+
+// a wrapper around a promise
+function promiseF( input ){
+     return new Promise(function( resolve, reject ){
+
+        // go to event queue (= later execution)
+        setTimeout(function(){
+            const output = input + input;
+            // for forwarding the state inside generator 
+            // also returning back the data we wanted
+            function run( data ){
+                // step is an object: { value: here-will-be-a-promise, done: boolean }
+                const step = iterator.next( output );
+                if( step.done ){
+                    return resolve( output );
+                 }
+
+                 // step.value is a promise
+                 step.value
+                    .then( run )
+                    .catch( iterator.throw )
+            }
+            // start the run() with input e.g. { tech: 'js' }
+            run( input )
+        }, 500 );
+    })
+}
+
+log( ".... end of main...." );
+</code></pre>
+    
+        <p>the output</p>
+<pre><code class="language-javascript">... start of main ...
+start of generatorF() ...
+.... end of main....
+y1 2
+y2 4
+y3 6
+y4 8
+end of generatorF() ...
+</code></pre>
+
+        <h3 class="sub-title">Example 2</h3>
+        <p>Here we have a dummy database and look for a match and return an output</p>
+<pre><code class="language-javascript">const log = console.log.bind( console );
+log( "... start of main ..." );
+
+function* generatorF(){
+    log( "start of generatorF() ..." );
+    
+    const y1 = yield promiseF( { tech: 'js' } );
+    log( "y1", y1 );
+    
+    const y2 = yield promiseF( { tech: 'css' } );
+    log( "y2", y2 );
+    
+    const y3 = yield promiseF( { tech: 'html' } );
+    log( 'y3', y3 );
+
+    const y4 = yield promiseF( { tech: 'js' } );
+    log( 'y4', y4 );
+
+    log( "end of generatorF() ..." );
+};
+
+// create the iterator part
+const iterator = generatorF();
+
+// trigger the generator (= start to run)
+iterator.next();
+
+// dummy database
+const database = {
+    "js": "Programming Language",
+    "css": "Cascading Style Sheet",
+    "html": "Hyper Text Markup Language"
+
+};
+
+// a wrapper around a promise
+function promiseF( input ){
+     return new Promise(function( resolve, reject ){
+        
+        // simulate random delay
+        const deley = Math.round( Math.random() * 1000 );
+
+        // go to event queue (= later execution)
+        setTimeout(function(){
+
+            // query from database
+            const output = database[ input.tech ];
+
+            // for forwarding the state inside generator 
+            // also returning back the data we wanted
+            function run( data ){
+                // step is an object: { value: here-will-be-a-promise, done: boolean }
+                const step = iterator.next( output );
+                if( step.done ){
+                    return resolve( output );
+                 }
+
+                 // step.value is a promise
+                 step.value
+                    .then( run )
+                    .catch( iterator.throw )
+            }
+            // start the run() with input e.g. { tech: 'js' }
+            run( input )
+        }, deley );
+    })
+}
+
+log( ".... end of main...." );
+</code></pre>
+        <p>output</p>
+<pre><code class="language-javascript">... start of main ...
+start of generatorF() ...
+.... end of main....
+y1 Programming Language
+y2 Cascading Style Sheet
+y3 Hyper Text Markup Language
+y4 JavaScript Language
+end of generatorF() ...
+</code></pre>
+
+        <h3 class="sub-title">Example 3</h3>
+        <p>Here instead of firing some promise one by one, we trigger all of them at same time.</p>
+        <p>But our generator function will pause for them in different order!</p>
+<pre><code class="language-javascript">const log = console.log.bind( console );
+log( "... start of main ..." );
+
+function* generatorF(){
+    log( "start of generatorF() ..." );
+    
+    const p1 = promiseF( { tech: 'js'} );
+    const p2 = promiseF( { tech: 'css'} );
+    const p3 = promiseF( { tech: 'html' } );
+    
+    log( "start p1 ..." );
+    log( "start p2 ..." );
+    log( "start p3 ..." );
+
+    const html = yield p3;
+    log( "html:", html );
+    
+    const js = yield p1;
+    log( "js:", js );
+    
+    const css = yield p2;
+    log( 'css:', css );
+
+    log( "end of generatorF() ..." );
+};
+
+// create the iterator part
+const iterator = generatorF();
+
+// trigger the generator (= start to run)
+let step = iterator.next();
+
+// dummy database
+const database = {
+    "js": "Programming Language",
+    "css": "Cascading Style Sheet",
+    "html": "Hyper Text Markup Language"
+};
+
+// a wrapper around a promise
+function promiseF( input ){
+     log( "input:", input );
+     return new Promise(function( resolve, reject ){
+        
+        // simulate random delay
+        const deley = Math.round( Math.random() * 1000 );
+
+        // go to event queue (= later execution)
+        setTimeout(function(){
+
+            // query from database
+            const output = database[ input.tech ];
+
+            // for forwarding the state inside generator 
+            // also returning back the data we wanted
+            function run( data ){
+                // step is an object: { value: here-will-be-a-promise, done: boolean }
+                const step = iterator.next( output );
+                if( step.done ){
+                    return resolve( output );
+                 }
+
+                 // step.value is a promise
+                 step.value
+                    .then( run )
+                    .catch( iterator.throw )
+            }
+            // start the run() with input e.g. { tech: 'js' }
+            run( input )
+        }, deley );
+    })
+}
+
+log( ".... end of main...." );</code></pre>
+        <p>output</p>
+<pre><code class="language-javascript">... start of main ...
+start of generatorF() ...
+input: { tech: 'js' }
+input: { tech: 'css' }
+input: { tech: 'html' }
+start p1 ...
+start p2 ...
+start p3 ...
+.... end of main....
+html: Hyper Text Markup Language
+js: Cascading Style Sheet
+css: Programming Language
+end of generatorF() ...
+</code></pre>
+
+        <h3 class="sub-title">Faster and more Readable code</h3>
+        <p>You saw that while we can start our promises at the same time, but we can synchronize them in the order we want; plus it is more readable.</p>
+        <p>Just notice out logic happens inside generator function, in fact the flow of our programming happens inside generator function.</p>
+<pre><code class="language-javascript">function* generatorF(){
+    log( "start of generatorF() ..." );
+    
+    const p1 = promiseF( { tech: 'js'} );
+    const p2 = promiseF( { tech: 'css'} );
+    const p3 = promiseF( { tech: 'html' } );
+    
+    log( "start p1 ..." );
+    log( "start p2 ..." );
+    log( "start p3 ..." );
+
+    const html = yield p3;
+    log( "html:", html );
+    
+    const js = yield p1;
+    log( "js:", js );
+    
+    const css = yield p2;
+    log( 'css:', css );
+
+    log( "end of generatorF() ..." );
+};
+</code></pre>
+
+
+        <h3 class="sub-title">What to do next?</h3>
+        <p>It is more complex than what you see here to deal with generators and promises together, and because of that there are libraries to simply this pattern for us. You try them.</p>
+
+        <h3 class="sub-title">More</h3>
+        <p>There are a lot of things about this pattern. Here is some resources that start with.</p>
+        <ul>
+            <li><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Iterators_and_Generators">Iterators_and_Generators</a></li>
+            <li><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Operators/yield*">yield*</a></li>
+            <li><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/function*">function*</a></li>
+            <li><a href="https://colintoh.com/blog/staying-sane-with-asynchronous-programming-promises-and-generators">staying-sane-with-asynchronous-programming-promises-and-generators</a></li>
+            <li><a href="https://medium.com/javascript-inside/generators-and-channels-in-javascript-594f2cf9c16e">generators-and-channels-in-javascript</a></li>
+        </ul>
+
+
 		DD_MM_YYYY
         <div class="edit-on-github">
             <a target="_blank" href="https://github.com/k-five/jsfun.ir/blob/master/home/modern-javascript/generators-and-promises/main.html">Edit on Github</a>
