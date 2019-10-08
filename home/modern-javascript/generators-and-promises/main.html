@@ -323,6 +323,78 @@ end of generatorF() ...
 <pre><code class="language-javascript">html: Hyper Text Markup Language
 js: Cascading Style Sheet
 css: Programming Language</code></pre>
+        <p>Why? Because they all run at the same time, but the one that is finished first, comes first. The iterator has forwarded inside that function and gives us a wrong output</p>
+        <p>Which means we have to code more to synchronize even further.</p>
+
+        <h3 class="sub-title">Solution?</h3>
+        <p>We can use <strong>async-await</strong> or libraries that do this for us.</p>
+        <p>An example using async-await</p>
+<pre><code class="language-javascript">const log = console.log.bind( console );
+log( "... start of main ..." );
+
+async function asyncF(){
+    log( "start of asyncF() ..." );
+    
+    const p1 = promiseF( { tech: 'js'} );
+    const p2 = promiseF( { tech: 'css'} );
+    const p3 = promiseF( { tech: 'html' } );
+    
+    log( "start p1 ..." );
+    log( "start p2 ..." );
+    log( "start p3 ..." );
+
+    const html = await p3;
+    log( "html:", html );
+    
+    const js = await p1;
+    log( "js:", js );
+    
+    const css = await p2;
+    log( 'css:', css );
+
+    log( "end of asyncF() ..." );
+};
+
+asyncF();
+
+// dummy database
+const database = {
+    "js": "Programming Language",
+    "css": "Cascading Style Sheet",
+    "html": "Hyper Text Markup Language"
+};
+
+// a wrapper around a promise
+function promiseF( input ){
+     return new Promise(function( resolve, reject ){
+        // simulate random delay
+        const deley = Math.round( Math.random() * 1000 );
+        // go to event queue (= later execution)
+        setTimeout(function(){
+             log( "deley:", deley, "for", input );
+             const output = database[ input.tech ];
+             resolve( output );
+        }, deley );
+    })
+}
+
+log( ".... end of main...." );</code></pre>
+
+        <p>and the output. The order is correct event they have different delay time.</p>
+        <p>For example the css delay time is 307, which means it is finished first, but we get html first and not css.</p>
+<pre><code class="language-javascript">... start of main ...
+start of asyncF() ...
+start p1 ...
+start p2 ...
+start p3 ...
+.... end of main....
+deley: 307 for { tech: 'css' }
+deley: 502 for { tech: 'js' }
+deley: 948 for { tech: 'html' }
+html: Hyper Text Markup Language
+js: Programming Language
+css: Cascading Style Sheet
+end of asyncF() ...</code></pre>
 
         <h3 class="sub-title">What to do next?</h3>
         <p>It is more complex than what you see here to deal with generators and promises together, and because of that there are libraries to simply this pattern for us. You try them.</p>
