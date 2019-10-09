@@ -244,6 +244,39 @@ tech.js: Hyper Text Markup Language
 .... end of main ....
 </code></pre>
 
+        <h3 class="sub-title">apply trap</h3>
+        <p>We can use this trap to manipulate or a kind of intercept a <strong>function</strong>. Here is a simple example.</p>
+        <p>The return value of <strong>proxyAdd</strong> has been modified.</p>
+<pre><code class="language-javascript">const log = console.log.bind( console );
+log( "... start of main ..." );
+
+function add( a, b ){
+    return a + b;
+}
+
+const handler = {
+    // trap is apply
+    apply: function( fn, _this, args ){
+        return fn( args[0], args[ 1 ] ) + " apply trap works!";
+    }
+}
+
+const proxyAdd = new Proxy( add, handler );
+
+const r1 = add( 2, 3 );
+log( "r1", r1 );
+
+const r2 = proxyAdd( 2, 3 );
+log( "r2", r2 );
+
+log( ".... end of main ...." );</code></pre>
+        
+        <p>and the output:</p>
+<pre><code class="language-javascript">... start of main ...
+r1 5
+r2 5 apply trap works!
+.... end of main ....</code></pre>
+
         <h3 class="sub-title">Proxy handler</h3>
         <p class="quote">All traps are optional. If a trap has not been defined, the default behavior is to forward the operation to the target.</p>
 
