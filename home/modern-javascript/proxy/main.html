@@ -2,14 +2,14 @@
 	<div class="content-r">
 		<h1>proxy</h1>
         <hr>
-        <p>Among features like, promises, async function, etc there are to features that have been labeled as <strong>Meta programming</strong> on Mozilla Developer Network.</p>
-        <p>The term meta-programming has different meaning, at least in my experiences with C++ and using its template features.</p>
+        <p>Among features like, promises, async function, etc there are two features that have been labeled as <strong>Meta programming</strong> on Mozilla Developer Network.</p>
+        <p>The term meta-programming has different meanings, at least in my experiences with C++ and using its template features.</p>
         <p>It simply means generator more code with lesser code, but MDN has another definition for it.</p>
         <p class="quote">Starting with ECMAScript 2015, JavaScript gains support for the <strong>Proxy</strong> and <strong>Reflect</strong> objects allowing you to intercept and define custom behavior for fundamental language operations (e.g. property lookup, assignment, enumeration, function invocation, etc). With the help of these two objects you are able to program at the meta level of JavaScript.</p>
 
         <h3 class="sub-title">proxy (or a trap handler)</h3>
         <p class="quote">The proxy's handler object is a placeholder object which contains traps for proxies.</p>
-        <p>Before ES6 we did not have at this level and only the browser had. But using proxies we have access to some operations that are going to happen on an object and we can do things before those operations.</p>
+        <p>Before ES6 we did not have access at this level and only the browser had. But using proxies we have access to some operations that are going to happen on an object and we can do things before those operations.</p>
         <p>For example when we read a property of an object or write (= assigned) to it two traps are invoked</p>
         <ul>
             <li>get for getting values</li>
@@ -18,7 +18,7 @@
         <p>And because we will be able to have access using a proxy before these operations, we can modify them to have a custom behavior.</p>
 
         <h3 class="sub-title">set and get traps</h3>
-        <p>Here we have a simple set and get traps. Notice that they do not any operations; just printing.</p>
+        <p>Here we have a simple set and get traps. Notice that they do not do any operations; just printing.</p>
 <pre><code class="language-javascript">const log = console.log.bind( console );
 log( "... start of main ..." );
 
