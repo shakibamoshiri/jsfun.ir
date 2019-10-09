@@ -1,0 +1,267 @@
+<main>
+	<div class="content-r">
+		<h1>proxy</h1>
+        <hr>
+        <p>Among features like, promises, async function, etc there are to features that have been labeled as <strong>Meta programming</strong> on Mozilla Developer Network.</p>
+        <p>The term meta-programming has different meaning, at least in my experiences with C++ and using its template features.</p>
+        <p>It simply means generator more code with lesser code, but MDN has another definition for it.</p>
+        <p class="quote">Starting with ECMAScript 2015, JavaScript gains support for the <strong>Proxy</strong> and <strong>Reflect</strong> objects allowing you to intercept and define custom behavior for fundamental language operations (e.g. property lookup, assignment, enumeration, function invocation, etc). With the help of these two objects you are able to program at the meta level of JavaScript.</p>
+
+        <h3 class="sub-title">proxy (or a trap handler)</h3>
+        <p class="quote">The proxy's handler object is a placeholder object which contains traps for proxies.</p>
+        <p>Before ES6 we did not have at this level and only the browser had. But using proxies we have access to some operations that are going to happen on an object and we can do things before those operations.</p>
+        <p>For example when we read a property of an object or write (= assigned) to it two traps are invoked</p>
+        <ul>
+            <li>get for getting values</li>
+            <li>set for setting values</li>
+        </ul>
+        <p>And because we will be able to have access using a proxy before these operations, we can modify them to have a custom behavior.</p>
+
+        <h3 class="sub-title">set and get traps</h3>
+        <p>Here we have a simple set and get traps. Notice that they do not any operations; just printing.</p>
+<pre><code class="language-javascript">const log = console.log.bind( console );
+log( "... start of main ..." );
+
+var handler = {
+    get: function( target, property, value  ) {
+        log( "get target:", target );
+        log( "get property:", property );
+        log( "" );
+    },
+    set: function( target, property, value ){
+        log( "set target:", target );
+        log( "set property:", property );
+        log( "set value:", value );
+        log( "" );
+    }
+};
+
+const tech = {
+    id: 'tech'
+};
+
+const pTech = new Proxy( tech , handler);
+
+// write
+pTech.js = "Programming Language";
+
+// read
+log( "pTech:", pTech );
+log( "pTech.js:", pTech.js );
+
+log( "tech:", tech );
+log( "tech.js:", tech.js );
+
+log( ".... end of main ...." );</code></pre>
+
+        <p>output</p>
+<pre><code class="language-javascript">... start of main ...
+set target: { id: 'tech' }
+set property: js
+set value: Programming Language
+
+get target: { id: 'tech' }
+get property: Symbol(nodejs.util.inspect.custom)
+
+get target: { id: 'tech' }
+get property: inspect
+
+get target: { id: 'tech' }
+get property: inspect
+
+get target: { id: 'tech' }
+get property: Symbol(Symbol.toStringTag)
+
+get target: { id: 'tech' }
+get property: Symbol(Symbol.iterator)
+
+pTech: { id: 'tech' }
+get target: { id: 'tech' }
+get property: js
+
+pTech.js: undefined
+tech: { id: 'tech' }
+tech.js: undefined
+.... end of main ....
+</code></pre>
+
+        <h3 class="sub-title">set and get, default behavior</h3>
+        <p>An example of default behavior. So we do not customize anything.</p>
+<pre><code class="language-javascript">const log = console.log.bind( console );
+log( "... start of main ..." );
+
+var handler = {
+    get: function( target, property, value  ) {
+        log( "get target:", target );
+        log( "get property:", property );
+        log( "" );
+
+        // indicate successful get
+        return true;
+    },
+    set: function( target, property, value ){
+        log( "set target:", target );
+        log( "set property:", property );
+        log( "set value:", value );
+        log( "" );
+
+        // default behavior
+        target[ property ] = value;
+
+        // indicate successful set
+        return true;
+    }
+};
+
+const tech = {
+    id: 'tech'
+};
+
+const pTech = new Proxy( tech , handler);
+
+// write
+pTech.js = "Programming Language";
+
+// read
+log( "pTech:", pTech );
+log( "pTech.js:", pTech.js );
+
+log( "tech:", tech );
+log( "tech.js:", tech.js );
+
+log( ".... end of main ...." );</code></pre>
+
+        <p>output</p>
+<pre><code class="language-javascript">... start of main ...
+set target: { id: 'tech' }
+set property: js
+set value: Programming Language
+
+get target: { id: 'tech', js: 'Programming Language' }
+get property: Symbol(nodejs.util.inspect.custom)
+
+get target: { id: 'tech', js: 'Programming Language' }
+get property: Symbol(Symbol.toStringTag)
+
+get target: { id: 'tech', js: 'Programming Language' }
+get property: Symbol(Symbol.iterator)
+
+pTech: { id: 'tech', js: 'Programming Language' }
+get target: { id: 'tech', js: 'Programming Language' }
+get property: js
+
+pTech.js: true
+tech: { id: 'tech', js: 'Programming Language' }
+tech.js: Programming Language
+.... end of main ....
+</code></pre>
+
+
+        <h3 class="sub-title">set and get, custom behavior</h3>
+        <p>Here we modify the default behavior and do not let them to be used. Instead we add our own.</p>
+<pre><code class="language-javascript">const log = console.log.bind( console );
+log( "... start of main ..." );
+
+var handler = {
+    get: function( target, property, value  ) {
+        log( "get target:", target );
+        log( "get property:", property );
+        log( "" );
+
+        // indicate successful get
+        return "I do not let you do this!";
+    },
+    set: function( target, property, value ){
+        log( "set target:", target );
+        log( "set property:", property );
+        log( "set value:", value );
+        log( "" );
+
+        // custom behavior
+        target[ property ] = "Hyper Text Markup Language";
+        
+        // even add more
+        target[ 'css' ] = "Cascading Style Sheet";
+
+        // indicate successful set
+        return true;
+    }
+};
+
+const tech = {
+    id: 'tech'
+};
+
+const pTech = new Proxy( tech , handler);
+
+// write
+pTech.js = "Programming Language";
+
+// read
+log( "pTech:", pTech );
+log( "pTech.js:", pTech.js );
+
+log( "tech:", tech );
+log( "tech.js:", tech.js );
+
+log( ".... end of main ...." );</code></pre>
+
+        <p>output</p>
+<pre><code class="language-javascript">... start of main ...
+set target: { id: 'tech' }
+set property: js
+set value: Programming Language
+
+get target: { id: 'tech',
+  js: 'Hyper Text Markup Language',
+  css: 'Cascading Style Sheet' }
+get property: Symbol(nodejs.util.inspect.custom)
+
+get target: { id: 'tech',
+  js: 'Hyper Text Markup Language',
+  css: 'Cascading Style Sheet' }
+get property: Symbol(Symbol.toStringTag)
+
+get target: { id: 'tech',
+  js: 'Hyper Text Markup Language',
+  css: 'Cascading Style Sheet' }
+get property: Symbol(Symbol.iterator)
+
+pTech: Object [I do not let you do this!] {
+  id: 'tech',
+  js: 'Hyper Text Markup Language',
+  css: 'Cascading Style Sheet' }
+get target: { id: 'tech',
+  js: 'Hyper Text Markup Language',
+  css: 'Cascading Style Sheet' }
+get property: js
+
+pTech.js: I do not let you do this!
+tech: { id: 'tech',
+  js: 'Hyper Text Markup Language',
+  css: 'Cascading Style Sheet' }
+tech.js: Hyper Text Markup Language
+.... end of main ....
+</code></pre>
+
+        <h3 class="sub-title">Proxy handler</h3>
+        <p class="quote">All traps are optional. If a trap has not been defined, the default behavior is to forward the operation to the target.</p>
+
+        <h3 class="sub-title">watcher</h3>
+        <p>The behavior of ES6 Proxy seems like a watcher to notify us a change notification and a kind of observation.</p>
+        <p>For more you can read:</p>
+        <ul>
+            <li><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide">JavaScript Guide</a></li>
+            <li><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Meta_programming">Meta_programming</a></li>
+            <li><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Proxy">Proxy</a></li>
+            <li><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Proxy/handler">Proxy handler</a></li>
+            <li><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Reflect">Reflect</a></li>
+            <li><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Deprecated_and_obsolete_features#Proxy">Deprecated_and_obsolete_features</a></li>
+        </ul>
+
+		DD_MM_YYYY
+        <div class="edit-on-github">
+            <a target="_blank" href="https://github.com/k-five/jsfun.ir/blob/master/home/modern-javascript/proxy/main.html">Edit on Github</a>
+        </div>
+	</div>
+</main>
