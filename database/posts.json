@@ -66,6 +66,9 @@
             "proxy": "",
             "resources": ""
         },
+        "functional programming javascript": {
+            "functional programming preface": ""
+        },
         "react": {
             "three JSX main patterns": "",
             "JSX direct function call": "",

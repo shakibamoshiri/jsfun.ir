@@ -1,0 +1,49 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 500 650" xmlns:xlink="http://www.w3.org/1999/xlink" width="500" height="650" font-family="Montserrat">
+  <rect x="0" y="0" width="500" height="650" fill="#fd0"></rect>
+
+  <g class="title" text-anchor="middle" font-weight="bold">
+<!--    <rect x="0" y="35" width="500" height="40" fill="#000"></rect>-->
+<!--    <text x="259" y="65" font-size="25" fill="#fff">JS Resources</text>-->
+  </g>
+  
+  <g transform="translate(0,100)" font-family="Ubuntu" font-size="20" fill="#000" text-anchor="middle" font-weight="bold">
+    <text x="250" y="0">Code <tspan fill="#c80000">JS</tspan> and <tspan fill="#c80000">Node</tspan> in FP paradigm</text>
+    <text x="250" y="40">scalable app with less code using</text>
+    <text x="250" y="80">FP <tspan fill="#00c800">concepts</tspan> &amp; <tspan fill="#00c800">techniques</tspan></text>
+  </g>
+  
+  <g transform="translate(0,250)" font-family="Ubuntu" font-size="25" fill="#c800c8" text-anchor="middle" font-weight="bold">
+    <rect x="0" y="0" width="500" height="40" fill="#000"></rect>
+    <text x="250" y="30" fill="#fff"  letter-spacing="3">Functional</text>
+  </g>
+  <g transform="translate(0,300)" font-family="Ubuntu" font-size="25" fill="#c800c8" text-anchor="middle" font-weight="bold">
+    <rect x="0" y="0" width="500" height="40" fill="#000"></rect>
+    <text x="250" y="30" fill="#fff"  letter-spacing="3">Programming</text>
+  </g>
+  <g transform="translate(0,350)" font-family="Ubuntu" font-size="25" fill="#c800c8" text-anchor="middle" font-weight="bold">
+    <rect x="0" y="0" width="500" height="40" fill="#000"></rect>
+    <text x="250" y="30" fill="#fff"  letter-spacing="3">JavaScript</text>
+  </g>
+  <g transform="translate(0,480)" font-size="25" fill="#000" text-anchor="middle" font-weight="bold">
+    <text x="250" y="0" fill="#fff" font-size="40">follow new series</text>
+    <text x="250" y="50" fill="#fff" >prerequisite for advanced</text>
+    <text x="250" y="100" fill="#fff" >JS, Node, and React</text>
+<!--    <text x="250" y="100" fill="#000" font-size="15">start from: Saturday 19th, October, 2019</text>-->
+  </g>
+  
+  
+  
+  <defs>
+    <marker id="arrow" markerWidth="10" markerHeight="7" 
+            refX="0" refY="3.5" orient="auto">
+      <polygon fill="#000" points="0 0, 5 3.5, 0 7" />
+    </marker>
+    <marker id="bullet" markerWidth="12" markerHeight="12" refX="6" refY="6" >
+      <circle fill="#000" cx="6" cy="6" r="2" stroke="context-stroke" stroke-width="2"/>
+    </marker>
+  </defs>
+
+  
+  <text x="10" y="645" font-size="12"  fill="#000" style="font-weight: bold">functional programming javascript by Shakiba Moshiri, 2019-10-14</text>
+<!--<path fill="none" stroke="#000" stroke-width="3" d="M60,50 v140" marker-start="url(#bullet)" marker-end="url(#arrow)"></path>-->
+</svg>
