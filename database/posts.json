@@ -67,7 +67,8 @@
             "resources": ""
         },
         "functional programming javascript": {
-            "functional programming preface": ""
+            "functional programming preface": "",
+            "pipeline architecture": ""
         },
         "react": {
             "three JSX main patterns": "",

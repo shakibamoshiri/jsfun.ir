@@ -1,0 +1,72 @@
+<main>
+	<div class="content-r">
+		<h1>pipeline-architecture</h1>
+        <hr>
+        <p>If we view the workflow of FP at the highest level of abstraction, it is alike a <strong>pipeline</strong>.</p>
+        <p>Pipeline architecture has many use cases, but in its simplest form is a combination of</p>
+        <ul>
+            <li>filter(s)</li>
+            <li>pipe(s)</li>
+        </ul>
+        <p>with which we can combine some pipes and some filters and get a pipeline.</p>
+        <p>In this model, <strong>things</strong>, which can by anything, go through a series of steps, which can be any steps, to get the final desire result. </p>
+        
+        <h3 class="sub-title">Examples</h3>
+        <p>Here are some examples of this model.</p>
+        <ul>
+            <li><strong>car manufactures</strong>: some sort of materials go through some sections and after each one, we will be closer and closer to the final result which is a car.</li>
+            <li><strong>compilers</strong>: first source code is read, then then it is parsed for any syntax error, then ..., till having an executable binary file.</li>
+            <li><strong>UNIX</strong>: the output of one CLI is sent as input into another CLI; and it can be repeated.</li>
+        </ul>
+        <p>We will see more examples in upcoming posts.</p>
+
+
+        <h3 class="sub-title">New Terms</h3>
+        <p>With any new concept comes new terms. In fact one of a big challenging part of learn functional programming is to understand these new terms which are a lot. </p>
+        <p>But we are not going to memorize them, nor want to talk about all of them; just a new terms related to pipeline architecture.</p>
+        <p>Four kinds of filter we have:</p>
+        <ul>
+            <li><strong>producer</strong>: it creates output, it sends, it pushes, etc</li>
+            <li><strong>consumer</strong>: it consumes input, it receives, it pulls, etc</li>
+            <li><strong>transformers</strong>: it consumes input(s) and creates output(s), it receives and sends, it pulls and pushes, etc</li>
+            <li><strong>tester</strong>: it consumes input, it receives, it pull; and based on a condition does something.</li>
+        </ul>
+
+        <h3 class="sub-title">Distributed Architecture</h3>
+        <p>It is noticeable that <strong>pipeline architecture</strong> itself is a kind of distributed architecture. In this model components, platforms, or whatever we have are separate from each other.</p>
+        <p>And how they work together? Using communication. For example:</p>
+        <ul>
+            <li>client</li>
+            <li>server</li>
+        </ul>
+        <p>is also a kind of distributed architecture and client and server has communication over <strong>network</strong>.</p>
+        <p>As another example, in <strong>UNIX</strong> world and working with commands (= CLIs) on a Terminal, we have IPC-Ch (= Inter Process Communication Channel) that sent data from left command is sent into next command which is after pipe (= |).</p>
+<pre><code class="language-javascript">echo {a..f} | tr [:lower:] [:upper:] | tr ' ' '\n' | sort -r 
+F
+E
+D
+C
+B
+A</code></pre>
+        <p>Mapping CLIs and pipes in UNIX's world to <strong>software</strong> and codding, we can see that we can separate our</p>
+        <ul>
+            <li>data: whatever it is</li>
+            <li>function: whatever it does</li>
+        </ul>
+        <p>from each others. While in <strong>OOP</strong> style data and function are collected into a <strong>class</strong> but in <strong>FP</strong>'s world  we tend to separate them.</p>
+        <p>Let focus and data and function in more details in next post.</p>
+
+        <h3 class="sub-title">Read more</h3>
+        <ul>
+            <li><a target="_blank" href="http://www.cs.sjsu.edu/~pearce/modules/patterns/distArch//">Distributed Architectures</a></li>
+            <li><a target="_blank" href="http://www.cs.sjsu.edu/~pearce/modules/patterns/distArch/pipeline.htm">Pipeline Architecture</a></li>
+            <li><a target="_blank" href="https://en.wikipedia.org/wiki/Pipeline_%28software%29">Pipeline (software)</a></li>
+            <li><a target="_blank" href="https://en.wikipedia.org/wiki/Software_design_pattern">Software design pattern</a></li>
+        </ul>
+        
+		DD_MM_YYYY
+        <div class="edit-on-github">
+            <a target="_blank" href="https://github.com/k-five/jsfun.ir/blob/master/home/functional-programming-javascript/pipeline-architecture/main.html">Edit on Github</a>
+        </div>
+	</div>
+</main>

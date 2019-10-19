@@ -1,0 +1,82 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 500 650" xmlns:xlink="http://www.w3.org/1999/xlink" width="500" height="650" font-family="Montserrat">
+  <rect x="0" y="0" width="500" height="650" fill="#fd0"></rect>
+
+  <g class="title" text-anchor="middle" font-weight="bold">
+    <rect x="0" y="35" width="500" height="40" fill="#000"></rect>
+    <text x="259" y="65" font-size="25" fill="#fff">Pipeline architecture</text>
+  </g>
+  
+  <g transform="translate(0,150)" font-family="Ubuntu" font-size="20" fill="#fff" text-anchor="middle" font-weight="bold">
+    <rect width="120" height="50" x="50"></rect>
+    <text x="110" y="30" fill="#000">producer</text>
+    <g>
+      <text x="230" y="10" fill="#000">pipe</text>
+      <path id="move_stroke" stroke-dasharray="10" stroke-dashoffset="0" fill="none" stroke="#000" stroke-width="2" d="M180,25 h100" marker-start="url(#bullet)" marker-end="url(#arrow)"></path>
+    </g>
+  </g>
+  <g transform="translate(250,150)" font-family="Ubuntu" font-size="20" fill="#ccc" text-anchor="middle" font-weight="bold">
+    <rect width="120" height="50" x="50"></rect>
+    <text x="110" y="30" fill="#000">filter</text>
+    <g transform="translate(-70,40) rotate(90,180,20)">
+      <text x="230" y="10" fill="#000">pipe</text>
+      <path id="move_stroke" stroke-dasharray="10" stroke-dashoffset="0" fill="none" stroke="#000" stroke-width="2" d="M180,25 h100" marker-start="url(#bullet)" marker-end="url(#arrow)"></path>
+    </g>
+  </g>
+  <g transform="translate(250,330)" font-family="Ubuntu" font-size="20" fill="#ccc" text-anchor="middle" font-weight="bold">
+    <rect width="120" height="50" x="50"></rect>
+    <text x="110" y="30" fill="#000">filter</text>
+    <g >
+      <text x="-10" y="10" fill="#000">pipe</text>
+      <path id="move_stroke" stroke-dasharray="10" stroke-dashoffset="0" fill="none" stroke="#000" stroke-width="2" d="M40,25 h-100" marker-start="url(#bullet)" marker-end="url(#arrow)"></path>
+    </g>
+  </g>
+  <g transform="translate(0,330)" font-family="Ubuntu" font-size="20" fill="#ccc" text-anchor="middle" font-weight="bold">
+    <rect width="120" height="50" x="50"></rect>
+    <text x="110" y="30" fill="#000">filter</text>
+    <g transform="translate(-70,40) rotate(90,180,20)">
+      <text x="230" y="10" fill="#000">pipe</text>
+      <path id="move_stroke" stroke-dasharray="10" stroke-dashoffset="0" fill="none" stroke="#000" stroke-width="2" d="M180,25 h100" marker-start="url(#bullet)" marker-end="url(#arrow)"></path>
+    </g>
+  </g>
+  <g transform="translate(0,510)" font-family="Ubuntu" font-size="20" fill="#ccc" text-anchor="middle" font-weight="bold">
+    <rect width="120" height="50" x="50"></rect>
+    <text x="110" y="30" fill="#000">filter</text>
+    <g>
+      <text x="230" y="10" fill="#000">pipe</text>
+      <path id="move_stroke" stroke-dasharray="10" stroke-dashoffset="0" fill="none" stroke="#000" stroke-width="2" d="M180,25 h100" marker-start="url(#bullet)" marker-end="url(#arrow)"></path>
+    </g>
+  </g>
+  <g transform="translate(250,510)" font-family="Ubuntu" font-size="20" fill="#fff" text-anchor="middle" font-weight="bold">
+    <rect width="120" height="50" x="50"></rect>
+    <text x="110" y="30" fill="#000">consumer</text>
+  </g>
+  
+  <defs>
+    <marker id="arrow" markerWidth="10" markerHeight="7" 
+            refX="0" refY="3.5" orient="auto">
+      <polygon fill="#000" points="0 0, 5 3.5, 0 7" />
+    </marker>
+    <marker id="bullet" markerWidth="12" markerHeight="12" refX="6" refY="6" >
+      <circle fill="#000" cx="6" cy="6" r="2" stroke="context-stroke" stroke-width="2"/>
+    </marker>
+  </defs>
+<defs>
+    <style type="text/css"><![CDATA[
+      @-webkit-keyframes stroke_forward {
+        100% { stroke-dashoffset: -140;  } }
+      @keyframes stroke_forward {
+        100% { stroke-dashoffset: -140; }
+      }
+      path#move_stroke {
+        animation-name: stroke_forward;
+        animation-duration: 5s;
+        animation-timing-function: linear;
+        animation-iteration-count: infinite;
+      }
+  ]]></style>
+  </defs>
+
+  <text x="10" y="625" font-size="12"  fill="#000" style="font-weight: bold">jsfun.ir/functional-programming-javascript</text>
+  <text x="10" y="645" font-size="12"  fill="#000" style="font-weight: bold">functional programming javascript by Shakiba Moshiri, 2019-10-19</text>
+<!--<path fill="none" stroke="#000" stroke-width="3" d="M60,50 v140" marker-start="url(#bullet)" marker-end="url(#arrow)"></path>-->
+</svg>
