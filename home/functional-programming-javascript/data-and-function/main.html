@@ -1,7 +1,117 @@
 <main>
 	<div class="content-r">
 		<h1>data-and-function</h1>
+        <hr>
+        <p>In previous post we mapped the UNIX style of using CLIs on a Terminal to FP function chaining.</p>
+<pre><code class="language-javascript">echo {a..f} | tr [:lower:] [:upper:] | tr ' ' '\n' | sort -r 
+F
+E
+D
+C
+B
+A</code></pre>
         
+        <p>And this is what happens.</p>
+        <ul>
+            <li>First output of <strong>echo</strong> is sent to input of <strong>tr</strong></li>
+            <li>second tr's output is sent to second <strong>tr's</strong> input</li>
+            <li>finally second tr's output is sent to <strong>sort</strong> command.</li>
+        </ul>
+        <p>the data we have first is something like this</p>
+<pre><code class="language-javascript">echo {a..f}
+a b c d e f</code></pre>
+        
+        <p>But after going through each next step it will change to final result.</p>
+<pre><code class="language-javascript">F
+E
+D
+C
+B
+A</code></pre>
+
+        <h3 class="sub-title">JavaScript</h3>
+        <p>We can model this simply in vanilla (native) JS.</p>
+<pre><code class="language-javascript">const log = console.log.bind( console );
+
+// our data
+const numbers = [ 3, 1, 4, 2, 5, 0 ];
+
+// our steps
+const plusOne = n => n + 1;
+const lessThen5 = n => n < 5;
+const lessToMore = ( a, b ) => a > b;
+
+const r =
+// our pipeline:
+numbers.map( plusOne ).filter( lessThen5 ).sort( lessToMore );
+
+// our result
+log( r );   // [ 1, 2, 3, 4 ]
+</code></pre>
+
+        <h3 class="sub-title">More like a pipe</h3>
+        <p>If that did not really feel like a pipeline, you are right. That is why we have libraies like</p>
+        <ul>
+            <li>undercore js</li>
+            <li>lodash js</li>
+            <li>ramda js</li>
+        </ul>
+        <p>These libraries are for helping us to make our code much cleaner and much like FP languages. They have many functions that each one does a specific task. Each function is like a <strong>pattern</strong>. By understanding these functions we finally have many patterns in mind that can help us declare our API and using these functions to get the job done.</p>
+
+        <h3 class="sub-title">Ramda.js</h3>
+        <p>Here is the same operations using Ramda.js.</p>
+<pre><code class="language-javascript">const R = require( "ramda" );
+
+// our data
+const numbers = [ 3, 1, 4, 2, 5, 0 ];
+
+// our steps
+const plusOne = n => n + 1;
+const lessThen4 = n => n < 5;
+const lessToMore = ( a, b ) => a > b;
+const log = console.log.bind( console );
+
+// our pipeline
+R.pipe(
+    R.map( plusOne ),
+    R.filter( lessThen4 ),
+    R.sort( lessThen4 ),
+    log
+)( numbers );
+
+// our result
+// [ 1, 2, 3, 4 ]</code></pre>
+
+        <h3 class="sub-title">UNIX</h3>
+        <p>Because we have our data <strong>3, 1, 4, 2, 5, 0</strong> and we are aware of operations we simply can get the final result using some CLIs.</p>
+<pre><code class="language-javascript">echo '3 1 4 2 5 0' | perl -lpe 's/\d/$&+1/eg && s/ /\n/g;' | sort | head -n 4
+1
+2
+3
+4</code></pre>
+        
+        <h3 class="sub-title">What is the key things to use FP?</h3>
+        <p>So what are the key things to use functional programming?</p>
+        <ol>
+            <li>Having <strong>data</strong></li>
+            <li><strong>understanding</strong> what <strong>operations</strong> we need to use</li>
+        </ol>
+        <p>If we have these two components, then using FP is not that hard.</p>
+
+        <h3 class="sub-title">Readability</h3>
+        <p>If you look at this portion of code.</p>
+<pre><code class="language-javascript">R.pipe(
+    R.map( plusOne ),
+    R.filter( lessThen4 ),
+    R.sort( lessThen4 ),
+    log
+)( numbers );</code></pre>
+
+        <p>you can see it is readable and easy to track to see what is happening; or what steps we have; or what flow we have.</p>
+        <p>And this is a feature in FP that we call <strong>declarative API</strong>. It has <strong>abstraction</strong> of course and we have to learn this abstractions but it pays off after understanding them.</p>
+        <p>The same is true when we use <strong>Linux's Terminal</strong>. At first it is scary to just work with plain, old commands; but after a while and understanding patterns we have, you will be able solve complex problems and scenarios very fast and easily.</p>
+        <p>In next section we will talk about declarative and imperative API.</p>
+
 		DD_MM_YYYY
         <div class="edit-on-github">
             <a target="_blank" href="https://github.com/k-five/jsfun.ir/blob/master/home/functional-programming-javascript/data-and-function/main.html">Edit on Github</a>
