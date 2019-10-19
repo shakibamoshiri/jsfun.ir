@@ -1,0 +1,72 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 500 650" xmlns:xlink="http://www.w3.org/1999/xlink" width="500" height="650" font-family="Montserrat">
+  <rect x="0" y="0" width="500" height="650" fill="#fd0"></rect>
+
+  <g class="title" text-anchor="middle" font-weight="bold">
+    <rect x="0" y="35" width="500" height="40" fill="#000"></rect>
+    <text x="259" y="65" font-size="25" fill="#fff">Data and Function</text>
+  </g>
+<g transform="translate(150,90)" font-family="Ubuntu" font-size="20" fill="#fff" text-anchor="middle" font-weight="bold">
+    <text x="100" y="30" fill="#000"><tspan fill="#c80000">UNIX</tspan> Inter Process Communication (= IPC)</text>
+  </g>  
+  <g transform="translate(0,150)" font-family="Ubuntu" font-size="20" fill="#fff" text-anchor="middle" font-weight="bold">
+    <rect width="100" height="50" x="50"></rect>
+    <text x="100" y="30" fill="#000">ls</text>
+    <g>
+      <text x="160" y="160" fill="#000">data</text>
+      <path fill="none" stroke="#000" stroke-width="2" d="M100,60 a20,20 0 0,0 120,0" marker-start="url(#bullet)" marker-end="url(#arrow)"></path>
+    </g>
+  </g>
+  <g transform="translate(150,150)" font-family="Ubuntu" font-size="20" fill="#fff" text-anchor="middle" font-weight="bold">
+    <rect width="100" height="50" x="50"></rect>
+    <text x="100" y="30" fill="#000">grep</text>
+    <g>
+      <text x="180" y="160" fill="#000">data</text>
+      <path fill="none" stroke="#000" stroke-width="2" d="M130,60 a20,20 0 0,0 120,0" marker-start="url(#bullet)" marker-end="url(#arrow)"></path>
+    </g>
+  </g>
+  <g transform="translate(300,150)" font-family="Ubuntu" font-size="20" fill="#fff" text-anchor="middle" font-weight="bold">
+    <rect width="100" height="50" x="50"></rect>
+    <text x="100" y="30" fill="#000">sort</text>
+  </g>
+  
+  <g transform="translate(0,400)" font-family="Ubuntu" font-size="20" fill="#fff" text-anchor="middle" font-weight="bold">
+    <rect width="100" height="50" x="50"></rect>
+    <text x="100" y="30" fill="#000">map()</text>
+    <g>
+      <path fill="none" stroke="#000" stroke-width="2" d="M100,-10 a20,20 0 0,1 120,0" marker-start="url(#bullet)" marker-end="url(#arrow)"></path>
+    </g>
+  </g>
+  <g transform="translate(150,400)" font-family="Ubuntu" font-size="20" fill="#fff" text-anchor="middle" font-weight="bold">
+    <rect width="100" height="50" x="50"></rect>
+    <text x="100" y="30" fill="#000">filter()</text>
+    <g>
+      <path fill="none" stroke="#000" stroke-width="2" d="M120,-10 a20,20 0 0,1 120,0" marker-start="url(#bullet)" marker-end="url(#arrow)"></path>
+    </g>
+  </g>
+  <g transform="translate(300,400)" font-family="Ubuntu" font-size="20" fill="#fff" text-anchor="middle" font-weight="bold">
+    <rect width="100" height="50" x="50"></rect>
+    <text x="100" y="30" fill="#000">reduce()</text>
+  </g>
+  <g transform="translate(150,460)" font-family="Ubuntu" font-size="20" fill="#fff" text-anchor="middle" font-weight="bold">
+    <text x="100" y="30" fill="#000"><tspan fill="#c80000">javascript</tspan> functions chain</text>
+  </g>
+  <g transform="translate(150,520)" font-family="Ubuntu" font-size="20" fill="#000" text-anchor="middle" font-weight="bold">
+    <text x="100" y="30" fill="#000">piping data from left to right</text>
+    <text x="100" y="60" font-size="15" fill="#c80000">operation -> data -> operation -> data -> operation</text>
+  </g>
+  <defs>
+    <marker id="arrow" markerWidth="10" markerHeight="7" 
+            refX="0" refY="3.5" orient="auto">
+      <polygon fill="#000" points="0 0, 5 3.5, 0 7" />
+    </marker>
+    <marker id="bullet" markerWidth="12" markerHeight="12" refX="6" refY="6" >
+      <circle fill="#000" cx="6" cy="6" r="2" stroke="context-stroke" stroke-width="2"/>
+    </marker>
+  </defs>
+
+  <g font-size="12"  fill="#000" font-weight="bold">
+    <text x="10" y="625">jsfun.ir/functional-programming-javascript</text>
+    <text x="10" y="645" >functional programming javascript by Shakiba Moshiri, 2019-10-21</text>
+  </g>
+<!--<path fill="none" stroke="#000" stroke-width="3" d="M60,50 v140" marker-start="url(#bullet)" marker-end="url(#arrow)"></path>-->
+</svg>
