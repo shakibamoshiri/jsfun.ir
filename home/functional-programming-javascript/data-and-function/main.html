@@ -67,15 +67,15 @@ const numbers = [ 3, 1, 4, 2, 5, 0 ];
 
 // our steps
 const plusOne = n => n + 1;
-const lessThen4 = n => n < 5;
+const lessThen5 = n => n < 5;
 const lessToMore = ( a, b ) => a > b;
 const log = console.log.bind( console );
 
 // our pipeline
 R.pipe(
     R.map( plusOne ),
-    R.filter( lessThen4 ),
-    R.sort( lessThen4 ),
+    R.filter( lessThen5 ),
+    R.sort( lessToMore ),
     log
 )( numbers );
 
@@ -102,8 +102,8 @@ R.pipe(
         <p>If you look at this portion of code.</p>
 <pre><code class="language-javascript">R.pipe(
     R.map( plusOne ),
-    R.filter( lessThen4 ),
-    R.sort( lessThen4 ),
+    R.filter( lessThen5 ),
+    R.sort( lessToMore ),
     log
 )( numbers );</code></pre>
 
