@@ -69,7 +69,8 @@
         "functional programming javascript": {
             "functional programming preface": "",
             "pipeline architecture": "",
-            "data and function": ""
+            "data and function": "",
+            "declarative API imperative API": ""
         },
         "react": {
             "three JSX main patterns": "",

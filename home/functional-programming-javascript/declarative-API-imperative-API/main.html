@@ -1,0 +1,147 @@
+<main>
+	<div class="content-r">
+    <h1>declarative-API-imperative-API</h1>
+    <hr>
+    <p>Using <strong>OOP</strong> style, we should think about two things.</p>
+    <ol>
+        <li>Implementation details</li>
+        <li>An API to work with this implementation</li>
+    </ol>
+    <p>Here is an example. We have to write <strong>methods</strong> to work with our <strong>data</strong>. This data is <strong>encapsulated</strong> in our class.</p>
+<pre><code class="language-javascript">const log = console.log.bind( console );
+
+class People {
+    constructor( list = [] ){
+        this.list = list;
+    }
+
+    add( name ){
+        this.list.push( name );
+        return name;
+    }
+
+    print(){
+        let index = 0;
+        const maxIndex = this.list.length;
+        for( ; index < maxIndex; ++index ){
+            console.log( index + 1, this.list[ index ] );
+        }
+    }
+};
+
+const p = new People;
+p.add( "person 1" );
+p.add( "person 2" );
+p.print();
+
+/* output
+1 'person 1'
+2 'person 2'
+*/</code></pre>
+
+    <p>More task we have, more methods we need to turn our data to the result we want. So after a while if we do not care about designing of class, it becomes a <strong>God Class</strong>.</p>
+    <p>So at that point, learning <strong>Design Pattern</strong> comes to the play.</p>
+
+    <h3 class="sub-title">Imperative</h3>
+    <p>This is imperative. Here our focus is on <strong>how to do</strong> or <strong>how to print</strong>. So we have to think about</p>
+    <ul>
+        <li>details</li>
+        <li>flow of our code</li>
+        <li>state of our code</li>
+    </ul>
+<pre><code class="language-javascript">    let index = 0;
+    const maxIndex = this.list.length;
+    for( ; index < maxIndex; ++index ){
+        console.log( index + 1, this.list[ index ] );
+    }</code></pre>
+    
+    <p>Also <strong>bug</strong> tracking, because we wrote this code, right?</p>
+
+
+    <h3 class="sub-title">Declarative</h3>
+    <p>And this part of our code is declarative.</p>
+<pre><code class="language-javascript">const p = new People;
+p.add( "person 1" );
+p.add( "person 2" );
+p.print();</code></pre>
+    
+    <p>Here we do not care about how to do. We care about <strong>what to do</strong> or <strong>what to print</strong>. So our focus is not on details, but on steps we need to proceed.</p>
+    <p>Here is the steps</p>
+    <ol>
+        <li>create new instance of People class</li>
+        <li>add into it two times</li>
+        <li>print what you added</li>
+    </ol>
+
+    <h3 class="sub-title">DOM imperative API and JSX declarative API</h3>
+    <p>Here is another example of imperative API using native DOM in web browsers.</p>
+<pre><code class="language-javascript">const h1 = document.createElement( "h1" );
+h1.textContent = "This is h1 tag";</code></pre>
+    <p>We created an h1 element and then added "This is h1 tag" to it.</p>
+    <p>Here is the same but using <strong>JSX</strong> in <strong>React.js</strong>.</p>
+<pre><code class="language-html">const h1 = &lt;h1&gt;This is h1 tag&lt;/h1&gt;</code></pre>
+
+    <p>It does not seem to be a big deal at first, but when we have complex code, it will be a big deal to work with imperative style; specially when we want to be more productive.</p>
+
+    <h3 class="sub-title">FP declarative API</h3>
+    <p>Functions in the functional programming world are not <strong>arbitrary</strong> functions that some developers liked to create and then others should use them.</p>
+    <p>They are based on already <strong>proven mathematical theories</strong> that ensures us not to worry about correctness of these function nor worry about implementation details.</p>
+
+    <h3 class="sub-title">FP is not against OOP</h3>
+    <p>Emphasizing on FP does not mean OOP is bed, is dead, etc; but a different approach to tackle our problems.</p>
+    <p>Making our <strong>People</strong> class simpler and easier to maintain by removing the <strong>print()</strong> method and using Ramda to print the list.</p>
+
+<pre><code class="language-javascript">const R = require( "ramda" );
+
+const log = console.log.bind( console );
+
+class People {
+    constructor( list = [] ){
+        this.list = list;
+    }
+
+    add( name ){
+        this.list.push( name );
+        return name;
+    }
+};
+
+const p = new People;
+
+// data should be added
+const list = [ "person 1", "person 2", "person 3" ];
+
+// extract add from People with fixed this binding
+const add = p.add.bind( p );
+
+// map index with map
+const mappedIndex = R.addIndex( R.map );
+
+const printter = ( person, index ) => log( index + 1, person );
+// new print
+const print = mappedIndex( printter );
+
+R.pipe(
+    R.map( add ),
+    print
+)( list );
+
+/* output
+1 'person 1'
+2 'person 2'
+3 'person 3'
+*/
+
+// just for sure
+log( p.list );  // [ 'person 1', 'person 2', 'person 3' ]
+</code></pre>
+
+        <p>Is functional programming good for everything? There is no bad part about it?</p>
+        <p>We will discuss issues with FP, specially the learning part.</p>
+        
+		DD_MM_YYYY
+        <div class="edit-on-github">
+            <a target="_blank" href="https://github.com/k-five/jsfun.ir/blob/master/home/functional-programming-javascript/declarative-API-imperative-API/main.html">Edit on Github</a>
+        </div>
+	</div>
+</main>
