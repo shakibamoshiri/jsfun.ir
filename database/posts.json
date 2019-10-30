@@ -71,7 +71,9 @@
             "pipeline architecture": "",
             "data and function": "",
             "declarative API imperative API": "",
-            "functional programming learning curve": ""
+            "functional programming learning curve": "",
+            "five crucial fp concepts": "",
+            "function as first class citizen": ""
         },
         "react": {
             "three JSX main patterns": "",
