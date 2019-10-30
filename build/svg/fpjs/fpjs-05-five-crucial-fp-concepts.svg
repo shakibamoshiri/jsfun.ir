@@ -1,0 +1,76 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 500 650" xmlns:xlink="http://www.w3.org/1999/xlink" width="500" height="650" font-family="Montserrat">
+  <rect x="0" y="0" width="500" height="650" fill="#fd0"></rect>
+
+  <g class="title" text-anchor="middle" font-weight="bold">
+    <rect x="0" y="35" width="500" height="40" fill="#000"></rect>
+    <text x="259" y="65" font-size="25" fill="#fff">five crucial FP concepts</text>
+  </g>
+  
+  <g transform="translate(0,120)" font-family="Ubuntu" font-size="20" fill="#fff" text-anchor="middle" font-weight="bold">
+    <rect width="300" height="50" x="100"></rect>
+    <text x="250" y="30" fill="#000" >function as first class citizen</text>
+    <polygon fill="#fff"  points="0,0 15,20 30,0" transform="translate(100,49)"></polygon>
+  </g>
+  <g transform="translate(0,200)" font-family="Ubuntu" font-size="20" fill="#fff" text-anchor="middle" font-weight="bold">
+    <rect width="300" height="50" x="100"></rect>
+    <text x="250" y="30" fill="#000" >closure</text>
+    <polygon fill="#fff"  points="0,0 15,20 30,0" transform="translate(100,49)"></polygon>
+    
+    <polygon points="0,0 15,-20 30,0" transform="translate(370,1)"></polygon>
+  </g>
+  <g transform="translate(0,280)" font-family="Ubuntu" font-size="20" fill="#fff" text-anchor="middle" font-weight="bold">
+    <rect width="300" height="50" x="100"></rect>
+    <text x="250" y="30" fill="#000" >currying</text>
+    <polygon fill="#fff"  points="0,0 15,20 30,0" transform="translate(100,49)"></polygon>
+    <polygon points="0,0 15,-20 30,0" transform="translate(370,1)"></polygon>
+  </g>
+  <g transform="translate(0,360)" font-family="Ubuntu" font-size="20" fill="#fff" text-anchor="middle" font-weight="bold">
+    <rect width="300" height="50" x="100"></rect>
+    <text x="250" y="30" fill="#000" >partial application</text>
+    <polygon fill="#fff"  points="0,0 15,20 30,0" transform="translate(100,49)"></polygon>
+    <polygon points="0,0 15,-20 30,0" transform="translate(370,1)"></polygon>
+  </g>
+  <g transform="translate(0,440)" font-family="Ubuntu" font-size="20" fill="#fff" text-anchor="middle" font-weight="bold">
+    <rect width="300" height="50" x="100"></rect>
+    <text x="250" y="30" fill="#000" >composition</text>
+    <polygon points="0,0 15,-20 30,0" transform="translate(370,1)"></polygon>
+  </g>
+  
+  <g transform="translate(400,500) rotate(-90,20,10)" font-family="Ubuntu" font-size="20" fill="#fff" text-anchor="middle" font-weight="bold">
+    <text x="250" y="50" fill="#c80000" >dependency flow</text>
+    <path fill="none" stroke="#000" stroke-width="2" d="M50,30 h350" marker-start="url(#bullet)" marker-end="url(#arrow)"></path>
+  </g>
+  <g transform="translate(-280,500) rotate(90,400,-30)" font-family="Ubuntu" font-size="20" fill="#fff" text-anchor="middle" font-weight="bold">
+    <text x="250" y="50" fill="#c80000" >learning path</text>
+    <path fill="none" stroke="#000" stroke-width="2" d="M50,30 h350" marker-start="url(#bullet)" marker-end="url(#arrow)"></path>
+  </g>
+  
+  <defs>
+    <marker id="arrow" markerWidth="10" markerHeight="7" 
+            refX="0" refY="3.5" orient="auto">
+      <polygon fill="#000" points="0 0, 5 3.5, 0 7" />
+    </marker>
+    <marker id="bullet" markerWidth="12" markerHeight="12" refX="6" refY="6" >
+      <circle fill="#000" cx="6" cy="6" r="2" stroke="context-stroke" stroke-width="2"/>
+    </marker>
+  </defs>
+    <g transform="scale(0.3) translate(1330,1750)">
+        <g transform="translate(0,250)" font-family="Ubuntu" font-size="25" fill="#c800c8" text-anchor="middle" font-weight="bold">
+          <rect x="0" y="0" width="300" height="40" fill="#000"></rect>
+          <text x="150" y="30" fill="#fff"  letter-spacing="3">Functional</text>
+        </g>
+        <g transform="translate(0,300)" font-family="Ubuntu" font-size="25" fill="#c800c8" text-anchor="middle" font-weight="bold">
+          <rect x="0" y="0" width="300" height="40" fill="#000"></rect>
+          <text x="150" y="30" fill="#fff"  letter-spacing="3">Programming</text>
+        </g>
+        <g transform="translate(0,350)" font-family="Ubuntu" font-size="25" fill="#c800c8" text-anchor="middle" font-weight="bold">
+          <rect x="0" y="0" width="300" height="40" fill="#000"></rect>
+          <text x="150" y="30" fill="#fff"  letter-spacing="3">JavaScript</text>
+        </g>
+  </g>
+  <g font-size="10"  fill="#000" font-weight="bold">
+    <text x="10" y="625">jsfun.ir/functional-programming-javascript</text>
+    <text x="10" y="645" >functional programming javascript by Shakiba Moshiri, 2019-10-29</text>
+  </g>
+<!--<path fill="none" stroke="#000" stroke-width="3" d="M60,50 v140" marker-start="url(#bullet)" marker-end="url(#arrow)"></path>-->
+</svg>
