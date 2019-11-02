@@ -1,0 +1,124 @@
+<main>
+	<div class="content-r">
+		<h1>function-as-first-class-citizen</h1>
+        <hr>
+        <p>Okay, we are at the beginning of <strong>five essential</strong> concepts in FP. Of course I mean in <strong>bottom-up</strong> approach, because in <strong>top-down</strong> approach it would be <strong>category theory, functor, etc</strong>.</p>
+        <p>These five things are:</p>
+        <ol>
+            <li>function as first class citizen</li>
+            <li>closure</li>
+            <li>currying</li>
+            <li>partial application</li>
+            <li>composition</li>
+        </ol>
+        <p>and these five concepts will depend upon each other. Understanding first (= function as first class citizen) is required to understand the second one (= closure) and so on.</p>
+
+
+        <h3 class="sub-title">variable</h3>
+        <p>We all are familiar with variables and how to use them.f</p>
+<pre><code class="language-javascript">// const language = "JS";
+console.log( language );            // JS
+console.log( language.length );     // 2</code></pre>
+
+        <p>We store our data in variables and then pass them around as arguments to some functions to do some operations and those data and return back a result.</p>
+        
+        <h3 class="sub-title">function</h3>
+        <p>What is it?</p>
+        <p>In the simplest form: a block of code for execution by <strong>()</strong> operator.</p>
+<pre><code class="language-javascript">function add( a, b ){
+    return a + b;
+}
+
+// using add without () operator does nothing
+// but with it we invoke the function
+const r = add( 2, 3 );
+console.log( r ); // 5</code></pre>
+        
+        <p>In non-function programming we just have this feature with a function. In <strong>C</strong> programming we can pass the <strong>address</strong> of a function to other function, but it becomes hard to use it heavily in the entire application.</p>
+        <p>Nor can we declare an inner function to use it, or return it just like what we do with a variable.</p>
+
+        <h3 class="sub-title">cpp example</h3>
+        <p>Here is a simple add function in <strong>C++</strong>.</p>
+<pre><code class="language-javascript">#include &lt;iostream&gt;
+
+int add( int a, int b ){
+    return a + b;
+}
+
+int main(){
+    const int r = add( 3, 2 );
+    std::cout << "add( 2, 3 ) === " << r << std::endl;
+}
+
+/* output
+add( 2, 3 ) === 5
+*/</code></pre>
+        <p>It works perfectly. Lets make a change by adding an inner function to add function..</p>
+<pre><code class="language-javascript">#include &lt;iostream&gt;
+
+int add( int a, int b ){
+//    return a + b;
+
+    int sum(){
+        return a + b;
+    }
+
+    const int r = sum();
+    return r;
+}
+
+int main(){
+    const int r = add( 3, 2 );
+    std::cout << "add( 2, 3 ) === " << r << std::endl;
+}
+
+/* output of: g++ ./example.cpp -o cpp && ./cpp
+temp.cpp: In function ‘int add(int, int)’:
+temp.cpp:6:14: error: a function-definition is not allowed here before ‘{’ token
+     int sum(){
+              ^
+temp.cpp:10:19: error: ‘sum’ was not declared in this scope
+     const int r = sum();
+                   ^~~
+*/</code></pre>
+        
+        <p>Notice this line</p>
+<pre><code class="language-javascript">a function-definition is not allowed here before ‘{’ token</code></pre>
+        <p>which simply means we cannot declare an inner function, so we would be able to return it and use it latter.f</p>
+        <p>In this paradigm <strong>function</strong> is not a first class citizen. It cannot do what a variable does. But in FP paradigm it can.</p>
+        <p>Lets do the same with JavaScript.</p>
+
+<pre><code class="language-javascript">function add( a, b ){
+    function sum(){
+        return a + b;
+    }
+    const r = sum();
+    return r;
+}
+
+const r = add( 3, 2 );
+console.log( r );   // 5</code></pre>
+        
+        <p>So it worked with  no error, since we can do what we can do with variables in JavaScript.</p>
+
+        <h3 class="sub-title">refactoring</h3>
+        <p>You may say why did you use sum() function? You did not have to do so! Yes, but think of it in this way, maybe we want to return a function not a variable.</p>
+<pre><code class="language-javascript">function add( a, b ){
+    return function sum(){
+        return a + b;
+    }
+}
+
+const r = add( 3, 2 ); // it returns a function
+console.log( r() );   // 5</code></pre>
+
+        <p>So as you can see if we have a function as first class citizen, we can use it just like a variable.</p>
+        <p>This crucial feature enables us to have / create other powerful features.</p>
+        <p>In next post we will talk about <strong>closure</strong> which is a feature based on this feature.</p>
+        
+		DD_MM_YYYY
+        <div class="edit-on-github">
+            <a target="_blank" href="https://github.com/k-five/jsfun.ir/blob/master/home/functional-programming-javascript/function-as-first-class-citizen/main.html">Edit on Github</a>
+        </div>
+	</div>
+</main>

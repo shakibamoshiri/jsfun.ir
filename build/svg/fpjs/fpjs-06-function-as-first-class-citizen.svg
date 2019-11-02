@@ -1,0 +1,66 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 500 650" xmlns:xlink="http://www.w3.org/1999/xlink" width="500" height="650" font-family="Montserrat">
+  <rect x="0" y="0" width="500" height="650" fill="#fd0"></rect>
+
+  <g class="title" text-anchor="middle" font-weight="bold">
+    <rect x="0" y="35" width="500" height="40" fill="#000"></rect>
+    <text x="259" y="65" font-size="25" fill="#fff">function as first class citizen</text>
+  </g>
+  
+  <g transform="translate(0,110)" font-family="monospace" font-size="15" fill="#fff" text-anchor="start" font-weight="bold" xml:space="preserve">
+    <text x="20" y="-10" fill="#c80000">common way of declaring a function</text>
+    <rect width="550" height="110"></rect>
+    <text x="20" y="30" fill="#000"><tspan fill="#c8c800">function</tspan> add( a, b ){</text>
+    <text x="20" y="50" fill="#000" xml:space="preserve">    return a + b;</text>
+    <text x="20" y="70" fill="#000">}</text>
+    <text x="20" y="90" fill="#000">console.log( add.length ); // 2 (= binary function)</text>
+  </g>
+  <g transform="translate(0,260)" font-family="monospace" font-size="15" fill="#fff" text-anchor="start" font-weight="bold" xml:space="preserve">
+    <text x="20" y="-10" fill="#c80000">better way to treat it as a value (more FP style)</text>
+    <rect width="550" height="110"></rect>
+    <text x="20" y="30" fill="#000">const <tspan fill="#00c8c8">add</tspan> = <tspan fill="#c8c800">function</tspan>( a, b ){</text>
+    <text x="20" y="50" fill="#000" xml:space="preserve">    return a + b;</text>
+    <text x="20" y="70" fill="#000">}</text>
+    <text x="20" y="90" fill="#000">console.log( <tspan fill="#00c8c8">add</tspan>.length ); // 2</text>
+  </g>
+  <g transform="translate(0,410)" font-family="monospace" font-size="15" fill="#f0f0f0" text-anchor="start" font-weight="bold" xml:space="preserve">
+    <text x="20" y="-10" fill="#c80000">assigning "function" to a constant variable</text>
+    <rect width="550" height="70"></rect>
+    <text x="20" y="30" fill="#000">const <tspan fill="#00c8c8">add</tspan> = ( a, b ) => a + b;</text>
+    <text x="20" y="50" fill="#000">console.log( <tspan fill="#00c8c8">add</tspan>.length ); // 2</text>
+  </g>
+  <g transform="translate(0,520)" font-family="monospace" font-size="15" fill="#f0f0f0" text-anchor="start" font-weight="bold" xml:space="preserve">
+    <text x="20" y="-10" fill="#c80000">assigning "string" to a constant variable</text>
+    <rect width="550" height="70"></rect>
+    <text x="20" y="30" fill="#000">const <tspan fill="#00c8c8">language</tspan> = "JS";</text>
+    <text x="20" y="50" fill="#000">console.log( <tspan fill="#00c8c8">language</tspan>.length ); // 2</text>
+  </g>
+  
+  <defs>
+    <marker id="arrow" markerWidth="10" markerHeight="7" 
+            refX="0" refY="3.5" orient="auto">
+      <polygon fill="#000" points="0 0, 5 3.5, 0 7" />
+    </marker>
+    <marker id="bullet" markerWidth="12" markerHeight="12" refX="6" refY="6" >
+      <circle fill="#000" cx="6" cy="6" r="2" stroke="context-stroke" stroke-width="2"/>
+    </marker>
+  </defs>
+    <g transform="scale(0.3) translate(1330,1750)">
+        <g transform="translate(0,250)" font-family="Ubuntu" font-size="25" fill="#c800c8" text-anchor="middle" font-weight="bold">
+          <rect x="0" y="0" width="300" height="40" fill="#000"></rect>
+          <text x="150" y="30" fill="#fff"  letter-spacing="3">Functional</text>
+        </g>
+        <g transform="translate(0,300)" font-family="Ubuntu" font-size="25" fill="#c800c8" text-anchor="middle" font-weight="bold">
+          <rect x="0" y="0" width="300" height="40" fill="#000"></rect>
+          <text x="150" y="30" fill="#fff"  letter-spacing="3">Programming</text>
+        </g>
+        <g transform="translate(0,350)" font-family="Ubuntu" font-size="25" fill="#c800c8" text-anchor="middle" font-weight="bold">
+          <rect x="0" y="0" width="300" height="40" fill="#000"></rect>
+          <text x="150" y="30" fill="#fff"  letter-spacing="3">JavaScript</text>
+        </g>
+  </g>
+  <g font-size="10"  fill="#000" font-weight="bold">
+    <text x="10" y="625">jsfun.ir/functional-programming-javascript</text>
+    <text x="10" y="645" >functional programming javascript by Shakiba Moshiri, 2019-10-24</text>
+  </g>
+<!--<path fill="none" stroke="#000" stroke-width="3" d="M60,50 v140" marker-start="url(#bullet)" marker-end="url(#arrow)"></path>-->
+</svg>
