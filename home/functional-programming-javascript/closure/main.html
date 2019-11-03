@@ -1,0 +1,100 @@
+<main>
+	<div class="content-r">
+		<h1>closure</h1>
+        <hr>
+        <p>In previous post (<a href="../function-as-first-class-citizen">function as first class citizen</a>) we talked about <strong>function as first class citizen</strong>, the most important part of FP. This post is about the second most important part which is closure.</p>
+        <p>In simple words it means a function that has access to its outer scope variables by reference via scope chain.</p>
+
+        <h3 class="sub-title">Garbage Collection</h3>
+        <p>In none function languages that do not have this feature, this is what happens when we declare some variables inside a function and that function is executed.</p>
+        <ul>
+            <li>some memory is allocated for data for the function</li>
+            <li>the function job is done</li>
+            <li>then those variables have been used are freed</li>
+            <li>and function is popped off the stack</li>
+        </ul>
+        <p>In dynamic languages like JavaScript who does the deallocation part? Garbage Collector or GB. So after the last line of a function which is <strong>}</strong> was run then we do hot have access to these variables.</p>
+        <p>This process is not true for languages that support <strong>closure</strong>. In fact if we have an inner function that uses a variable outside of its scope (= from its parent functions) then GB does not do its job which is deallocation after popping off a function from the stack.</p>
+        <p>And what do we have at the end? <strong>An inner function that has access to outer scope variables by reference.</strong>.</p>
+<pre><code class="language-javascript">function add( a, b ){
+    function sum(){
+        return a + b;
+    }
+    const r = sum();
+    return r;
+}
+
+const result = add( 2, 3 );
+console.log( result ); // 5</code></pre>
+        <p>In the code above the <strong>bounded context</strong> of add() function is <strong>close over</strong> sum() function; and thus sum() can find <strong>a</strong> and <strong>b</strong> variables via <strong>scope chain</strong>. Since it is by reference we can do a very interesting thing!</p>
+        <p>What is that?</p>
+
+        <h3 class="sub-title">Function as value</h3>
+        <p>Remember that function in FP languages is a first class citizen and we can treat it a value. In JavaScript we can return an <string>inner function</string>. Things get interested, specially when that function can have access to outer variables by reference (= closure).</p>
+        <p>Here is the same code but using different style, returning sum function.</p>
+<pre><code class="language-javascript">function add( a, b ){
+    function sum(){
+        return a + b;
+    }
+    // we do not invoke sum(), we return it!
+    return sum;
+}
+
+const sum = add( 2, 3 ); // return sum
+console.log( sum() );   // 5</code></pre>
+        <p>The output is still <strong>5</strong> because our nested function has access to <strong>a</strong> and <strong>b</strong> variables.</p>;
+
+        <h3 class="sub-title">function expression or anonymous function</h3>
+        <p>We know that we can do this is JS.</p>
+<pre><code class="language-javascript">const add = function( a, b ){
+    return a + b;
+}</code></pre>
+
+        <p>Which is equivalent to this in ES6 with Lambda Expression or Arrow Function.</p>
+<pre><code class="language-javascript">const add = ( a, b ) =&gt; a + b;</code></pre>
+
+        <p>Base on this fact, we can refactor our first code to a more concise one.</p>
+<pre><code class="language-javascript">function add( a, b ){
+    // name is optional, we can remove it
+    // return function() ...
+    return function sum(){
+        return a + b;
+    }
+}
+
+const add2And3 = add( 2, 3 );   // returning a function expression
+console.log( add2And3() );        // 5</code></pre>
+        <p>And in ES6</p>
+<pre><code class="language-javascript">const add = ( a, b ) =&gt; () =&gt; a + b;
+const add2And3 = add( 2, 3 );
+console.log( add2And3() );      // 5</code></pre>
+
+        <p>This is what we can do by combining two features</p>
+        <ol>
+            <li>function as first class citizen</li>
+            <li>closure</li>
+        </ol>
+
+<pre><code class="language-javascript">function add( a, b ){
+    // returning a function expression
+    return function(){
+        return a + b;
+    }
+}
+
+const sum = add( 2, 3 ); // return sum
+console.log( sum() );   // 5</code></pre>
+        <p>While this is very good and awesome but we can still go further by using another important concept which is <strong>currying</strong> and we explore it in next post.</p>
+        <p>So in next post we add currying to the mix and we will have</p>
+        <ol>
+            <li>function as first class citizen</li>
+            <li>closure</li>
+            <li>currying</li>
+        </ol>
+
+		DD_MM_YYYY
+        <div class="edit-on-github">
+            <a target="_blank" href="https://github.com/k-five/jsfun.ir/blob/master/home/functional-programming-javascript/closure/main.html">Edit on Github</a>
+        </div>
+	</div>
+</main>

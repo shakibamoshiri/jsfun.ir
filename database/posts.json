@@ -73,7 +73,8 @@
             "declarative API imperative API": "",
             "functional programming learning curve": "",
             "five crucial fp concepts": "",
-            "function as first class citizen": ""
+            "function as first class citizen": "",
+            "closure": ""
         },
         "react": {
             "three JSX main patterns": "",
