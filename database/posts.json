@@ -74,7 +74,8 @@
             "functional programming learning curve": "",
             "five crucial fp concepts": "",
             "function as first class citizen": "",
-            "closure": ""
+            "closure": "",
+            "currying": ""
         },
         "react": {
             "three JSX main patterns": "",

@@ -1,0 +1,82 @@
+<main>
+	<div class="content-r">
+		<h1>currying</h1>
+        <hr>
+        <p>In the two previous post we learned what are:</p>
+        <ol>
+            <li>function as first class citizen</li>
+            <li>closure</li>
+        </ol>
+        <p>In this post we modifying our combination of these two concepts to a very powerful pattern named <strong>currying</strong>.</p>
+        <p>Here is our previous example.</p>
+<pre><code class="language-javascript">// add is a binary function, it has two parameters
+function add( a, b ){
+    // sum is a nullary function, it is not parameters
+    function sum(){
+        // capturing a and b by reference
+        return a + b;
+    }
+    return sum();
+}</code></pre>
+
+        <h3 class="sub-title">function arguments</h3>
+        <p>There are names for number of arguments a function takes, which is called <strong>arity</strong> of that function.</p>
+        <ul>
+            <li><strong>nullary function</strong>: a function that accepts no arguments e.g. sum().</li>
+            <li><strong>unary function</strong>: a function that accepts just one argument e.g. add( a ).</li>
+            <li><strong>binary function</strong>: a function that accepts two arguments e.g. add( a, b ).</li>
+            <li><strong>trinary function</strong>: a function that accepts three arguments e.g. shape( x, y, z ).</li>
+            <li><strong>n-ary function</strong>: a function that accepts more then three (4, 5, etc) arguments e.g. Math.max( a, b, c, d, e )</li>
+            <li><strong>variadic function</strong>: a function that accepts arbitrary arguments e.g add( ...args ).</li>
+        </ul>
+        <p>And you can guess that the arity of our add() function is 2, or it is a binary function.</p>
+
+        <h3 class="sub-title">unary function</h3>
+        <p>While we have many choices in terms of arity for a function, but the best one for us is <strong>unary function</strong>.</p>
+        <p>Using <strong>closure</strong> feature of JS we can spread a function arguments to some unary function that each one takes just one arguments, and therefore, each nested function takes next arguments.</p>
+        <p>Lets make our add() function to a curry function.</p>
+        <p>First removing pointless expressions</p>
+<pre><code class="language-javascript">// add is a binary function, it has two parameters
+function add( a, b ){
+    // sum is a nullary function, it is not parameters
+    return function(){
+        // capturing a and b by reference
+        return a + b;
+    }
+}</code></pre>
+
+        <p>Second, making all functions, unary, or all with arity of one.</p>
+<pre><code class="language-javascript">// add is a unary function
+function add( a ){
+    // sum is a unary function
+    return function( b ){
+        // capturing a and b by reference
+        return a + b;
+    }
+}</code></pre>
+    
+        <p>ES6 style.</p>
+<pre><code class="language-javascript">const add = a =&gt; b =&gt; a + b; </code></pre>
+
+        <p>Lets test it.</p>
+<pre><code class="language-javascript">add( 2 );    // function add()
+add( 2 )( 3 );  // 5</code></pre>
+
+
+        <p>That is it. We convert our first binary function to a unary function.</p>
+        <p>And now everything is ready to go to next step which is <strong>partial application</strong>.</p>
+        <p>Thus remember so far that we are using three things.</p>
+        <ol>
+            <li>function as first class citizen</li>
+            <li>closure</li>
+            <li>currying</li>
+        </ol>
+        <p>And in next post we will add partial application to this mix.</p>
+        <p>More about <a href="https://en.wikipedia.org/wiki/Variadic_function">variadic function</a> if you liked.</p>
+
+		DD_MM_YYYY
+        <div class="edit-on-github">
+            <a target="_blank" href="https://github.com/k-five/jsfun.ir/blob/master/home/functional-programming-javascript/currying/main.html">Edit on Github</a>
+        </div>
+	</div>
+</main>

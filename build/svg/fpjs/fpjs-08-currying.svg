@@ -1,0 +1,68 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 500 650" xmlns:xlink="http://www.w3.org/1999/xlink" width="500" height="650" font-family="Montserrat">
+  <rect x="0" y="0" width="500" height="650" fill="#fd0"></rect>
+
+  <g class="title" text-anchor="middle" font-weight="bold">
+    <rect x="0" y="35" width="500" height="40" fill="#000"></rect>
+    <text x="259" y="65" font-size="25" fill="#fff">currying</text>
+  </g>
+  
+  <g transform="translate(0,120)" font-family="monospace" font-size="15" fill="#fff" text-anchor="start" font-weight="bold" xml:space="preserve">
+    <text x="20" y="-10" fill="#000" font-family="Montserrat">non-curry functions, add: binary function, sum: nullary function</text>
+    <rect width="550" height="150"></rect>
+    <text x="20" y="30" fill="#000"><tspan fill="#c8c800">function</tspan> <tspan fill="#00c8c0">add</tspan>( <tspan fill="#c80000">a</tspan>, <tspan fill="#c80000">b</tspan> ){</text>
+    <text x="20" y="50" fill="#000" xml:space="preserve">    <tspan fill="#c8c800">function</tspan> <tspan fill="#00c8c0">sum</tspan>(){</text>
+    <text x="20" y="70" fill="#000" xml:space="preserve">        return a + b;</text>
+    <text x="20" y="90" fill="#000" xml:space="preserve">    }</text>
+    <text x="20" y="110" fill="#000" xml:space="preserve">    return sum();  // pointless</text>
+    <text x="20" y="130" fill="#000">}</text>
+  </g>
+  
+  <g transform="translate(0,310)" font-family="monospace" font-size="15" fill="#fff" text-anchor="start" font-weight="bold" xml:space="preserve">
+    <text x="20" y="-10" fill="#000" font-family="Montserrat">1. refactor: removing pointless expressions</text>
+    <rect width="550" height="130"></rect>
+    <text x="20" y="30" fill="#000" ><tspan fill="#c8c800">function</tspan> <tspan fill="#00c8c0">add</tspan>( a, b ){</text>
+    <text x="20" y="50" fill="#000"  xml:space="preserve">    return <tspan fill="#c8c800">function</tspan>(){</text>
+    <text x="20" y="70" fill="#000" xml:space="preserve">        return <tspan fill="#c80000">a</tspan> + <tspan fill="#c80000">b</tspan>; // a and b bound by reference</text>
+    <text x="20" y="90" fill="#000" xml:space="preserve">    }</text>
+    <text x="20" y="110" fill="#000" >}</text>
+  </g>
+  <g transform="translate(0,480)" font-family="monospace" font-size="15" fill="#fff" text-anchor="start" font-weight="bold" xml:space="preserve">
+    <text x="20" y="-10" fill="#000" font-family="Montserrat">2. refactor: make all functions as unary, now it is a curry function</text>
+    <rect width="550" height="130"></rect>
+    <text x="20" y="30" fill="#000" ><tspan fill="#c8c800">function</tspan> <tspan fill="#00c8c0">add</tspan>( a ){</text>
+    <text x="20" y="50" fill="#000"  xml:space="preserve">    return <tspan fill="#c8c800">function</tspan>( b ){</text>
+    <text x="20" y="70" fill="#000" xml:space="preserve">        return <tspan fill="#c80000">a</tspan> + <tspan fill="#c80000">b</tspan>; // only a bound by reference</text>
+    <text x="20" y="90" fill="#000" xml:space="preserve">    }</text>
+    <text x="20" y="110" fill="#000" >}</text>
+  </g>
+  
+  
+  <defs>
+    <marker id="arrow" markerWidth="10" markerHeight="7" 
+            refX="0" refY="3.5" orient="auto">
+      <polygon fill="#000" points="0 0, 5 3.5, 0 7" />
+    </marker>
+    <marker id="bullet" markerWidth="12" markerHeight="12" refX="6" refY="6" >
+      <circle fill="#000" cx="6" cy="6" r="2" stroke="context-stroke" stroke-width="2"/>
+    </marker>
+  </defs>
+    <g transform="scale(0.3) translate(1330,1750)">
+        <g transform="translate(0,250)" font-family="Ubuntu" font-size="25" fill="#c800c8" text-anchor="middle" font-weight="bold">
+          <rect x="0" y="0" width="300" height="40" fill="#000"></rect>
+          <text x="150" y="30" fill="#fff"  letter-spacing="3">Functional</text>
+        </g>
+        <g transform="translate(0,300)" font-family="Ubuntu" font-size="25" fill="#c800c8" text-anchor="middle" font-weight="bold">
+          <rect x="0" y="0" width="300" height="40" fill="#000"></rect>
+          <text x="150" y="30" fill="#fff"  letter-spacing="3">Programming</text>
+        </g>
+        <g transform="translate(0,350)" font-family="Ubuntu" font-size="25" fill="#c800c8" text-anchor="middle" font-weight="bold">
+          <rect x="0" y="0" width="300" height="40" fill="#000"></rect>
+          <text x="150" y="30" fill="#fff"  letter-spacing="3">JavaScript</text>
+        </g>
+  </g>
+  <g font-size="10"  fill="#000" font-weight="bold">
+    <text x="10" y="625">jsfun.ir/functional-programming-javascript</text>
+    <text x="10" y="645" >functional programming javascript by Shakiba Moshiri, 2019-11-03</text>
+  </g>
+<!--<path fill="none" stroke="#000" stroke-width="3" d="M60,50 v140" marker-start="url(#bullet)" marker-end="url(#arrow)"></path>-->
+</svg>
