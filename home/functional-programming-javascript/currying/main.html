@@ -2,12 +2,12 @@
 	<div class="content-r">
 		<h1>currying</h1>
         <hr>
-        <p>In the two previous post we learned what are:</p>
+        <p>In the two previous posts we learned what are:</p>
         <ol>
             <li>function as first class citizen</li>
             <li>closure</li>
         </ol>
-        <p>In this post we modifying our combination of these two concepts to a very powerful pattern named <strong>currying</strong>.</p>
+        <p>In this post we are modifying our combination of these two concepts to a very powerful pattern named <strong>currying</strong>.</p>
         <p>Here is our previous example.</p>
 <pre><code class="language-javascript">// add is a binary function, it has two parameters
 function add( a, b ){
@@ -33,8 +33,8 @@ function add( a, b ){
 
         <h3 class="sub-title">unary function</h3>
         <p>While we have many choices in terms of arity for a function, but the best one for us is <strong>unary function</strong>.</p>
-        <p>Using <strong>closure</strong> feature of JS we can spread a function arguments to some unary function that each one takes just one arguments, and therefore, each nested function takes next arguments.</p>
-        <p>Lets make our add() function to a curry function.</p>
+        <p>Using <strong>closure</strong> feature of JS we can spread a function arguments to some unary function that each one takes just one argument, and therefore, each nested function takes next argument.</p>
+        <p>Lets convert our add( a, b )) function to a curry function.</p>
         <p>First removing pointless expressions</p>
 <pre><code class="language-javascript">// add is a binary function, it has two parameters
 function add( a, b ){
@@ -63,7 +63,7 @@ function add( a ){
 add( 2 )( 3 );  // 5</code></pre>
 
 
-        <p>That is it. We convert our first binary function to a unary function.</p>
+        <p>That is it. We converted our first binary function to a unary function.</p>
         <p>And now everything is ready to go to next step which is <strong>partial application</strong>.</p>
         <p>Thus remember so far that we are using three things.</p>
         <ol>
