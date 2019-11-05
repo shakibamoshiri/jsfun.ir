@@ -1,0 +1,93 @@
+<main>
+	<div class="content-r">
+		<h1>partial-application</h1>
+        <hr>
+        <p>The fun part is about to start. In previous posts we learned about</p>
+        <ul>
+            <li>function</li>
+            <li>closure</li>
+            <li>currying</li>
+        </ul>
+        <p>Our last code sample was this, that we convert our <strong>binary function</strong> to a <strong>unary function</strong>.</p>
+<pre><code class="language-javascript">// add is a unary function
+function add( a ){
+    // sum is a unary function
+    return function( b ){
+        // capturing a and b by reference
+        return a + b;
+    }
+}</code></pre>
+        
+        <p>And for testing it, we did this</p>
+<pre><code class="language-javascript">add( 2 );    // function add()
+add( 2 )( 3 );  // 5</code></pre>
+
+        <h3 class="sub-title">partially applying an argument</h3>
+        <p>By now we know that our add function, takes one arguments, then returns another function, and that one also takes one argument. So this style should be obvious to you; two consecutive nested functions.</p>
+<pre><code class="language-javascript">add( 2 )( 3 );  // 5</code></pre>
+
+        <p>In this style we have used all the function immediately to gain the result which is <strong>5</strong>. If we do not do this, if we just invoke the first function and store the inner function ( one that is returned) then we <strong>partially applied an argument</strong>. That is partial application.</p>
+        <p>Lets try it</p>
+<pre><code class="language-javascript">// using first function
+// returning another function that takes one argument
+const add2 = add( 2 );
+
+// we already have "2", now we have added 3
+const result = add2( 3 );
+
+console.log( result );      // 5</code></pre>
+
+        <p>Conceptually is will be something like this when we call <strong>add( 2 )</strong></p>
+<pre><code class="language-javascript">// replacing a with 2
+function add( 2 ){
+    // sum is a unary function
+    return function( b ){
+        // capturing a and b by reference
+        return 2 + b;
+    }
+}</code></pre>
+
+        <p>Then we call <strong>add2( 3 )</strong> it becomes</p>
+<pre><code class="language-javascript">// replacing a with 2, and b with 3
+function add( 2 ){
+    // sum is a unary function
+    return function( 3 ){
+        // capturing a and b by reference
+        return 2 + 3;
+    }
+}</code></pre>
+
+        <h3 class="sub-title">bind, call, apply</h3>
+        <p>May or may now you have used partial application in your JS code. Here are some examples.</p>
+        <p>Using <strong>bind</strong> method.</p>
+<pre><code class="language-javascript">// fixed this binding
+const log = console.log.bind( console );
+
+// partially applying on console.log, two arguments
+// it is equivalent to console.log( "hello", "JS" );
+const greeting = console.log.bind( null, "hello", "JS" );</code></pre>
+
+        <p>Now <strong>greeting</strong> is a function that has captured two arguments</p>
+        <ol>
+            <li>hello</li>
+            <li>JS</li>
+        </ol>
+        <p>And if we invoke it we will see "hello JS".</p>
+<pre><code class="language-javascript">greeting();  // hello JS</code></pre>
+
+        <h3 class="sub-title">What is it good for?</h3>
+        <p>At first everyone things what! What is this style good for? Why do not we directly use the function and do it in this style?</p>
+        <p>That is because you are not seening the <strong>pig picture</strong> of this technique. It is not useful when we use it just for one function. It will be very useful when we have more than one, two, or more currying functions.</p>
+        <p>By having many currying function we will be able to partially apply some of them, and then use the rest of our currying function later on, which give us two things</p>
+        <ul>
+            <li>defer in execution (or invocation)</li>
+            <li>composition</li>
+        </ul>
+        <p>and we discuss <strong>composition</strong> in next post.</p>
+
+		DD_MM_YYYY
+        <div class="edit-on-github">
+            <a target="_blank" href="https://github.com/k-five/jsfun.ir/blob/master/home/functional-programming-javascript/partial-application/main.html">Edit on Github</a>
+        </div>
+	</div>
+</main>

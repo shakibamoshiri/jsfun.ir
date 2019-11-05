@@ -1,0 +1,67 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 500 650" xmlns:xlink="http://www.w3.org/1999/xlink" width="500" height="650" font-family="Montserrat">
+  <rect x="0" y="0" width="500" height="650" fill="#fd0"></rect>
+
+  <g class="title" text-anchor="middle" font-weight="bold">
+    <rect x="0" y="35" width="500" height="40" fill="#000"></rect>
+    <text x="259" y="65" font-size="25" fill="#fff">partial application</text>
+  </g>
+  
+  
+  <g transform="translate(0,120)" font-family="monospace" font-size="15" fill="#fff" text-anchor="start" font-weight="bold" xml:space="preserve">
+    <text x="20" y="-10" fill="#000" font-family="Montserrat">A curry function, common style</text>
+    <rect width="550" height="130"></rect>
+    <text x="20" y="30" fill="#000" ><tspan fill="#c8c800">function</tspan> <tspan fill="#00c8c0">add</tspan>( a ){</text>
+    <text x="20" y="50" fill="#000"  xml:space="preserve">    return <tspan fill="#c8c800">function</tspan>( b ){</text>
+    <text x="20" y="70" fill="#000" xml:space="preserve">        return <tspan fill="#c80000">a</tspan> + <tspan fill="#c80000">b</tspan>; // only a bound by reference</text>
+    <text x="20" y="90" fill="#000" xml:space="preserve">    }</text>
+    <text x="20" y="110" fill="#000" >}</text>
+  </g>
+  
+  <g transform="translate(0,300)" font-family="monospace" font-size="15" fill="#fff" text-anchor="start" font-weight="bold" xml:space="preserve">
+    <text x="20" y="-10" fill="#000" font-family="Montserrat">A curry function, ES6 style</text>
+    <rect width="550" height="40"></rect>
+    <text x="20" y="30" fill="#000" >const <tspan fill="#00c8c0">add</tspan> = a => b => <tspan fill="#c80000">a</tspan> + <tspan fill="#c80000">b</tspan>;</text>
+  </g>
+  
+  <g transform="translate(0,420)" font-family="monospace" font-size="15" fill="#fff" text-anchor="start" font-weight="bold" xml:space="preserve">
+    <text x="20" y="-30" fill="#000" font-family="Montserrat">applying arguments <tspan font-family="Ubuntu">partially</tspan>,</text>
+    <text x="20" y="-10" fill="#000" font-family="Montserrat">deferring inner function invocation</text>
+    <rect width="550" height="170"></rect>
+    <text x="20" y="30" fill="#000" >const <tspan fill="#00c8c0">add5</tspan> = <tspan fill="#00c8c0">add</tspan>( 5 );</text>
+    <text x="20" y="50" fill="#000"  xml:space="preserve">// <tspan fill="#c80000">a</tspan> was bound to inner function</text>
+    <text x="20" y="70" fill="#000" xml:space="preserve">// now <tspan fill="#c80000">a</tspan> === 5</text>
+    <text x="20" y="90" fill="#000" xml:space="preserve">const r = <tspan fill="#00c8c0">add5</tspan>( 2 );</text>
+    <text x="20" y="110" fill="#000" >// <tspan fill="#c80000">b</tspan> was assigned</text>
+    <text x="20" y="130" fill="#000" >// now <tspan fill="#c80000">b</tspan> === 2</text>
+    <text x="20" y="150" fill="#000" >console.log( r ); // 7 (= 5 + 2)</text>
+  </g>
+  
+  <defs>
+    <marker id="arrow" markerWidth="10" markerHeight="7" 
+            refX="0" refY="3.5" orient="auto">
+      <polygon fill="#000" points="0 0, 5 3.5, 0 7" />
+    </marker>
+    <marker id="bullet" markerWidth="12" markerHeight="12" refX="6" refY="6" >
+      <circle fill="#000" cx="6" cy="6" r="2" stroke="context-stroke" stroke-width="2"/>
+    </marker>
+  </defs>
+    <g transform="scale(0.3) translate(1330,1750)">
+        <g transform="translate(0,250)" font-family="Ubuntu" font-size="25" fill="#c800c8" text-anchor="middle" font-weight="bold">
+          <rect x="0" y="0" width="300" height="40" fill="#000"></rect>
+          <text x="150" y="30" fill="#fff"  letter-spacing="3">Functional</text>
+        </g>
+        <g transform="translate(0,300)" font-family="Ubuntu" font-size="25" fill="#c800c8" text-anchor="middle" font-weight="bold">
+          <rect x="0" y="0" width="300" height="40" fill="#000"></rect>
+          <text x="150" y="30" fill="#fff"  letter-spacing="3">Programming</text>
+        </g>
+        <g transform="translate(0,350)" font-family="Ubuntu" font-size="25" fill="#c800c8" text-anchor="middle" font-weight="bold">
+          <rect x="0" y="0" width="300" height="40" fill="#000"></rect>
+          <text x="150" y="30" fill="#fff"  letter-spacing="3">JavaScript</text>
+        </g>
+  </g>
+  <g font-size="10"  fill="#000" font-weight="bold">
+    <text x="10" y="625">jsfun.ir/functional-programming-javascript</text>
+    <text x="10" y="645" >functional programming javascript by Shakiba Moshiri, 2019-11-05</text>
+  </g>
+<!--<path fill="none" stroke="#000" stroke-width="3" d="M60,50 v140" marker-start="url(#bullet)" marker-end="url(#arrow)"></path>-->
+</svg>

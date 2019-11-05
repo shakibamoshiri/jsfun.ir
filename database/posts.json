@@ -75,7 +75,8 @@
             "five crucial fp concepts": "",
             "function as first class citizen": "",
             "closure": "",
-            "currying": ""
+            "currying": "",
+            "partial application": ""
         },
         "react": {
             "three JSX main patterns": "",
