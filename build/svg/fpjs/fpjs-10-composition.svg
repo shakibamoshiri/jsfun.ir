@@ -1,0 +1,74 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 500 650" xmlns:xlink="http://www.w3.org/1999/xlink" width="500" height="650" font-family="Montserrat">
+  <rect x="0" y="0" width="500" height="650" fill="#fd0"></rect>
+
+  <g class="title" text-anchor="middle" font-weight="bold">
+    <rect x="0" y="35" width="500" height="40" fill="#000"></rect>
+    <text x="259" y="65" font-size="25" fill="#fff">Composition</text>
+  </g>
+  
+  <g transform="translate(0,120)" font-family="monospace" font-size="15" fill="#fff" text-anchor="start" font-weight="bold" xml:space="preserve">
+    <text x="20" y="-10" fill="#000" font-family="Montserrat">Two curry functions, ES6 style, Addition, Multiplication</text>
+    <rect width="550" height="60"></rect>
+    <text x="20" y="25" fill="#000" >const <tspan fill="#00c8c0">add</tspan> = a => b => a + b;</text>
+    <text x="20" y="45" fill="#000" >const <tspan fill="#00c8c0">mul</tspan> = a => b => a * b;</text>
+  </g>
+  
+  <g transform="translate(0,220)" font-family="monospace" font-size="15" fill="#fff" text-anchor="start" font-weight="bold" xml:space="preserve">
+    <text x="20" y="-10" fill="#000" font-family="Montserrat">Partial application for both "add" and "mul"</text>
+    <rect width="550" height="60"></rect>
+    <text x="20" y="25" fill="#000" >const <tspan fill="#00c8c0">add5</tspan> = add( 5 ); // 5 + b</text>
+    <text x="20" y="45" fill="#000" >const <tspan fill="#00c8c0">mul2</tspan> = mul( 2 ); // 2 * b</text>
+  </g>
+  
+  <g transform="translate(0,320)" font-family="monospace" font-size="15" fill="#fff" text-anchor="start" font-weight="bold" xml:space="preserve">
+    <text x="20" y="-10" fill="#000" font-family="Montserrat">Compose: right to left composition, and left to right</text>
+<!--    <text x="20" y="-10" fill="#000" font-family="Montserrat">Pipe: left to right composition</text>-->
+    <rect width="550" height="60"></rect>
+    <text x="20" y="25" fill="#000" >const <tspan fill="#00c8c0">compose</tspan> = ( f1, f2 ) => arg => <tspan fill="#c80000">f1</tspan>( <tspan fill="#c80000">f2</tspan>( arg ) );</text>
+    <text x="20" y="45" fill="#000" >const <tspan fill="#00c8c0">pipe</tspan> = ( f1, f2 ) => arg => <tspan fill="#c80000">f2</tspan>( <tspan fill="#c80000">f1</tspan>( arg ) );</text>
+  </g>
+  
+  <g transform="translate(0,420)" font-family="monospace" font-size="15" fill="#fff" text-anchor="start" font-weight="bold" xml:space="preserve">
+    <text x="20" y="-10" fill="#000" font-family="Montserrat">Composing two functions: add5 and mul2</text>
+    <rect width="550" height="190"></rect>
+    <text x="20" y="30" fill="#000" >// add5, mul2 are bound, like a, b for add and mul</text>
+    <text x="20" y="50" fill="#000" >const <tspan fill="#00c8c0">c</tspan> = compose( add5, mul2 ); // f1(f2( ??? ))</text>
+    <text x="20" y="70" fill="#000" xml:space="preserve" >const <tspan fill="#00c8c0">p</tspan> = pipe( mul2, add5 );    // f2(f1( ??? ))</text>
+    <path fill="none" stroke="#000" stroke-width="1" d="M410,70 q0,10 -10,10 h-75 q-10,0 -10,10" marker-start="url(#bullet)" marker-end="url(#arrow)"></path>
+    
+    <text x="20" y="110" fill="#000" >const <tspan fill="#00c8c0">cr</tspan> = c( 2 ); // add5(mul2( 2 )) = 5 + (2 * 2)</text>
+    <text x="20" y="130" fill="#000" >const <tspan fill="#00c8c0">pr</tspan> = p( 2 ); // add5(mul2( 2 )) = 5 + (2 * 2)</text>
+    <text x="20" y="160" fill="#000" >console.log( cr ); // 9 compose result</text>
+    <text x="20" y="180" fill="#000" >console.log( pr ); // 9 pipe result</text>
+  </g>
+  
+  
+  <defs>
+    <marker id="arrow" markerWidth="10" markerHeight="7" 
+            refX="0" refY="3.5" orient="auto">
+      <polygon fill="#000" points="0 0, 5 3.5, 0 7" />
+    </marker>
+    <marker id="bullet" markerWidth="12" markerHeight="12" refX="6" refY="6" >
+      <circle fill="#000" cx="6" cy="6" r="2" stroke="context-stroke" stroke-width="2"/>
+    </marker>
+  </defs>
+    <g transform="scale(0.3) translate(1330,1750)">
+        <g transform="translate(0,250)" font-family="Ubuntu" font-size="25" fill="#c800c8" text-anchor="middle" font-weight="bold">
+          <rect x="0" y="0" width="300" height="40" fill="#000"></rect>
+          <text x="150" y="30" fill="#fff"  letter-spacing="3">Functional</text>
+        </g>
+        <g transform="translate(0,300)" font-family="Ubuntu" font-size="25" fill="#c800c8" text-anchor="middle" font-weight="bold">
+          <rect x="0" y="0" width="300" height="40" fill="#000"></rect>
+          <text x="150" y="30" fill="#fff"  letter-spacing="3">Programming</text>
+        </g>
+        <g transform="translate(0,350)" font-family="Ubuntu" font-size="25" fill="#c800c8" text-anchor="middle" font-weight="bold">
+          <rect x="0" y="0" width="300" height="40" fill="#000"></rect>
+          <text x="150" y="30" fill="#fff"  letter-spacing="3">JavaScript</text>
+        </g>
+  </g>
+  <g font-size="10"  fill="#000" font-weight="bold">
+    <text x="10" y="625">jsfun.ir/functional-programming-javascript</text>
+    <text x="10" y="645" >functional programming javascript by Shakiba Moshiri, 2019-11-06</text>
+  </g>
+<!--<path fill="none" stroke="#000" stroke-width="3" d="M60,50 v140" marker-start="url(#bullet)" marker-end="url(#arrow)"></path>-->
+</svg>

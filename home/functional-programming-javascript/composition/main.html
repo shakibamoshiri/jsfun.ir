@@ -1,0 +1,216 @@
+<main>
+	<div class="content-r">
+		<h1>composition</h1>
+        <hr>
+        <p>After knowing about</p>
+        <ol>
+            <li>function as first class citizen</li>
+            <li>closure</li>
+            <li>currying</li>
+            <li>partial application</li>
+        </ol>
+        <p>It is time to put all of these in to practice. Composition is what lets us using these four techniques.</p>
+        <p>Lets create two curry functions: addition and multiplication in ES5 style.</p>
+<pre><code class="language-javascript">const add = a =&gt; b =&gt; a + b
+const mul = a =&gt; b =&gt; a * b;</code></pre>
+
+        <p>By now you should know that those arrow functions (= add, mul) are equivalent to these.</p>
+<pre><code class="language-javascript">const add = function( a ){
+    return function( b ){
+        return a + b;
+    }
+}
+
+const mul = function( a ){
+    return function( b ){
+        return a * b;
+    }
+}</code></pre>
+    
+        <p>And these also are equivalent to these</p>
+ <pre><code class="language-javascript">function add( a, b ){
+    function aPlusb(){
+        return a + b;
+    }
+    return aPlusb();
+}
+
+function mul( a, b ){
+    function aTimesb(){
+        return a * b;
+    }
+    return aTimesb();
+}</code></pre>
+
+        <p>And since we want to use <strong>partial application</strong> we like to have a curry function, which is <strong>some consecutive nested unary functions</strong>.</p>
+
+        <h3 class="sub-title">applying arguments partially</h3>
+        <p>Now that we have two curry functions, lets use them</p>
+<pre><code class="language-javascript"> // just binding first argument
+const add5 = add( 5 );  // returning a function
+const mul2 = mul( 2 );  // returning a function
+</code></pre>
+
+        <h3 class="sub-title">our compose function</h3>
+        <p>We can do our composition in two ways</p>
+        <ol>
+            <li>compose: right to left composition</li>
+            <li>pipe: left to right composition</li>
+        </ol>
+<pre><code class="language-javascript">// compose: right to left
+const compose = ( f1, f2 ) =&gt; arg =&gt; f1( f2( arg ) );
+
+// pipe: left to right composition
+const pipe = ( f1, f2 ) =&gt; arg =&gt; f2( f1( arg ) );</code></pre>
+
+        <p>composing add5, mul2</p>
+<pre><code class="language-javascript">const c = compose( add5, mul2 ); // returning a function that accepts one argument
+const p = pipe( mul2, add5 );    // returning a function that accepts one argument</code></pre>
+
+        <p>What is it returning back? This part</p>
+<pre><code class="language-javascript">// for compose, it is assigned to "c"
+// arg =&gt; f1( f2( arg ) )
+
+// for pipe, it is assigned to "p"
+// arg =&gt; f2( f1( arg ) );</code></pre>
+
+
+        <h3 class="sub-title">getting the result</h3>
+<pre><code class="language-javascript">// compose result
+const cr = c( 2 );  // equals to add5( mul2( 2 ) )
+const pr = p( 2 );  // equals to add5( mul2( 2 ) )
+
+console.log( cr );  // 9 === ( 5 + ( 2 * 2 ) )
+console.log( pr );  // 9 === ( 5 + ( 2 * 2 ) )</code></pre>
+
+    <h3 class="sub-title">using Ramda.js</h3>
+    <p>We do not have to create a compose, or pipe function. We can use a library that has been tested many times.</p>
+<pre><code class="language-javascript">const R = require( "ramda" );
+
+// Two curry functions in ES6 syntax
+const add = a =&gt; b =&gt; a + b;
+const mul = a =&gt; b =&gt; a * b;
+
+// partial application over add, and mul
+const add5 = add( 5 );  // 5 + b
+const mul2 = mul( 2 );  // 5 * b
+
+// using R.compose
+const cr = R.compose( add5, mul2 )( 2 );
+console.log( 'cr', cr );    // cr 9
+
+// using R.pipe
+const pr = R.pipe( mul2, add5 )( 2 );
+console.log( 'pr', pr );    // pr 9</code></pre>
+
+        <h3 class="sub-title">Learn English Effectively</h3>
+        <p>I already created a node.js script for sorting a file based an word's length.</p>
+        <p>Imaging you are learning English. One of good techniques to learn words is to start from small words, words that have shorter length.</p>
+        <p>For example if you already know about these three</p>
+        <ol>
+            <li>ploy</li>
+            <li>morph</li>
+            <li>-ism</li>
+        </ol>
+        <p>then you have a better chance to understand the word <strong>polymorphism</strong>. Why? Because your mind is already familiar with smaller parts of this word.</p>
+        <p>Here is the code I wrote a few months ago, it is a script; almost functional but not quite right.</p>
+<pre><code class="language-javascript">#!/usr/bin/env node
+
+const fs = require( "fs" );
+
+const log = console.log;
+const program = process.argv[1].split( /\// ).pop();
+const filename = process.argv[ 2 ];
+
+if( !filename ){
+    log( `usage: ${program} filename` );
+    log( `Ex.1 : ${program} file.txt` );
+    process.exit( 0 );
+}
+
+
+const file = fs.readFileSync( filename );
+const fileString = file.toString();
+const fileLines = fileString.split( "\n" ).filter( ( line ) =&gt; line !== "" );
+
+let unique = {},
+    words = [];
+fileLines.forEach( function( line ){
+    words = line.split( /\W+|\d+/g ).filter( ( word ) =&gt;  word !== "" );
+ 
+    words.forEach( function( word ){
+        unique[ word ] = word.length;
+    })
+})
+
+const sprintf = functions( text, space = 5 ){
+    text = text + "";
+    return ( text + ( " ".repeat( space - text.length ) ) );
+}
+
+let value = 0;
+const result =
+Object.keys( unique )
+       .sort( ( a, b ) =&gt; { return unique[ a ] - unique[ b ] } )
+       .reduce( function( accum, key ) {
+            value = unique[ key ];
+            return accum + sprintf( value ) + key + "\n";
+            // log( sprintf( value ), key );
+        }, "");
+log( result );
+</code></pre>
+
+        <p>And here is the code after refactoring using Ramda.js.</p>
+<pre><code class="language-javascript">#!/usr/bin/env node
+
+const fs = require( "fs" );
+const R = require( "ramda" );
+
+const log = console.log.bind( console );
+const program = process.argv[1].split( /\// ).pop();
+const filename = process.argv[ 2 ];
+
+if( !filename ){
+    log( `usage: ${program} filename` );
+    log( `Ex.1 : ${program} file.txt` );
+    process.exit( 0 );
+}
+
+const newLine = "\n";
+const toString = string =&gt; string.toString();
+const ignoreEmtpyItem = item =&gt; item !== "";
+const lineToWord = line =&gt; R.split( /\W+|\d+/g, line );
+const sortByLength = ( a, b ) =&gt; a.length - b.length;
+const mapLengthToString = string =&gt; string.length + " " + string;
+const arrayToString = ( result, input ) =&gt; result + input + "\n";
+
+R.pipe(
+    fs.readFileSync,                // read the file
+    toString,                       // convert it to string
+    R.split( newLine ),             // array of lines
+    R.map( lineToWord ),            // array of array of words
+    R.flatten,                      // flatten it, array of array to array
+    R.filter( ignoreEmtpyItem ),    // remove empty items
+    R.sort( sortByLength ),         // sort by item's length
+    R.map( mapLengthToString ),     // a single string for each item
+    R.reduce( arrayToString, "" ),  // everything to a single string
+    log                             // print
+)( filename );
+</code></pre>
+
+        <p>So with this post, and four previous ones, we learned about</p>
+        <ol>
+            <li>function as first class citizen</li>
+            <li>closure</li>
+            <li>currying</li>
+            <li>partial application</li>
+            <li>composition</li>
+        </ol>
+        <p>We will continue our discussion about functional programming in next posts.</p>
+
+		DD_MM_YYYY
+        <div class="edit-on-github">
+            <a target="_blank" href="https://github.com/k-five/jsfun.ir/blob/master/home/functional-programming-javascript/composition/main.html">Edit on Github</a>
+        </div>
+	</div>
+</main>

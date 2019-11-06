@@ -76,7 +76,8 @@
             "function as first class citizen": "",
             "closure": "",
             "currying": "",
-            "partial application": ""
+            "partial application": "",
+            "composition": ""
         },
         "react": {
             "three JSX main patterns": "",
