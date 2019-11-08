@@ -1,0 +1,172 @@
+<main>
+	<div class="content-r">
+		<h1>pure-and-impure-functions</h1>
+        <hr>
+        <p>So far we learned about</p>
+        <ol>
+            <li>function as first class citizen</li>
+            <li>closure</li>
+            <li>currying</li>
+            <li>partial application</li>
+            <li>composition</li>
+        </ol>
+        <p>The last part of this list, <strong>composition</strong> works because of pure functions. Functions that we used in previous post for sorting a list of words are all pure functions.</p>
+<pre><code class="language-javascript">R.pipe(
+    fs.readFileSync,                // read the file
+    toString,                       // convert it to string
+    R.split( newLine ),             // array of lines
+    R.map( lineToWord ),            // array of array of words
+    R.flatten,                      // flatten it, array of array to array
+    R.filter( ignoreEmtpyItem ),    // remove empty items
+    R.sort( sortByLength ),         // sort by item's length
+    R.map( mapLengthToString ),     // a single string for each item
+    R.reduce( arrayToString, "" ),  // everything to a single string
+    log                             // print
+)( filename );</code></pre>
+
+        <p>One can ask, how it is possible? How a program can create result without any <strong>side-effect</strong>? And it is time to clarify what is a pure function.</p>
+
+        <h3 class="-sub-title">A pure function</h3>
+        <p>The shortest definition for a pure function is: <strong>a function that has no side-effect</strong>. And it quickly becomes confusing that if all functions have no side-effect how can we produce the result? </p>
+        <p>The reality about a pure function is that it can have and only <strong>internal side effects</strong> and no <strong>external side effects</strong>.</p>
+        <p>Here is a function that do not have any side effect.</p>
+<pre><code class="language-javascript">const add = a =&gt; =&gt; a + b;</code></pre>
+        <p>This function just returns a result of an addition operation and we know that addition operation is a side effect free operation.</p>
+
+        <p>This one has side effect on its input, but not on external states, since the input is not by reference, we can ignore it, thus it is pure.</p>
+<pre><code class="language-javascript">const inc = a =&gt; ++a;</code></pre>
+
+        <p>And here is a more famous utility that has internal side effects but no external.</p>
+<pre><code class="language-javascript">const filter = function( predicate, array ){
+    const newArray = [];
+    for( const index of array )
+        if( predicate( array[ index ] ) )
+            newArray.push( array[ index ] );
+
+    return newArray;
+}</code></pre>
+        <p>And since we are familiar with <strong>curry functions</strong> it is better to write it this way.</p>
+ <pre><code class="language-javascript">const filter = function( predicate ){
+    return function( array ){
+        const newArray = [];
+        for( const index of array )
+            if( predicate( array[ index ] ) )
+                newArray.push( array[ index ] );
+        return newArray;
+    }
+}</code></pre>
+        <p>It has an array (= newArray). It modifies it but it is hidden from our application and we cannot see it nor care about it. We give it an input, and it gives us back an output.</p>
+        <p>So we can say these about a pure function</p>
+        <ul>
+            <li>It does not have side effects</li>
+            <li>If it has, it does not have external side effects</li>
+            <li>It does not take arguments but reference</li>
+            <li>If it takes, it does not modify them, or if want, will create a copy of them</li>
+            <li>It returns a result</li>
+            <li>It does one thing well (Single Responsibility Well)</li>
+        </ul>
+        <p>So functions that do not satisfy these rules are considered as <strong>impure functions</strong>, functions that have side effects.</p>
+
+        <h3 class="sub-title">Completely side effect free program</h3>
+        <p>Anyone that has coded for a while immediately think that how is it possible to code with no side effect? And it is true that is not possible to have a 100% side effect free software and we need to change some states.</p>
+        <p>In fact the emphasize is on having less impure functions and think of it to solve our problem using pure functions as much as possible and not having no side effect at all. Having less impure functions leads us to have less side effects which itself leads us to</p>
+        <ul>
+            <li>easy to reason about code</li>
+            <li>less buggy code</li>
+            <li>easy to test e.g. TDD</li>
+            <li>easy to refactor</li>
+        </ul>
+
+        <h3 class="sub-title">State and state management</h3>
+        <p>By a simple observation over all pure functions or the rules we reviewed we can see that a function either does not have a state or it has. In case of having a state, a function, manages its own states and does not care about <strong>outside world</strong> a kind of <strong>self state management</strong>.</p>
+        <p>Following the rule of self-state management enables us to combine some of these pure function known as <strong>composition</strong> to achieve our final needs.</p>
+        <p>So without pure functions, composition does not make sense, and many useful pure functions like</p>
+        <ul>
+            <li>map</li>
+            <li>filter</li>
+            <li>reduce</li>
+            <li>etc</li>
+        </ul>
+        <p>have a kind of <strong>isolate states</strong> that do not affect outside of the function.</p>
+
+
+        <h3 class="sub-title">Low coupling and High cohesion</h3>
+        <p>While these two terms mostly is used in OOP, but we can see them in FP, too. By having pure functions, in fact we do not have coupling between functions.</p>
+        <p>Here is an example of high coupling (= impure functions) that makes hard to debug, test, and compose our functions</p>
+<pre><code class="language-javascript">// data 
+let year = 2019;
+
+// impure function
+function inc(){
+    ++year;
+}
+
+// impure function
+function dec(){
+    --year;
+}
+
+function* random01(){
+    while( true )
+        yield Math.floor( Math.random() * 2);
+}
+
+let max = 10;
+const iterator = random01();
+
+while( max-- ){
+    const { value } = iterator.next();
+    if( value )
+        inc();
+    else
+        dec();
+}
+
+console.log( year );    // what is your best guess?  </code></pre>
+        <p>Yes, it is unpredictable! And imagine it for a large application with many functions.</p>
+
+        <p>Comparing to this one</p>
+<pre><code class="language-javascript">let year = 2019;
+
+// pure function
+function inc( x ){
+    return ++x;
+}
+
+// pure function
+function dec( x ){
+    return --x;
+}
+
+function* random01(){
+    while( true )
+        yield Math.floor( Math.random() * 2);
+}
+
+let max = 100;
+const iterator = random01();
+
+while( max-- ){
+    const { value } = iterator.next();
+    if( value )
+        inc( year );
+    else
+        dec( year );
+}
+
+console.log( year );    // what is your best guess?</code></pre>
+        <p>Because our inc, and dec functions have no side effects, we can predicate that "year" variable is still 2019.</p>
+
+        <h3 class="sub-title">Explicit is better than implicit</h3>
+        <p>This is from python zen coding. Python fans usually criticizes <strong>Perl</strong> or other languages for some implicit behavior. So python is said to be explicit about its behavior. Using this rule we can see that while we did not change our <strong>year</strong> variable, we were not explicit about it while we could</p>
+<pre><code class="language-javascript">const year = 2019;</code></pre>
+
+        <p>Using constant assignment makes is explicit that it should not be modified, also prevent our data from accidental changes by others.</p>
+        <p>This concept of constant and non-constant data leads us to our next post which is will be about <strong>immutable &amp; mutable data.</strong></p>
+    
+		DD_MM_YYYY
+        <div class="edit-on-github">
+            <a target="_blank" href="https://github.com/k-five/jsfun.ir/blob/master/home/functional-programming-javascript/pure-and-impure-functions/main.html">Edit on Github</a>
+        </div>
+	</div>
+</main>

@@ -77,7 +77,8 @@
             "closure": "",
             "currying": "",
             "partial application": "",
-            "composition": ""
+            "composition": "",
+            "pure and impure functions": ""
         },
         "react": {
             "three JSX main patterns": "",
