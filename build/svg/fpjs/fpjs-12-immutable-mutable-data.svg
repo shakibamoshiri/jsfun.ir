@@ -1,0 +1,71 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 500 650" xmlns:xlink="http://www.w3.org/1999/xlink" width="500" height="650" font-family="Montserrat">
+  <rect x="0" y="0" width="500" height="650" fill="#fd0"></rect>
+
+  <g class="title" text-anchor="middle" font-weight="bold">
+    <rect x="0" y="35" width="500" height="40" fill="#000"></rect>
+    <text x="259" y="65" font-size="25" fill="#fff">immutable &amp; mutable data</text>
+  </g>
+  
+  <g transform="translate(0,130)" font-family="monospace" font-size="15" fill="#fff" text-anchor="start" font-weight="bold">
+    <text x="20" y="-20" fill="#000" font-family="Montserrat" font-size="20">immutable === not modifiable</text>
+    <rect width="550" height="130"></rect>
+    <text x="20" y="30" fill="#000" >const <tspan fill="#00c8c0">year</tspan> 2019;</text>
+    <text x="20" y="50" fill="#000" >const <tspan fill="#00c8c0">language</tspan> = "JavaScript";</text>
+    <text x="20" y="70" fill="#999" >// assuming Object.freeze is a deep-operation</text>
+    <text x="20" y="90" fill="#000" >const <tspan fill="#00c8c0">array</tspan> = Object.freeze( [ 1, 2, 3 ] );</text>
+    <text x="20" y="110" fill="#000" >const <tspan fill="#00c8c0">filter</tspan> = Object.freeze( { x: 10 } );</text>
+  </g>
+  <g transform="translate(-10,280)" font-size="18" fill="#fff" text-anchor="start" font-weight="bold">
+    <text x="20" y="20" fill="#000"  xml:space="preserve">      declaration &amp; assignment at the same time</text>
+    <text x="20" y="50" fill="#000"  xml:space="preserve">       nothing can modify it</text>
+    
+    <use xlink:href="#check_mark" transform="translate(20,0)"></use>
+    <use xlink:href="#check_mark" transform="translate(20,30)"></use>
+  </g>
+  <g transform="translate(0,400)" font-family="monospace" font-size="15" fill="#fff" text-anchor="start" font-weight="bold">
+    <text x="20" y="-20" fill="#000" font-family="Montserrat" font-size="20">mutable === modifiable</text>
+    <rect width="550" height="190"></rect>
+    <text x="20" y="30" fill="#000" >var <tspan fill="#00c8c0">year</tspan> 2019;</text>
+    <text x="20" y="50" fill="#000" >let <tspan fill="#00c8c0">language</tspan>;</text>
+    <text x="20" y="70" fill="#999" >// Object.freeze is NOT a deep-operation</text>
+    <text x="20" y="90" fill="#000" >const <tspan fill="#00c8c0">array</tspan> = Object.freeze( [ 1, 2, [ 3, 4 ] ] );</text>
+    <text x="20" y="110" fill="#000" >const <tspan fill="#00c8c0">filter</tspan> = Object.freeze( { x: 10 } );</text>
+    <text x="20" y="130" fill="#000" ><tspan fill="#00c8c0">language</tspan> = "JavaScript";</text>
+    <text x="20" y="150" fill="#000" ><tspan fill="#00c8c0">array</tspan>[ 2 ][ 0 ] = 30; <tspan fill="#999">// [ 1, 2, [ 30, 4 ] ]</tspan></text>
+    <text x="20" y="170" fill="#000" ><tspan fill="#00c8c0">array</tspan>[ 2 ][ 1 ] = 40; <tspan fill="#999">// [ 1, 2, [ 30, 40 ] ]</tspan></text>
+  </g>
+  
+  
+  
+  <defs>
+    <g id="check_mark" transform="translate(0,0)" font-weight="bold" font-size="25" fill="#000" text-anchor="middle">
+        <path fill="none" stroke="#00C800" stroke-width="3" d="M5,10 l10,10 l15,-25"></path>
+    </g>
+    <marker id="arrow" markerWidth="10" markerHeight="7" 
+            refX="0" refY="3.5" orient="auto">
+      <polygon fill="#000" points="0 0, 5 3.5, 0 7" />
+    </marker>
+    <marker id="bullet" markerWidth="12" markerHeight="12" refX="6" refY="6" >
+      <circle fill="#000" cx="6" cy="6" r="2" stroke="context-stroke" stroke-width="2"/>
+    </marker>
+  </defs>
+    <g transform="scale(0.3) translate(1330,1750)">
+        <g transform="translate(0,250)" font-family="Ubuntu" font-size="25" fill="#c800c8" text-anchor="middle" font-weight="bold">
+          <rect x="0" y="0" width="300" height="40" fill="#000"></rect>
+          <text x="150" y="30" fill="#fff"  letter-spacing="3">Functional</text>
+        </g>
+        <g transform="translate(0,300)" font-family="Ubuntu" font-size="25" fill="#c800c8" text-anchor="middle" font-weight="bold">
+          <rect x="0" y="0" width="300" height="40" fill="#000"></rect>
+          <text x="150" y="30" fill="#fff"  letter-spacing="3">Programming</text>
+        </g>
+        <g transform="translate(0,350)" font-family="Ubuntu" font-size="25" fill="#c800c8" text-anchor="middle" font-weight="bold">
+          <rect x="0" y="0" width="300" height="40" fill="#000"></rect>
+          <text x="150" y="30" fill="#fff"  letter-spacing="3">JavaScript</text>
+        </g>
+  </g>
+  <g font-size="10"  fill="#000" font-weight="bold">
+    <text x="10" y="625">jsfun.ir/functional-programming-javascript</text>
+    <text x="10" y="645" >functional programming javascript by Shakiba Moshiri, 2019-11-10</text>
+  </g>
+<!--<path fill="none" stroke="#000" stroke-width="3" d="M60,50 v140" marker-start="url(#bullet)" marker-end="url(#arrow)"></path>-->
+</svg>

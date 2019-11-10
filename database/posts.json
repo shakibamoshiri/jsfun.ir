@@ -78,7 +78,8 @@
             "currying": "",
             "partial application": "",
             "composition": "",
-            "pure and impure functions": ""
+            "pure and impure functions": "",
+            "immutable and mutable data": ""
         },
         "react": {
             "three JSX main patterns": "",

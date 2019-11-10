@@ -1,0 +1,91 @@
+<main>
+	<div class="content-r">
+		<h1>immutable-and-mutable-data</h1>
+        <hr>
+        <p>These two terms are very close to the two previous terms</p>
+        <ol>
+            <li>pure funciton</li>
+            <li>impure function</li>
+        </ol>
+        <p>not just conceptually, but also in practice.</p>
+
+        <h3 class="sub-title">Mutability</h3>
+        <p>Mutable data refers to <strong>changeable data over time</strong>. We store our data in a variable and that variable which acts like a <strong>container</strong> for that data type is modified over and over again. The best example is a for loop</p>
+<pre><code class="language-javascript">let index = 0;
+const max = 10;
+for( ; index < max; ++index ){
+    console.log( "index:", index );
+}</code></pre>
+
+        <p>Here <string>index</string> is overwritten in each for loop iteration. We need this mutability. But for many cases we do not need mutable data e.g. <strong>max</strong> variable. Since  when our data is constant, two things happen</p>
+        <ul>
+            <li>visually by looking at code we know that we should not modify them</li>
+            <li>Also the JS interpreter (= in some level compiler) knows this is a constant variable and can do some optimization</li>
+        </ul>
+        <p>Thus in any cases that we do not need to modify (= update) a variable it is better to explicitly declare it as constant.</p>
+
+        <h3 class="sub-title">Immutability</h3>
+        <p>The opposite of mutable data is immutable data. Data that cannot be changed and we should not be modify them.</p>
+        <p>In practice (coding) immutable data are differentiated using <strong>const</strong> keyword which tells the interpreter (or compiler) this is a constant variable. </p>
+        <p>For constant variable the <strong>declaration</strong> part and <strong>assignment</strong> happen at the same time which is a big difference between non-constant variables that can be declared first and then be assigned or reassigned again and again.</p>
+        <p>Thus, constant variables are <strong>one time assignment operations</strong> while non-constant variables are <strong>many times assignment operations</strong>.</p>
+        
+        <h3 class="sub-title">Pure &amp; impure functions</h3>
+        <p>From the previous post and this one you can see there is a similarity between <strong>pure function</strong> - function that should not change the state of our application - with <strong>immutable data</strong> that prevents our states from changing.</p>
+        <p>Also <strong>impure function </strong>- function that modifies states of our application - with <strong>mutable data</strong> that holds data that are changed over time in our application.</p>
+        <p>So instead of writing a code this way</p>
+<pre><code class="language-javascript">// data 
+let year = 2019;
+
+// impure function
+function inc(){
+    ++year;
+}
+
+// impure function
+function dec(){
+    --year;
+}</code></pre>
+
+        <p>We will refactor it to this one</p>
+<pre><code class="language-javascript">// data 
+const year = 2019;
+
+// impure function
+function inc( input ){
+    ++input;
+}
+
+// impure function
+function dec( input ){
+    --input;
+}</code></pre>
+
+        <p>Or in ES6 style</p>
+<pre><code class="language-javascript">// data 
+const year = 2019;
+const add = x =&gt; ++x;
+const dec = x =&gt; --x; </code></pre>
+
+        <p>Thus as much as we can, we prefer</p>
+        <ul>
+            <li>pure functions and immutable data</li>
+        </ul>
+        <p>over</p>
+        <ul>
+            <li>impure functions and mutable data</li>
+        </ul>
+
+        <p>The combination of</p>
+        <ul>
+            <li>pure function</li>
+            <li>immutable data</li>
+        </ul>
+        <p>helps us to have a <strong>side effect free morphism</strong> which will be our next post's topic.</p>
+
+		DD_MM_YYYY
+        <div class="edit-on-github">
+            <a target="_blank" href="https://github.com/k-five/jsfun.ir/blob/master/home/functional-programming-javascript/immutable-and-mutable-data/main.html">Edit on Github</a>
+        </div>
+	</div>
+</main>
