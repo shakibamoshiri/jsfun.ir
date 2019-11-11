@@ -79,7 +79,8 @@
             "partial application": "",
             "composition": "",
             "pure and impure functions": "",
-            "immutable and mutable data": ""
+            "immutable and mutable data": "",
+            "side effect free morphism": ""
         },
         "react": {
             "three JSX main patterns": "",

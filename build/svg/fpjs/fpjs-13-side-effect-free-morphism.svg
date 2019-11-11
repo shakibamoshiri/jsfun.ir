@@ -1,0 +1,69 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 500 650" xmlns:xlink="http://www.w3.org/1999/xlink" width="500" height="650" font-family="Montserrat">
+  <rect x="0" y="0" width="500" height="650" fill="#fd0"></rect>
+
+  <g class="title" text-anchor="middle" font-weight="bold">
+    <rect x="0" y="35" width="500" height="40" fill="#000"></rect>
+    <text x="259" y="65" font-size="25" fill="#fff">Side Effect Free Morphism</text>
+  </g>
+  
+  
+  <g transform="translate(0,100)" font-family="monospace" font-size="15" fill="#fff" text-anchor="start" font-weight="bold">
+    <rect width="550" height="270"></rect>
+    <text x="10" y="30" fill="#000" xml:space="preserve" ><tspan fill="#c80000">R</tspan>.pipe(               <tspan fill="#999">// composition: left to right</tspan></text>
+    <text x="10" y="50" fill="#000" xml:space="preserve" >    fs.readFileSync,  <tspan fill="#999">// read file system</tspan></text>
+    <text x="10" y="70" fill="#000" xml:space="preserve" >    <tspan fill="#0cf">toString</tspan>,         <tspan fill="#999">// convert to string</tspan></text>
+    <text x="10" y="90" fill="#000" xml:space="preserve" >    <tspan fill="#c80000">R</tspan>.split( newLine ),   <tspan fill="#999">// split them line by line</tspan></text>
+    <text x="10" y="110" fill="#000" xml:space="preserve" >    <tspan fill="#c80000">R</tspan>.map( <tspan fill="#0cf">lineToWord</tspan> ),  <tspan fill="#999">// each line to words</tspan></text>
+    <text x="10" y="130" fill="#000" xml:space="preserve" >    <tspan fill="#c80000">R</tspan>.flatten,            <tspan fill="#999">// flatten array of array</tspan></text>
+    <text x="10" y="150" fill="#000" xml:space="preserve" >    <tspan fill="#c80000">R</tspan>.filter( <tspan fill="#0cf">ignoreEmptyItem</tspan> ), <tspan fill="#999">// remove empty ""</tspan></text>
+    <text x="10" y="170" fill="#000" xml:space="preserve" >    <tspan fill="#c80000">R</tspan>.sort( <tspan fill="#0cf">sortByLength</tspan> ),      <tspan fill="#999">// by word.length</tspan></text>
+    <text x="10" y="190" fill="#000" xml:space="preserve" >    <tspan fill="#c80000">R</tspan>.map( <tspan fill="#0cf">mapLengthToString</tspan> ),  <tspan fill="#999">// e.g '2 JS'</tspan></text>
+    <text x="10" y="210" fill="#000" xml:space="preserve" >    <tspan fill="#c80000">R</tspan>.reduce( <tspan fill="#0cf">arrayToString</tspan> ),   <tspan fill="#999">// a single string</tspan></text>
+    <text x="10" y="230" fill="#000" xml:space="preserve" >    console.log                  <tspan fill="#999">// print the result</tspan></text>
+    <text x="10" y="250" fill="#000" xml:space="preserve" >)( filename );</text>  
+  </g>
+  
+  <g transform="translate(0,410)" font-size="20"  fill="#000" font-family="Ubuntu" text-anchor="middle" font-weight="bold">
+    <text x="250" y="0" >remember pipeline architecture</text>
+    <text x="250" y="30" >producer -> [ <tspan fill="#fff">filter</tspan> ] -> [ <tspan fill="#fff">filter</tspan> ]</text>
+    <text x="250" y="60" >[ <tspan fill="#fff">filter</tspan> ] -> [ <tspan fill="#fff">filter</tspan> ] -> [ <tspan fill="#fff">filter</tspan> ]</text>
+    <text x="250" y="90" >[ <tspan fill="#fff">filter</tspan> ] -> [ <tspan fill="#fff">filter</tspan> ] -> consumer</text>
+  </g>
+  <g transform="translate(0,550)" font-family="Ubuntu" font-size="25" fill="#fff" text-anchor="middle" font-weight="bold">
+    <text x="250" y="0" >Morphism in JavaScript is by</text>
+    <text x="250" y="30" >pure functions</text>
+  </g>
+  
+  
+  <defs>
+    <g id="check_mark" transform="translate(0,0)" font-weight="bold" font-size="25" fill="#000" text-anchor="middle">
+        <path fill="none" stroke="#00C800" stroke-width="3" d="M5,10 l10,10 l15,-25"></path>
+    </g>
+    <marker id="arrow" markerWidth="10" markerHeight="7" 
+            refX="0" refY="3.5" orient="auto">
+      <polygon fill="#000" points="0 0, 5 3.5, 0 7" />
+    </marker>
+    <marker id="bullet" markerWidth="12" markerHeight="12" refX="6" refY="6" >
+      <circle fill="#000" cx="6" cy="6" r="2" stroke="context-stroke" stroke-width="2"/>
+    </marker>
+  </defs>
+    <g transform="scale(0.3) translate(1330,1750)">
+        <g transform="translate(0,250)" font-family="Ubuntu" font-size="25" fill="#c800c8" text-anchor="middle" font-weight="bold">
+          <rect x="0" y="0" width="300" height="40" fill="#000"></rect>
+          <text x="150" y="30" fill="#fff"  letter-spacing="3">Functional</text>
+        </g>
+        <g transform="translate(0,300)" font-family="Ubuntu" font-size="25" fill="#c800c8" text-anchor="middle" font-weight="bold">
+          <rect x="0" y="0" width="300" height="40" fill="#000"></rect>
+          <text x="150" y="30" fill="#fff"  letter-spacing="3">Programming</text>
+        </g>
+        <g transform="translate(0,350)" font-family="Ubuntu" font-size="25" fill="#c800c8" text-anchor="middle" font-weight="bold">
+          <rect x="0" y="0" width="300" height="40" fill="#000"></rect>
+          <text x="150" y="30" fill="#fff"  letter-spacing="3">JavaScript</text>
+        </g>
+  </g>
+  <g font-size="10"  fill="#000" font-weight="bold">
+    <text x="10" y="625">jsfun.ir/functional-programming-javascript</text>
+    <text x="10" y="645" >functional programming javascript by Shakiba Moshiri, 2019-11-11</text>
+  </g>
+<!--<path fill="none" stroke="#000" stroke-width="3" d="M60,50 v140" marker-start="url(#bullet)" marker-end="url(#arrow)"></path>-->
+</svg>
