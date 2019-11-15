@@ -80,7 +80,8 @@
             "composition": "",
             "pure and impure functions": "",
             "immutable and mutable data": "",
-            "side effect free morphism": ""
+            "side effect free morphism": "",
+            "higher order function": ""
         },
         "react": {
             "three JSX main patterns": "",
