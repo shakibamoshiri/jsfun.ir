@@ -1,0 +1,41 @@
+<main>
+	<div class="content-r">
+		<h1>higher-order-function</h1>
+        <hr>
+        <p>Higher order functions e.g map, filter, reduce are one of most used functions in JS, and other languages. It is so common that might some do not notice it.</p>
+        <p>We call a function a higher order function when it works with other functions either as its input value or return value.</p>
+        <p>Here is a simple <strong>filter</strong> function that uses a <strong>predicate</strong> function to run on each loop item. It is a non-curry function.</p>
+<pre><code class="language-javascript">// a non-curry higher order function
+const filter = function( predicate, list ){
+    const newArray = [];
+    for( let index = 0; index < list.length; ++index ){
+        if( predicate( list[ index ], index) ){
+            newArray.push( list[ index ] );
+        }
+    }
+    return newArray;
+}</code></pre>
+        
+        <p>And here is the same but also in a curry style.</p>
+<pre><code class="language-javascript">// a curry version of a higher order function
+const filter = function( predicate ){
+    return function( list ){
+        const newArray = [];
+        for( let index = 0; index < list.length; ++index ){
+            if( predicate( list[ index ], index) ){
+                newArray.push( list[ index ] );
+            }
+        }
+        return newArray;
+    }
+}</code></pre>
+        
+        <p>As you can see a higher order function is more general than a curry function and when we have a curry function it means it is already a higher order function.</p>
+        <p>That is it.</p>
+
+		DD_MM_YYYY
+        <div class="edit-on-github">
+            <a target="_blank" href="https://github.com/k-five/jsfun.ir/blob/master/home/functional-programming-javascript/higher-order-function/main.html">Edit on Github</a>
+        </div>
+	</div>
+</main>
