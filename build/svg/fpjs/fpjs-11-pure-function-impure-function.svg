@@ -6,7 +6,7 @@
     <text x="259" y="65" font-size="25" fill="#fff">pure &amp; impure functions</text>
   </g>
   
-  <g transform="translate(0,130)" font-family="monospace" font-size="15" fill="#fff" text-anchor="start" font-weight="bold">
+  <g transform="translate(0,130)" font-family="monospace" font-size="14" fill="#fff" text-anchor="start" font-weight="bold">
     <text x="20" y="-20" fill="#000" font-family="Montserrat" font-size="20">A pure function</text>
     <rect width="550" height="260"></rect>
     <text x="20" y="30" fill="#000" >const <tspan fill="#00c8c0">add</tspan> = a => b => a + b;</text>
@@ -14,7 +14,7 @@
     <text x="20" y="70" fill="#000" >const <tspan fill="#00c8c0">dec</tspan> = a => --a;</text>
     <text x="20" y="90" fill="#000" >const <tspan fill="#00c8c0">filter</tspan> = <tspan fill="#c80000">function</tspan>( <tspan fill="#08c">predicate</tspan>, array ){</text>
     <text x="20" y="110" fill="#000"  xml:space="preserve">    const <tspan fill="#00c8c0">newArray</tspan> = [];</text>
-    <text x="20" y="130" fill="#000"  xml:space="preserve">    for( const <tspan fill="#00c8c0">index</tspan> of array ){</text>
+    <text x="20" y="130" fill="#000"  xml:space="preserve">    for( let <tspan fill="#00c8c0">index</tspan> = 0; index &gt; list.length; ++index ){</text>
     <text x="20" y="150" fill="#000"  xml:space="preserve">        if( <tspan fill="#08c">predicate</tspan>( array[ index ] ) ){</text>
     <text x="20" y="170" fill="#000"  xml:space="preserve">            newArray.push( array[ index ] );</text>
     <text x="20" y="190" fill="#000"  xml:space="preserve">         }</text>
