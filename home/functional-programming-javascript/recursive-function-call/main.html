@@ -1,0 +1,152 @@
+<main>
+	<div class="content-r">
+		<h1>recursive-function-call</h1>
+        <p>For beginners, thinking of <strong>recursion</strong> which means how to solve a problem with a function recursively, is a little bit scary. But for seasoned developers, who are more familiar with data structure - sometimes - is the only way to come up with the solution!</p>
+        <p>In JS if when we want to <strong>freeze</strong> an array we have a method that solves this for us.</p>
+<pre><code class="language-javascript">const array = Object.freeze( [ 1, 2, 3, 4 ] );
+array[ 0 ] = 'zero';    // read-only
+console.log( array );   // [ 1, 2, 3, 4 ] </code></pre>
+        
+        <p>Everyone knows how to use Object.freeze; there is no trick. But when our data becomes more complex, then regular, leaner solutions do not work.</p>
+        <p>How are we going to make this array as read-only?</p>
+<pre><code class="language-javascript">const array =
+[ 0, [ "one", "two"], 3, 4, [ 50, 60, [ 700, 800 ] ], 'nine hundred' ];</code></pre>
+
+        <p>Using <strong>Object.freeze</strong>? No. Because Object.freeze is a shallow operation and has no effect on nested array.</p>
+        <p>Almost always when we have nested data structure (like this one) or a kind of <strong>tree</strong> data structure, then we cannot solve our problem using regular for-loop and the solution will be somehow using a recursion strategy.</p>
+        <p>If we use Object.freeze, then only indexes 0, 2, 3, and 5 will be frozen; 1 and 4 will be modifiable!</p>
+<pre><code class="language-javascript">[ 0, ???, 3, 4, ???, 'nine hundred' ]</code></pre>
+
+
+        <p>The solution is simple. A function that detects <strong>nested array</strong> and freezes them as well. After freezing all nested array, then we are done and safe to pass this array around. Here is a such function. It is not the only solution!</p>
+<pre><code class="language-javascript">const log = console.log.bind( console );
+
+function deepFreeze( array,  newArray = [] ){
+    for( const index in array ){
+        if( typeof array[ index ] === 'object' ){
+            newArray[ index ] = Object.freeze( array[ index ] );
+            deepFreeze( array[ index ], newArray );
+        }
+    }
+    newArray = Object.freeze( array );
+    return newArray;
+}
+
+
+log( '... start ...' );
+
+const r = deepFreeze( [ 0, [ "one", "two"], 3, 4, [ 50, 60, [ 700, 800 ] ], 'nine hundred' ] );
+r[0] = 'funny';
+log( r[0] );
+
+r[1][0] = 'funny';
+log( r[1][0] );
+
+r[4][0] = 'funny';
+log( r[4][0] );
+
+r[4][2][0] = 'funny';
+log( r[4][2][0] );
+
+log( r );
+
+log( '.... end .....' );</code></pre>
+
+        <p>And here is the output:</p>
+<pre><code class="language-javascript">... start ...
+0
+one
+50
+700
+[ 0,
+  [ 'one', 'two' ],
+  3,
+  4,
+  [ 50, 60, [ 700, 800 ] ],
+  'nine hundred' ]
+.... end .....
+</code></pre>
+        <p>With this <strong>deepFreeze</strong> function we do something like this:</p>
+<pre><code class="language-javascript">const r =
+Object.freeze( [ 0, Object.freeze( [ "one", "two"] ), 3, 4, Object.freeze( [ 50, 60, Object.freeze( [ 700, 800 ] ) ] ), 'nine hundred' ] );</code></pre>
+        <p>So all nested array will be frozen and thus the whole array we have will be frozen.</p>
+        <p>Maybe the hard part of the solution is the pattern we need to apply to the function we want to call it recursively. When we could find the pattern, then coming up with the code will be much easier.</p>
+
+
+        <h3 class="sub-title">JSON to route</h3>
+        <p>The application I am using it for creating and managing this blog is <a target="_blank" href="http://nodepost.ir">nodepost</a>. It is less then 500 line of code and has a very important function. A recursive function that converts JSON file to an array which can be served by a web-server (e.g. node.js) and a route manger (e.g. express.js).</p>
+        <p>And here is the function:</p>
+<pre><code class="language-javascript">// postsJson is a JSON
+// route will be filled for each path
+// parent will be the parent of nested posts
+// at first there is no parent
+function makeRoute( postsJson, route = [], parent = "" ){
+    for( const post in postsJson ){
+        // children if there is any
+        const subPosts = postsJson[ post ];
+
+        // parent directory if it has children
+        // also remove extra white-spaces in the postsJson.json file
+        const parentDir = parent + "/" + post.replace( / +/g, "-" );
+
+        // store it
+        route.push( parentDir );
+
+        // when we have nested posts then
+        // recursively parse the sub-posts
+        if( typeof subPosts !== "string" ){
+            // subPosts will be new postsJson
+            // route wil be continually filled
+            // parentDir will be the new parent
+            makeRoute( subPosts, route, parentDir )
+         }
+    }
+    return route;
+}</code></pre>
+
+        <p>And giving to it such a JSON file:</p>
+<pre><code class="language-javascript">{
+    "home": {
+        "front end": {
+            "JavaScript": "",
+            "HTML": "",
+            "CSS": {
+                "CSS 2": "",
+                "CSS 3": ""
+            }
+        },
+        "back end": {
+            "node.js": "",
+            "PHP": "",
+            "Python": {
+                "python 2": "",
+                "python 3": ""
+            }
+        }
+    }
+}
+</code></pre>
+
+        <p>Will convert it to an array that we can use as routes of our website:</p>
+<pre><code class="language-javascript">[ '/home',
+  '/home/front-end',
+  '/home/front-end/JavaScript',
+  '/home/front-end/HTML',
+  '/home/front-end/CSS',
+  '/home/front-end/CSS/CSS-2',
+  '/home/front-end/CSS/CSS-3',
+  '/home/back-end',
+  '/home/back-end/node.js',
+  '/home/back-end/PHP',
+  '/home/back-end/Python',
+  '/home/back-end/Python/python-2',
+  '/home/back-end/Python/python-3' ]</code></pre>
+
+        <p>We will continue our posts about function programming with other concepts like <strong>Functors</strong>, <strong>Monads</strong>, and summing up by introducing some resources about function programming with JS.</p>
+
+		DD_MM_YYYY
+        <div class="edit-on-github">
+            <a target="_blank" href="https://github.com/k-five/jsfun.ir/blob/master/home/functional-programming-javascript/recursive-function-call/main.html">Edit on Github</a>
+        </div>
+	</div>
+</main>

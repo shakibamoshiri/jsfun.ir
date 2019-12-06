@@ -1,0 +1,73 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 500 650" xmlns:xlink="http://www.w3.org/1999/xlink" width="500" height="650" font-family="Montserrat">
+  <rect x="0" y="0" width="500" height="650" fill="#fd0"></rect>
+
+  <g class="title" text-anchor="middle" font-weight="bold">
+    <rect x="0" y="35" width="500" height="40" fill="#000"></rect>
+    <text x="259" y="65" font-size="25" fill="#fff">Recursive Function Call</text>
+  </g>
+  
+  
+  <g transform="translate(0,50)" font-family="monospace" font-size="13" fill="#fff" text-anchor="start" font-weight="bold">
+    <rect width="550" height="230" y="50"></rect>
+    <text x="20" y="70" fill="#999" >// recursively freeze all nested array</text>
+    <text x="20" y="90" fill="#000" ><tspan fill="#c80000">function</tspan> deepFreeze( array, newArray = [] ){</text>
+    <text x="20" y="110" fill="#000"  xml:space="preserve">  for( const <tspan fill="#00c8c0">index</tspan> in array ){</text>
+    <text x="20" y="130" fill="#000"  xml:space="preserve">    if( <tspan fill="#c80000">typeof</tspan> array[ index ] === 'object' ){</text>
+    <text x="20" y="150" fill="#000"  xml:space="preserve">      newArray[ index ] = Object.freeze( array[ index ] );</text>
+    <text x="20" y="170" fill="#000"  xml:space="preserve">      <tspan fill="#08c">deepFreeze</tspan>( array[ index ], newArray );</text>
+    <text x="20" y="190" fill="#000"  xml:space="preserve">    }</text>
+    <text x="20" y="210" fill="#000"  xml:space="preserve">  }</text>
+    <text x="20" y="230" fill="#000"  xml:space="preserve">  newArray = Object.freeze( array );</text>
+    <text x="20" y="250" fill="#000"  xml:space="preserve">  <tspan fill="#c800c8">return</tspan> newArray;</text>
+    <text x="20" y="270" fill="#000"  xml:space="preserve">}</text>
+  </g>
+  <g transform="translate(0,310)" font-family="monospace" font-size="13" fill="#f0f0f0" text-anchor="start" font-weight="bold">
+    <rect width="550" height="50" y="50"></rect>
+    <text x="20" y="70" fill="#999" >// base condition</text>
+    <text x="20" y="90" fill="#000"  xml:space="preserve">if( <tspan fill="#c80000">typeof</tspan> array[ index ] === 'object' ){</text>
+  </g>
+  <g transform="translate(0,390)" font-family="monospace" font-size="13" fill="#f0f0f0" text-anchor="start" font-weight="bold">
+    <rect width="550" height="50" y="50"></rect>
+    <text x="20" y="70" fill="#999" >// recursive function</text>
+    <text x="20" y="90" fill="#000"  xml:space="preserve"><tspan fill="#08c">deepFreeze</tspan>( array[ index ], newArray );</text>
+  </g>
+  <g transform="translate(0,470)" font-family="Ubuntu" font-size="23" fill="#000" text-anchor="middle" font-weight="bold">
+    <text x="250" y="70" fill="#000" >base condition + recursive function</text>
+    <text x="250" y="100" fill="#000" >recursive pattern</text>
+  </g>
+  
+
+  
+  
+  <defs>
+    <g id="check_mark" transform="translate(0,0)" font-weight="bold" font-size="25" fill="#000" text-anchor="middle">
+        <path fill="none" stroke="#00C800" stroke-width="3" d="M5,10 l10,10 l15,-25"></path>
+    </g>
+    <marker id="arrow" markerWidth="10" markerHeight="7" 
+            refX="0" refY="3.5" orient="auto">
+      <polygon fill="#000" points="0 0, 5 3.5, 0 7" />
+    </marker>
+    <marker id="bullet" markerWidth="12" markerHeight="12" refX="6" refY="6" >
+      <circle fill="#000" cx="6" cy="6" r="2" stroke="context-stroke" stroke-width="2"/>
+    </marker>
+  </defs>
+    <g transform="scale(0.3) translate(1330,1750)">
+        <g transform="translate(0,250)" font-family="Ubuntu" font-size="25" fill="#c800c8" text-anchor="middle" font-weight="bold">
+          <rect x="0" y="0" width="300" height="40" fill="#000"></rect>
+          <text x="150" y="30" fill="#fff"  letter-spacing="3">Functional</text>
+        </g>
+        <g transform="translate(0,300)" font-family="Ubuntu" font-size="25" fill="#c800c8" text-anchor="middle" font-weight="bold">
+          <rect x="0" y="0" width="300" height="40" fill="#000"></rect>
+          <text x="150" y="30" fill="#fff"  letter-spacing="3">Programming</text>
+        </g>
+        <g transform="translate(0,350)" font-family="Ubuntu" font-size="25" fill="#c800c8" text-anchor="middle" font-weight="bold">
+          <rect x="0" y="0" width="300" height="40" fill="#000"></rect>
+          <text x="150" y="30" fill="#fff"  letter-spacing="3">JavaScript</text>
+        </g>
+  </g>
+  <g font-size="10"  fill="#000" font-weight="bold">
+    <text x="10" y="625">jsfun.ir/functional-programming-javascript</text>
+    <text x="10" y="645" >functional programming javascript by Shakiba Moshiri, 2019-11-06</text>
+  </g>
+<!--<path fill="none" stroke="#000" stroke-width="3" d="M60,50 v140" marker-start="url(#bullet)" marker-end="url(#arrow)"></path>-->
+</svg>

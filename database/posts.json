@@ -81,7 +81,8 @@
             "pure and impure functions": "",
             "immutable and mutable data": "",
             "side effect free morphism": "",
-            "higher order function": ""
+            "higher order function": "",
+            "recursive function call": ""
         },
         "react": {
             "three JSX main patterns": "",
